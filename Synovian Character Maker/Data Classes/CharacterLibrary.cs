@@ -1,0 +1,163 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using Synovian_Character_Maker.Static_Classes;
+
+namespace Synovian_Character_Maker.Data_Classes
+{
+    public class CharacterLibrary
+    {
+        public List<CharacterSheet> characterSheets { get => new List<CharacterSheet>(_characterSheets); }
+        List<CharacterSheet> _characterSheets;
+
+        public CharacterLibrary()
+        {
+            _characterSheets = new List<CharacterSheet>();
+        }
+
+        public CharacterLibrary(List<CharacterSheet> characters)
+        {
+            _characterSheets = new List<CharacterSheet>(characters);
+        }
+
+        ~CharacterLibrary()
+        {
+            Static_Classes.DataWriter.ExportAllCharacterSheets(_characterSheets);
+        }
+
+        /// <summary>
+        /// Try and get a sheet by a string name.
+        /// </summary>
+        /// <param name="name">String name of the character wanted.</param>
+        /// <param name="characterSheet">The output charactersheet if found, may return NULL</param>
+        /// <returns>Returns a boolian if successfuly found</returns>
+        public bool TryGetCharacter(string name, out CharacterSheet characterSheet)
+        {
+            foreach(CharacterSheet characterSheet1 in _characterSheets)
+            {
+                if(characterSheet1.Name == name)
+                {
+                    characterSheet = characterSheet1;
+                    return true;
+                }
+            }
+            characterSheet = null;
+            return false;
+        }
+
+        /// <summary>
+        /// Attempt to add a new character to the library.
+        /// </summary>
+        /// <param name="characterSheet">The new charactersheet</param>
+        /// <param name="automaticallyToFile">Override to auomatically save the character to disk.</param>
+        /// <returns>Returns a boolian on whether the sheet successfully was added or not. However if the override is used, the 
+        /// bool will return false if the program failed to save to disk.</returns>
+        public bool AddCharacter(CharacterSheet characterSheet, bool automaticallyToFile = false)
+        {
+            if(automaticallyToFile)
+            {
+                foreach (CharacterSheet sheet in _characterSheets)
+                {
+                    if (sheet.Name == characterSheet.Name)
+                        return false;
+                }
+
+                _characterSheets.Add(characterSheet);
+
+                return DataWriter.WriteCharacterToDiskTxt(characterSheet);
+            }
+            else
+            {
+                foreach (CharacterSheet sheet in _characterSheets)
+                {
+                    if (sheet.Name == characterSheet.Name)
+                        return false;
+                }
+
+                _characterSheets.Add(characterSheet);
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Attempt to remove a character from the library, with the override option to remove from disk.
+        /// </summary>
+        /// <param name="name">The name of the Character</param>
+        /// <param name="removeFileFromDisk">The program will attempt to remove the character file from the user's disk. This will only
+        /// work if the character file is in the maker's Sheets folder.</param>
+        /// <returns>Returns a bool if the sheet was removed from the library. However this bool will always be false if it failed 
+        /// to remove the file from disk if the override is overridden.</returns>
+        public bool RemoveCharacter(string name, bool removeFileFromDisk = false)
+        {
+            // Is not override overriden?
+            if(!removeFileFromDisk)
+            {
+                // Go through the library
+                foreach(CharacterSheet characterSheet in _characterSheets)
+                {
+                    // If the sheet has the requested name
+                    if(characterSheet.Name == name)
+                    {
+                        // Remove the sheet
+                        _characterSheets.Remove(characterSheet);
+                        return true;
+                    }
+                }
+                return false;
+            }
+            else
+            {
+                foreach (CharacterSheet characterSheet in _characterSheets)
+                {
+                    if (characterSheet.Name == name)
+                    {
+                        _characterSheets.Remove(characterSheet);
+                        if (File.Exists($"{Globals.CharacterFolder}\\{name}.txt"))
+                        {
+                            try
+                            {
+                                File.Delete($"{Globals.CharacterFolder}\\{name}.txt");
+                                return true;
+                            }
+                            catch (Exception e)
+                            {
+                                
+                                return false;
+                            }
+                        }
+                        else if (File.Exists($"{Globals.CharacterFolder}\\{name}.zip"))
+                        {
+                            try
+                            {
+                                File.Delete($"{Globals.CharacterFolder}\\{name}.zip");
+                                return true;
+                            }
+                            catch (Exception e)
+                            {
+                                return false;
+                            }
+                        }
+                        else
+                            return false;
+                    }
+                }
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Search the library for a character by string name.
+        /// </summary>
+        /// <param name="name">Name of the charactersheet</param>
+        /// <returns>Returns a boolian based on whether it finds a sheet or not.</returns>
+        public bool HasCharacter(string name)
+        {
+            foreach(CharacterSheet characterSheet in characterSheets)
+                if (characterSheet.Name == name) return true;
+            return false;
+        }
+    }
+}

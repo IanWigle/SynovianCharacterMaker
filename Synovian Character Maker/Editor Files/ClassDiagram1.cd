@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Synovian_Character_Maker.Data_Classes.AbilityLibrary">
+    <Position X="0.5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AACQAAAAAAAAAAAAAgBAAIAEAAQAAAAAACAAIAAQAAA=</HashCode>
+      <FileName>Data Classes\AbilityLibrary.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Data_Classes.Ability">
+    <Position X="0.5" Y="4.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>EBABIAEQAAAAyAAAICBAEAQgBBAAAQAEgAAAACAQIAA=</HashCode>
+      <FileName>Data Classes\Ability.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Data_Classes.CharacterSheet">
+    <Position X="3.25" Y="4.25" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Synovian_Character_Maker.Data_Classes.CharacterSheet.SheetFileType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Data Classes\CharacterSheet.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ABABIAkAAAIAAAiAAAAAAIQgAAAAQwAACAAAQCAQAAE=</HashCode>
+      <FileName>Data Classes\CharacterSheet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Data_Classes.CharacterLibrary">
+    <Position X="3.25" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAICAAAAAABAAAAAAAIEAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Data Classes\CharacterLibrary.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Data_Classes.CompanionSheet">
+    <Position X="6" Y="4.25" Width="3.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Synovian_Character_Maker.Data_Classes.CompanionSheet.CompanionType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Data Classes\CompanionSheet.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>GAAAAAAgAAAAAAkAAAABAAAAIAAEABAAAAAAACgAAAE=</HashCode>
+      <FileName>Data Classes\CompanionSheet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Static_Classes.DataReader">
+    <Position X="9.5" Y="0.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Synovian_Character_Maker.Static_Classes.DataReader.DataReadTypes" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Static Classes\DataReader.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAgAAACAACAAAAAAIAAAAAAAAAQAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Static Classes\DataReader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Static_Classes.DataWriter">
+    <Position X="11.75" Y="0.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Synovian_Character_Maker.Static_Classes.DataWriter.ExcelFormats" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Static Classes\DataWriter.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAFAAAAAEIAAAAEAAAACABAAAAAAA=</HashCode>
+      <FileName>Static Classes\DataWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Static_Classes.Globals">
+    <Position X="9.5" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAYAAAAAAAAAAAAAAIAAAIAAAAAAgIAAAAAAAAAABA=</HashCode>
+      <FileName>Static Classes\Globals.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Static_Classes.Helpers">
+    <Position X="11.75" Y="4.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Static Classes\Helpers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Static_Classes.ProgramSettings">
+    <Position X="9.5" Y="6.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Static Classes\ProgramSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Program">
+    <Position X="11.75" Y="6.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAABAQABBAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Static Classes\Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Static_Classes.StatRules">
+    <Position X="9.5" Y="8.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAACAAIAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Static Classes\StatRules.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Forms.MainForm">
+    <Position X="15.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAQACAAAQAAYASAAAACACAAAACAgKAGAAARBCU=</HashCode>
+      <FileName>Forms\MainForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Forms.AbilityMaker">
+    <Position X="17.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ACQCMARQASAggQAQQQSCBAACBgAYAIAEEGIQAIEAACE=</HashCode>
+      <FileName>Forms\AbilityMaker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Forms.CharacterMaker.ZipExportOptions">
+    <Position X="15.25" Y="7" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Synovian_Character_Maker.Forms.CharacterMaker.ZipExportOptions.ExitStatus" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Forms\CharacterMaker\ZipExportOptions.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Struct Name="Synovian_Character_Maker.Forms.CharacterMaker.ZipExportOptions.ZipExportSettings" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Forms\CharacterMaker\ZipExportOptions.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAQEAAACAAAICAAAYAAAAAGAAAAEAACA=</HashCode>
+      <FileName>Forms\CharacterMaker\ZipExportOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Forms.CharacterMaker.GeneralInfoWindow">
+    <Position X="17.75" Y="10.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAQASYgAAEQAACAgAQ6AAAEAAAAECAAAIEAACA=</HashCode>
+      <FileName>Forms\CharacterMaker\GeneralInfoWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Forms.CharacterMaker.FilterTab">
+    <Position X="20" Y="14.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QAAAgAAAACAAEAEAAACAAAiKAAA4oAAAAHAAAAH4pyE=</HashCode>
+      <FileName>Forms\CharacterMaker\FilterTab.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Forms.CharacterMaker.CharacterMaker">
+    <Position X="20" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>ADAAIIAQACQQEAQAAEmA7Aji6wAIGIiAqmIgBQAAYCM=</HashCode>
+      <FileName>Forms\CharacterMaker\CharacterMaker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Forms.CharacterMaker.CalculatorLog">
+    <Position X="22.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAACQEAACAAAIAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Forms\CharacterMaker\CalculatorLog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker.CompanionMaker">
+    <Position X="22.75" Y="3.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAQACAAABAAAACJBAADAwAAAwBAICAAAAQAAAA=</HashCode>
+      <FileName>Forms\CharacterMaker\CompanionMaker\CompanionMaker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker.CompanionSetup">
+    <Position X="22.75" Y="9.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker.CompanionSetup.CompanionSelection" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Forms\CharacterMaker\CompanionMaker\CompanionSetup.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQASgAAAAIBGCEgEBCAAAwAgAAALQCyAABAKA=</HashCode>
+      <FileName>Forms\CharacterMaker\CompanionMaker\CompanionSetup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Synovian_Character_Maker.Forms.CharacterMaker.Filters" Collapsed="true">
+    <Position X="7.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAQBAAAAAAAAAAAAAAABAACAAAAAAEAQBAIAA=</HashCode>
+      <FileName>Forms\CharacterMaker\FilterTab.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="Synovian_Character_Maker.Data_Classes.Ability_Alignment" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABACAAAAAAAAAAAAIAAEAAAgAAAgAAAACA=</HashCode>
+      <FileName>Data Classes\Ability.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Synovian_Character_Maker.Data_Classes.Rank" Collapsed="true">
+    <Position X="6" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAEBEAAAAAAAAAAACAAAAAEAASAAAAAAAAAAE=</HashCode>
+      <FileName>Data Classes\Ability.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Synovian_Character_Maker.Data_Classes.Ability_Schools" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQggAAAIAAQAEIBAABAAAAAIAAgAoAAAIAACACQ=</HashCode>
+      <FileName>Data Classes\Ability.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
