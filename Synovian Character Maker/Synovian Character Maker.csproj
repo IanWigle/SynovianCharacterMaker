@@ -146,6 +146,12 @@
     <Compile Include="Forms\CharacterMaker\CalculatorLog.Designer.cs">
       <DependentUpon>CalculatorLog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CharacterMaker\CharacterDetailsWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CharacterMaker\CharacterDetailsWindow.Designer.cs">
+      <DependentUpon>CharacterDetailsWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\CharacterMaker\CharacterMaker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -202,6 +208,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CharacterMaker\CalculatorLog.resx">
       <DependentUpon>CalculatorLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CharacterMaker\CharacterDetailsWindow.resx">
+      <DependentUpon>CharacterDetailsWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CharacterMaker\CharacterMaker.resx">
       <DependentUpon>CharacterMaker.cs</DependentUpon>
@@ -288,6 +297,7 @@
 xcopy "$(ProjectDir)Misc\StringDescriptionTable.txt" "$(SolutionDir)Output\Main\$(Configuration)\Data\" /Y /Q
 xcopy "$(ProjectDir)Misc\StringNameTable.txt" "$(SolutionDir)Output\Main\$(Configuration)\Data\" /Y /Q
 xcopy "$(ProjectDir)Misc\Settings.txt" "$(SolutionDir)Output\Main\$(Configuration)\Data\" /Y /Q
-xcopy "$(ProjectDir)Misc\StatRules.txt" "$(SolutionDir)Output\Main\$(Configuration)\Data\" /Y /Q</PostBuildEvent>
+xcopy "$(ProjectDir)Misc\StatRules.txt" "$(SolutionDir)Output\Main\$(Configuration)\Data\" /Y /Q
+xcopy "$(ProjectDir)Assets\Audio\AFriendAudio.wav" "$(SolutionDir)Output\Main\$(Configuration)\Data\Audio\" /Y /Q</PostBuildEvent>
   </PropertyGroup>
 </Project>

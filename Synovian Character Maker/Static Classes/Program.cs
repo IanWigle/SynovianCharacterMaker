@@ -40,7 +40,7 @@ namespace Synovian_Character_Maker
 
         static public AudioPlayer audioPlayer { get => _audioPlayer; }
         static private AudioPlayer _audioPlayer = null;
-        static private string defaultSong = "";
+        static private string defaultSong = "AFriendAudio.wav";
 
         /// <summary>
         /// The main entry point for the application.
@@ -65,11 +65,17 @@ namespace Synovian_Character_Maker
             DataReader.ReadAllSheets(ref _characterLibrary);
 
             _audioPlayer = new AudioPlayer(defaultSong);
+            DataReader.LoadAudioSettings(ref _audioPlayer);
 
             if(args.Contains("-ability_maker") || openAbilityMaker == true)
                 Application.Run(new AbilityMaker());
             else
                 Application.Run(new MainForm());
+        }
+
+        public static CharacterSheet GetOpenedSheet()
+        {
+            return Static_Classes.Helpers.GetForm<Forms.CharacterMaker.CharacterMaker>().current_characterSheet;
         }
     }
 }

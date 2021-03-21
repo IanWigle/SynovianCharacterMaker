@@ -29,6 +29,11 @@ namespace Synovian_Character_Maker.Forms
             }
 
             numericVolume.Maximum = 1;
+            numericVolume.Value = Program.audioPlayer.volume;
+            audioOnLoopCheckBox.Checked = Program.audioPlayer.onLoop;
+            keepMenuOpenBox.Checked = Program.programSettings.HideMainMenu;
+            zipsOverTxtBox.Checked = Program.programSettings.FocusOnZipsOverTxts;
+            songNameLabel.Text = $"Song : {Program.audioPlayer.SongName()}";
         }
 
         private void exitButton_Click(object sender, EventArgs e) => Close();
@@ -70,7 +75,6 @@ namespace Synovian_Character_Maker.Forms
                         return;
                 }
 
-
                 CharacterSheet characterSheet = new CharacterSheet(generalInfoWindow.name,
                                                                    generalInfoWindow.rank,
                                                                    generalInfoWindow.alignment);
@@ -81,26 +85,24 @@ namespace Synovian_Character_Maker.Forms
                 {
                     form.Visible = true;
                     (form as CharacterMaker.CharacterMaker).UseDifferentCharacter(characterSheet);
-                    if (Program.programSettings.HideMainMenu)
-                    {
-                        Visible = false;
-                    }
                 }
                 else
                 {
                     CharacterMaker.CharacterMaker characterMaker = new CharacterMaker.CharacterMaker(characterSheet);
                     characterMaker.Show();
-                    if (Program.programSettings.HideMainMenu)
-                    {
-                        Visible = false;
-                    }
                 }
+
+                Visible = Program.programSettings.HideMainMenu;
             }    
         }
 
         private void loadCharButton_Click(object sender, EventArgs e)
         {
-            
+            openCharacter.InitialDirectory = $"{Globals.CharacterFolder}";
+            openCharacter.Title = "Load Character";
+            openCharacter.DefaultExt = ".txt";
+            openCharacter.Filter = "txt files (*.txt)|*.txt|zip folder (*.zip)|*.zip|ExcelX Sheet (*.xlsx)|*.xlsx|Excel Sheet (*.xls)|*.xls|All files (*.*)|*.*";
+            openCharacter.ShowDialog();
         }
 
         private void characterView_DoubleClick(object sender, EventArgs e)
@@ -111,23 +113,15 @@ namespace Synovian_Character_Maker.Forms
                 {
                     form.Visible = true;
                     (form as CharacterMaker.CharacterMaker).UseDifferentCharacter(characterSheet);
-                    goto HandleClosingForm;
                 }
                 else
                 {
                     CharacterMaker.CharacterMaker characterMaker = new CharacterMaker.CharacterMaker(characterSheet);
                     characterMaker.Show();
-                    goto HandleClosingForm;
                 }
             }
-            
-            HandleClosingForm:
-            {
-                if(Program.programSettings.HideMainMenu)
-                {
-                    Visible = false;
-                }
-            }
+
+            Visible = Program.programSettings.HideMainMenu;
         }
 
         private void audioOnLoopCheckBox_CheckedChanged(object sender, EventArgs e) => Program.audioPlayer.onLoop = audioOnLoopCheckBox.Checked;
@@ -135,6 +129,7 @@ namespace Synovian_Character_Maker.Forms
         private void custonSongButton_Click(object sender, EventArgs e)
         {
             openSongFile.Filter = "WAV (*.wav)|*.wav|MP3 (*.mp3)|*.mp3|All Files (*.*)|*.*";
+            openSongFile.InitialDirectory = $"{Globals.DataFolder}\\Audio";
             openSongFile.Title = "Find new song . . .";
             openSongFile.ShowDialog();
         }
@@ -142,19 +137,30 @@ namespace Synovian_Character_Maker.Forms
         private void openSongFile_FileOk(object sender, CancelEventArgs e)
         {
             Program.audioPlayer.ChangeSong(openSongFile.FileName);
-            numericVolume.Value = (decimal)Program.audioPlayer.Volume();
+            numericVolume.Value = (decimal)Program.audioPlayer.volume;
             songNameLabel.Text = $"Song : {Program.audioPlayer.SongName()}";
         }
 
         private void numericVolume_ValueChanged(object sender, EventArgs e)
         {
             if (!Program.audioPlayer.IsValid()) return;
-            Program.audioPlayer.SetVolume(((float)numericVolume.Value > 1) ? 1.0f : (float)numericVolume.Value);
+            //Program.audioPlayer.SetVolume(((float)numericVolume.Value > 1) ? 1.0f : (float)numericVolume.Value);
+            Program.audioPlayer.volume = numericVolume.Value;
+            Program.programSettings.AudioVolume = numericVolume.Value;
         }
 
         private void numericVolume_Click(object sender, EventArgs e)
         {
             numericVolume.Value = (numericVolume.Value > (decimal)1.0) ? (decimal)1.0 : numericVolume.Value;
+        }
+
+        private void keepMenuOpenBox_CheckedChanged(object sender, EventArgs e) => Program.programSettings.HideMainMenu = keepMenuOpenBox.Checked;
+
+        private void zipsOverTxtBox_CheckedChanged(object sender, EventArgs e) => Program.programSettings.FocusOnZipsOverTxts = zipsOverTxtBox.Checked;
+
+        private void openCharacter_FileOk(object sender, CancelEventArgs e)
+        {
+
         }
     }
 }

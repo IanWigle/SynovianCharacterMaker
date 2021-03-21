@@ -111,13 +111,10 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
         private void CharacterMaker_FormClosing(object sender, FormClosingEventArgs e)
         {
-            FormCollection fc = Application.OpenForms;
-            foreach(Form form in fc)
+            if (Helpers.TryGetForm(typeof(MainForm), out Form form))
             {
-                if(form.GetType() == typeof(MainForm))
-                {
-                    form.Focus();
-                }
+                form.Visible = true;
+                form.Focus();
             }
         }
 
@@ -141,6 +138,12 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
         private void saveTxtButton_Click(object sender, EventArgs e)
         {
+            if (current_characterSheet._image != null)
+            {
+                if (MessageBox.Show("Your character has a image. The image won't be saved into the text file. Are you sure you want to do this?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                    return;
+            }
+
             if (DataReader.IsSheetInDefaultDir(current_characterSheet.Name))
             {
                 DataWriter.WriteCharacterToDiskTxt(current_characterSheet);
@@ -484,7 +487,13 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
         private void saveExcel_FileOk(object sender, CancelEventArgs e)
         {
-            DataWriter.ExportCharacterSheetExcel(current_characterSheet, saveExcel.FileName, (saveExcel.Filter.Split('.')[1] == "xlsx") ? DataWriter.ExcelFormats.XLSX : DataWriter.ExcelFormats.XLS);
+            DataWriter.ExportCharacterSheetExcel(current_characterSheet, saveExcel.FileName, (saveExcel.FileName.Split('.')[1] == "xlsx") ? DataWriter.ExcelFormats.XLSX : DataWriter.ExcelFormats.XLS);
+        }
+
+        private void characterDetailsButton_Click(object sender, EventArgs e)
+        {
+            CharacterDetailsWindow characterDetailsWindow = new CharacterDetailsWindow();
+            characterDetailsWindow.ShowDialog();
         }
     }
 }

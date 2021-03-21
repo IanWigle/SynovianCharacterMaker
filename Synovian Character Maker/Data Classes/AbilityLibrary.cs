@@ -165,6 +165,19 @@ namespace Synovian_Character_Maker.Data_Classes
             return false;
         }
 
+        public List<Ability> GetAbilitiesOfSchool(Ability_Schools ability_Schools)
+        {
+            List<Ability> abilities = new List<Ability>();
+
+            foreach(Ability ability in _abilities)
+            {
+                if (ability.ability_School == ability_Schools)
+                    abilities.Add(ability);
+            }
+
+            return abilities;
+        }
+
         private List<Ability> _abilities = new List<Ability>();
     }
 }

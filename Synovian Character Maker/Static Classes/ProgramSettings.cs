@@ -9,12 +9,13 @@ namespace Synovian_Character_Maker.Static_Classes
     public class ProgramSettings
     {
         public bool FocusOnZipsOverTxts { get; set; }
+        public bool DetectExcelSheets { get; set; }
         public bool HideMainMenu { get; set; }
         public bool LoopSong { get; set; }
+        public decimal AudioVolume { get; set; }
 
         ~ProgramSettings()
         {
-            LoopSong = false;
             DataWriter.ExportSettings(this);
         }
     }

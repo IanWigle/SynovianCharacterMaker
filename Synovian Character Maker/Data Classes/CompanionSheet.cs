@@ -61,6 +61,23 @@ namespace Synovian_Character_Maker.Data_Classes
             _primaryCompanionType = primeType;
             _additionalCompanionTypes = new List<CompanionType>();
             abilities = new List<int>();
+
+            switch (primaryCompanionType)
+            {
+                case CompanionType.Research_Droid:
+                    _additionalCompanionTypes.Add(CompanionType.Medical_Droid);
+                    _additionalCompanionTypes.Add(CompanionType.Engineering_Droid);
+                    _additionalCompanionTypes.Add(CompanionType.Astromech_Droid);
+                    break;
+                case CompanionType.Security_Droid:
+                    _additionalCompanionTypes.Add(CompanionType.Battle_Droid);
+                    break;
+                case CompanionType.Assassin_Droid:
+                    _additionalCompanionTypes.Add(CompanionType.Battle_Droid);
+                    break;
+                default:
+                    break;
+            }
         }
 
         public CompanionSheet(string name, CompanionType primeType, List<CompanionType> secondaryTypes)
@@ -77,6 +94,31 @@ namespace Synovian_Character_Maker.Data_Classes
             _primaryCompanionType = primeType;
             _additionalCompanionTypes = secondaryTypes;
             abilities = abs;
+        }
+
+        public CompanionSheet(string name, CompanionType primaryType, List<int> abs)
+        {
+            _companionName = name;
+            _primaryCompanionType = primaryType;
+            _additionalCompanionTypes = new List<CompanionType>();
+            abilities = abs;
+
+            switch (primaryCompanionType)
+            {
+                case CompanionType.Research_Droid:
+                    _additionalCompanionTypes.Add(CompanionType.Medical_Droid);
+                    _additionalCompanionTypes.Add(CompanionType.Engineering_Droid);
+                    _additionalCompanionTypes.Add(CompanionType.Astromech_Droid);
+                    break;
+                case CompanionType.Security_Droid:
+                    _additionalCompanionTypes.Add(CompanionType.Battle_Droid);
+                    break;
+                case CompanionType.Assassin_Droid:
+                    _additionalCompanionTypes.Add(CompanionType.Battle_Droid);
+                    break;
+                default:
+                    break;
+            }
         }
 
         static public int DetermineSkillPointsByType(CompanionType companionType)

@@ -124,6 +124,13 @@ namespace Synovian_Character_Maker.Static_Classes
                 WriteIndented = true,
             };
 
+            if (File.Exists($"{Globals.CharacterFolder}\\{characterSheet.Name}.zip") ||
+                File.Exists($"{Globals.CharacterFolder}\\{characterSheet.Name}.xls") ||
+                File.Exists($"{Globals.CharacterFolder}\\{characterSheet.Name}.xlsx"))
+                {
+                    return false;
+                }
+
             try
             {
                 string jsonString = JsonSerializer.Serialize(characterSheet, options);
@@ -166,28 +173,16 @@ namespace Synovian_Character_Maker.Static_Classes
 
             if (zipExportSettings.savePicture && characterSheet._image != null)
             {
-                characterSheet._image.Save($"{Globals.TempFolder}{characterSheet.Name}.jpg");
+                using (var ms = new MemoryStream())
+                {
+                    characterSheet._image.Save(ms, characterSheet._image.RawFormat);
+                    System.IO.File.WriteAllBytes($"{Globals.TempFolder}\\{characterSheet.Name}.{characterSheet.imageExtension}", ms.ToArray());
+                }
             }
             if (zipExportSettings.saveExcel)
             {
                 WorkBook mainWorkBook = ExportCharacterSheetExcel(characterSheet, $"{Globals.TempFolder}\\{characterSheet.Name}");
 
-                // Check if we even have a valid companion sheet.
-                if (characterSheet.companionSheet != null)
-                {
-                    if (zipExportSettings.saveCompExcelSeperate)
-                    {
-                        //WorkBook compWorkBook = ExportCharacterCompanionExcel(characterSheet.companionSheet, ref mainWorkBook);
-
-                        //compWorkBook.SaveAs($"{Globals.TempFolder}\\{characterSheet.companionSheet.companionName}.xlsx");
-                    }
-                    else
-                    {
-                        //mainWorkBook = ExportCharacterCompanionExcel(characterSheet.companionSheet, ref mainWorkBook);
-                    }
-                }
-
-                mainWorkBook.SaveAs($"{Globals.TempFolder}\\{characterSheet.Name}.xlsx");
             }
 
             // Archive all files
@@ -604,7 +599,8 @@ namespace Synovian_Character_Maker.Static_Classes
             mainXlSheet.Merge($"N{currentLowestIndex}:N{largestColumnIndex - 1}");
 
             // Setup companion worksheet
-            CreateCompanionSheetForExcel(characterSheet.companionSheet, ref workBook);
+            if (characterSheet.companionSheet != null)
+                CreateCompanionSheetForExcel(characterSheet.companionSheet, ref workBook);
 
             // Save the excel file.
             workBook.SaveAs(url);
@@ -746,5 +742,7 @@ namespace Synovian_Character_Maker.Static_Classes
                 }
             }
         }
+
+        
     }
 }

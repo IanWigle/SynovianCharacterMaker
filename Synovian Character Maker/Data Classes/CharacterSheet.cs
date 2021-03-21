@@ -32,6 +32,8 @@ namespace Synovian_Character_Maker.Data_Classes
         public Ability_Alignment alignment { get => _alignment; }
         Ability_Alignment _alignment = Ability_Alignment.Ability_Invalid;
 
+        public string characterDescription { get; set; }
+
         public List<int> abilities { get => new List<int>(_abilities); }
         List<int> _abilities;
 
@@ -45,7 +47,10 @@ namespace Synovian_Character_Maker.Data_Classes
 
         public string characterSpecies { get; set; }
 
-        public Image _image = null;
+        [JsonIgnore]
+        public Image _image { get; set; }
+        [JsonIgnore]
+        public string imageExtension { get; set; }
 
         public CompanionSheet companionSheet { get; set; }
 
@@ -150,6 +155,18 @@ namespace Synovian_Character_Maker.Data_Classes
             {
                 _abilities.Add(ID);
             } 
+        }
+
+        public void AddAbilities(List<int> ids)
+        {
+            foreach(int id in ids)
+            {
+                if (Program.abilityLibrary.Contains(id) &&
+                    !_abilities.Contains(id))
+                {
+                    _abilities.Add(id);
+                }
+            }
         }
 
         public void RemoveAbility(Ability ability)

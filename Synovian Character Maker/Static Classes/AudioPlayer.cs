@@ -15,19 +15,49 @@ namespace Synovian_Character_Maker.Static_Classes
         /// https://github.com/naudio/NAudio
         /// 
 
+
         private WaveOutEvent outputDevice;
         private AudioFileReader audioFile;
         
-        public bool onLoop { get; set; }
+        public bool onLoop 
+        {
+            get => _onLoop;
+            set
+            {
+                _onLoop = value;
+                if(Program.programSettings != null)
+                {
+                    Program.programSettings.LoopSong = value;
+                }
+            }
+        }
+        private bool _onLoop;
+        public decimal volume
+        {
+            get => (decimal)outputDevice.Volume;
+            set
+            {
+                if(outputDevice != null)
+                {
+                    outputDevice.Volume = (float)value;
+                }
+                if(Program.programSettings != null)
+                {
+                    Program.programSettings.AudioVolume = value;
+                }
+            }
+        }
+
 
         public AudioPlayer(string audioFileUrl)
         {
             if (audioFileUrl != "")
             {
                 outputDevice = new WaveOutEvent();
-                audioFile = new AudioFileReader(audioFileUrl);
+                audioFile = new AudioFileReader($"{Globals.AudioFolder}\\{audioFileUrl}");
                 outputDevice.Init(audioFile);
                 outputDevice.PlaybackStopped += OnPlaybackStopped;
+                outputDevice.Play();
                 onLoop = true;
             }
         }
@@ -89,12 +119,11 @@ namespace Synovian_Character_Maker.Static_Classes
         }
 
         public bool IsValid() => outputDevice != null && audioFile != null;
-        public float Volume() => outputDevice.Volume;
         public void SetVolume(float volume) => outputDevice.Volume = volume;
         public string SongName() => audioFile.FileName.Split('\\')[audioFile.FileName.Split('\\').Count() - 1];
         private void OnPlaybackStopped(object sender, StoppedEventArgs eventArgs)
         {
-            if(onLoop && outputDevice.PlaybackState == PlaybackState.Stopped)
+            if(onLoop && outputDevice.PlaybackState == PlaybackState.Stopped && outputDevice.DeviceNumber != -1)
             {
                 outputDevice.Play();
             }

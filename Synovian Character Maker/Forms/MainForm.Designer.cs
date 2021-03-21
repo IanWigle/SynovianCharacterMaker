@@ -57,7 +57,12 @@
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.numericVolume = new System.Windows.Forms.NumericUpDown();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.keepMenuOpenBox = new System.Windows.Forms.CheckBox();
+            this.zipsOverTxtBox = new System.Windows.Forms.CheckBox();
             this.openSongFile = new System.Windows.Forms.OpenFileDialog();
+            this.openCharacter = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -72,6 +77,8 @@
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericVolume)).BeginInit();
+            this.groupBox6.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -254,6 +261,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.groupBox4, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.groupBox6, 1, 0);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(6, 6);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
@@ -374,10 +382,56 @@
             this.numericVolume.ValueChanged += new System.EventHandler(this.numericVolume_ValueChanged);
             this.numericVolume.Click += new System.EventHandler(this.numericVolume_Click);
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.flowLayoutPanel2);
+            this.groupBox6.Location = new System.Drawing.Point(577, 3);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(563, 260);
+            this.groupBox6.TabIndex = 1;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Misc";
+            // 
+            // flowLayoutPanel2
+            // 
+            this.flowLayoutPanel2.Controls.Add(this.keepMenuOpenBox);
+            this.flowLayoutPanel2.Controls.Add(this.zipsOverTxtBox);
+            this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(6, 19);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(551, 235);
+            this.flowLayoutPanel2.TabIndex = 0;
+            // 
+            // keepMenuOpenBox
+            // 
+            this.keepMenuOpenBox.AutoSize = true;
+            this.keepMenuOpenBox.Location = new System.Drawing.Point(3, 3);
+            this.keepMenuOpenBox.Name = "keepMenuOpenBox";
+            this.keepMenuOpenBox.Size = new System.Drawing.Size(183, 17);
+            this.keepMenuOpenBox.TabIndex = 0;
+            this.keepMenuOpenBox.Text = "Keep Menu Open In Background";
+            this.keepMenuOpenBox.UseVisualStyleBackColor = true;
+            this.keepMenuOpenBox.CheckedChanged += new System.EventHandler(this.keepMenuOpenBox_CheckedChanged);
+            // 
+            // zipsOverTxtBox
+            // 
+            this.zipsOverTxtBox.AutoSize = true;
+            this.zipsOverTxtBox.Location = new System.Drawing.Point(3, 26);
+            this.zipsOverTxtBox.Name = "zipsOverTxtBox";
+            this.zipsOverTxtBox.Size = new System.Drawing.Size(180, 17);
+            this.zipsOverTxtBox.TabIndex = 1;
+            this.zipsOverTxtBox.Text = "Prioritize Opening Zips Over Txts";
+            this.zipsOverTxtBox.UseVisualStyleBackColor = true;
+            this.zipsOverTxtBox.CheckedChanged += new System.EventHandler(this.zipsOverTxtBox_CheckedChanged);
+            // 
             // openSongFile
             // 
             this.openSongFile.FileName = "openFileDialog1";
             this.openSongFile.FileOk += new System.ComponentModel.CancelEventHandler(this.openSongFile_FileOk);
+            // 
+            // openCharacter
+            // 
+            this.openCharacter.FileOk += new System.ComponentModel.CancelEventHandler(this.openCharacter_FileOk);
             // 
             // MainForm
             // 
@@ -405,6 +459,9 @@
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericVolume)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            this.flowLayoutPanel2.ResumeLayout(false);
+            this.flowLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -440,6 +497,11 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericVolume;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private System.Windows.Forms.CheckBox keepMenuOpenBox;
+        private System.Windows.Forms.CheckBox zipsOverTxtBox;
+        private System.Windows.Forms.OpenFileDialog openCharacter;
     }
 }
 
