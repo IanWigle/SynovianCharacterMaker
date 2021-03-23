@@ -62,16 +62,16 @@
             this.companionButton = new System.Windows.Forms.Button();
             this.calculateButton = new System.Windows.Forms.Button();
             this.characterDetailsButton = new System.Windows.Forms.Button();
+            this.clearSheetButton = new System.Windows.Forms.Button();
             this.characterAbilitiesView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.saveTxt = new System.Windows.Forms.SaveFileDialog();
-            this.openTxt = new System.Windows.Forms.OpenFileDialog();
+            this.openCharacterDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveZip = new System.Windows.Forms.SaveFileDialog();
             this.saveExcel = new System.Windows.Forms.SaveFileDialog();
-            this.clearSheetButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -207,6 +207,7 @@
             this.loadExcelButton.TabIndex = 5;
             this.loadExcelButton.Text = "Load Excel";
             this.loadExcelButton.UseVisualStyleBackColor = true;
+            this.loadExcelButton.Click += new System.EventHandler(this.loadExcelButton_Click);
             // 
             // saveExcelButton
             // 
@@ -226,6 +227,7 @@
             this.loadZipButton.TabIndex = 3;
             this.loadZipButton.Text = "Load Zip";
             this.loadZipButton.UseVisualStyleBackColor = true;
+            this.loadZipButton.Click += new System.EventHandler(this.loadZipButton_Click);
             // 
             // saveZipButton
             // 
@@ -438,6 +440,16 @@
             this.characterDetailsButton.UseVisualStyleBackColor = true;
             this.characterDetailsButton.Click += new System.EventHandler(this.characterDetailsButton_Click);
             // 
+            // clearSheetButton
+            // 
+            this.clearSheetButton.Location = new System.Drawing.Point(194, 61);
+            this.clearSheetButton.Name = "clearSheetButton";
+            this.clearSheetButton.Size = new System.Drawing.Size(185, 53);
+            this.clearSheetButton.TabIndex = 3;
+            this.clearSheetButton.Text = "Clear Sheet";
+            this.clearSheetButton.UseVisualStyleBackColor = true;
+            this.clearSheetButton.Click += new System.EventHandler(this.clearSheetButton_Click);
+            // 
             // characterAbilitiesView
             // 
             this.characterAbilitiesView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -479,10 +491,10 @@
             // 
             this.saveTxt.FileOk += new System.ComponentModel.CancelEventHandler(this.saveTxt_FileOk);
             // 
-            // openTxt
+            // openCharacterDialog
             // 
-            this.openTxt.FileName = "openFileDialog1";
-            this.openTxt.FileOk += new System.ComponentModel.CancelEventHandler(this.openTxt_FileOk);
+            this.openCharacterDialog.FileName = "openFileDialog1";
+            this.openCharacterDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.openTxt_FileOk);
             // 
             // saveZip
             // 
@@ -493,16 +505,6 @@
             // 
             this.saveExcel.DefaultExt = "xlsx";
             this.saveExcel.FileOk += new System.ComponentModel.CancelEventHandler(this.saveExcel_FileOk);
-            // 
-            // clearSheetButton
-            // 
-            this.clearSheetButton.Location = new System.Drawing.Point(194, 61);
-            this.clearSheetButton.Name = "clearSheetButton";
-            this.clearSheetButton.Size = new System.Drawing.Size(185, 53);
-            this.clearSheetButton.TabIndex = 3;
-            this.clearSheetButton.Text = "Clear Sheet";
-            this.clearSheetButton.UseVisualStyleBackColor = true;
-            this.clearSheetButton.Click += new System.EventHandler(this.clearSheetButton_Click);
             // 
             // CharacterMaker
             // 
@@ -568,7 +570,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.SaveFileDialog saveTxt;
-        private System.Windows.Forms.OpenFileDialog openTxt;
+        private System.Windows.Forms.OpenFileDialog openCharacterDialog;
         private System.Windows.Forms.SaveFileDialog saveZip;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;

@@ -699,7 +699,7 @@ namespace Synovian_Character_Maker.Static_Classes
             int ceneterColumnAbilities = currentIndex;
             int rightColumnAbilities = currentIndex;
 
-            string[] headerNames = { "Offense Abilities", "Survival Abilities", "Understanding Abilities", "Mentalism Abilities", "Defense Abilities", "Arms Abilities" };
+            string[] headerNames = { "Offense Abilities", "Survival Abilities", "Understanding Abilities", "Mentalism Abilities", "Defense Abilities", "Arms Abilities", "Engineering Abilities" };
                         
             void HandleColumn(string cellColumn, ref int columnIndex)
             {

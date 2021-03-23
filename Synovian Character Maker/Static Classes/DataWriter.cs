@@ -240,6 +240,14 @@ namespace Synovian_Character_Maker.Static_Classes
         /// <returns>Will return a copy of the Workbook structure.</returns>
         public static WorkBook ExportCharacterSheetExcel(CharacterSheet characterSheet, string url, ExcelFormats excelFormats = ExcelFormats.XLSX)
         {
+            Synovian_Character_Maker.Forms.ExcelExportProgressWindow log = Helpers.GetForm<Synovian_Character_Maker.Forms.ExcelExportProgressWindow>();
+
+            void Log(string message, int increment = 1)
+            {
+                if (log != null)
+                    log.ProgressTheBar(message, increment);
+            }
+
             if (url == "")
                 url = $"{Globals.CharacterFolder}\\{characterSheet.Name}.{((excelFormats == ExcelFormats.XLS) ? "xls" : "xlsx")}";
 
@@ -313,6 +321,7 @@ namespace Synovian_Character_Maker.Static_Classes
             MakeThickBorder("J3:M3");
             mainXlSheet.Merge("J3:M3");
             mainXlSheet.GetColumn(1).Style.ShrinkToFit = true;
+            Log("Created top header");
             // Top Header info
             // Rank
             mainXlSheet["B4"].StringValue = $"Rank: {characterSheet.s_rank}";
@@ -341,6 +350,7 @@ namespace Synovian_Character_Maker.Static_Classes
             mainXlSheet["B6"].Style.FillPattern = IronXL.Styles.FillPattern.SolidForeground;
             MakeThickBorder("B6:E6");
             mainXlSheet.Merge("B6:E6");
+            Log("Filled basic character details");
             // Trees/Schools
             int startingSchoolIndex = 4;
             string[] schools = characterSheet.GetAllSchools();
@@ -355,6 +365,7 @@ namespace Synovian_Character_Maker.Static_Classes
                 mainXlSheet.Merge($"F{startingSchoolIndex}:I{startingSchoolIndex}");
                 startingSchoolIndex++;
             }
+            Log("Filled all schools");
             // Forms 
             int startingFormIndex = 4;
             string[] forms = characterSheet.GetAbilitiesOfSchool(Ability_Schools.Ability_Forms);
@@ -391,6 +402,7 @@ namespace Synovian_Character_Maker.Static_Classes
                 mainXlSheet.Merge($"J{startingFormIndex}:M{startingFormIndex}");
                 startingFormIndex++;
             }
+            Log("Filled all force and saber forms");
             // Header break
             int currentLowestIndex = (startingSchoolIndex > startingFormIndex) ? startingSchoolIndex : startingFormIndex;
             if (currentLowestIndex <= 6) currentLowestIndex = 7;
@@ -422,6 +434,7 @@ namespace Synovian_Character_Maker.Static_Classes
             mainXlSheet[$"N{currentLowestIndex}"].Style.FillPattern = IronXL.Styles.FillPattern.SolidForeground;
             mainXlSheet[$"N{currentLowestIndex}"].Style.SetBackgroundColor(System.Drawing.Color.Black);
             currentLowestIndex++;
+            Log("Created second header break and ability table");
             // Split each up based on trees
             // These values are not of the rows and columns of excel, rather the rows in neatly sorting abilities
             // based on school.
@@ -548,6 +561,7 @@ namespace Synovian_Character_Maker.Static_Classes
                 if (largestColumnIndex <= currentRightColumnIndex) largestColumnIndex = currentRightColumnIndex;
             }
 
+            int incrementFraction = 1 / characterSheet.abilities.Count();
             foreach (Ability_Schools ability_Schools in (Ability_Schools[])Enum.GetValues(typeof(Ability_Schools)))
             {
                 if (ability_Schools == 0 || ability_Schools == Ability_Schools.Ability_Max) continue;
@@ -555,6 +569,7 @@ namespace Synovian_Character_Maker.Static_Classes
                 string[] abilities = characterSheet.GetAbilitiesOfSchool(ability_Schools);
                 if (abilities.Count() == 0) continue;
 
+                
                 switch (currentColumn)
                 {
                     case 0:
@@ -567,11 +582,11 @@ namespace Synovian_Character_Maker.Static_Classes
                         SetupRightColumn(ability_Schools, ref abilities);
                         break;
                 }
-
+                Log($"Added all {Enum.GetName(typeof(Ability_Schools),ability_Schools)} abilities.", incrementFraction);
                 currentColumn++;
                 if (currentColumn >= maxColumns) currentColumn = 0;
             }
-
+            Log("Added all abilities");
             // Fill all empty cells till it fits with border
             if (largestColumnIndex != currentLeftColumnIndex)
             {
@@ -584,6 +599,7 @@ namespace Synovian_Character_Maker.Static_Classes
                     mainXlSheet.Merge($"B{l}:E{l}");
                 }
             }
+            Log("Cleaning up tables . . .");
             if (largestColumnIndex != currentCenterColumnIndex)
             {
                 for (int c = currentCenterColumnIndex; c < largestColumnIndex; c++)
@@ -595,6 +611,7 @@ namespace Synovian_Character_Maker.Static_Classes
                     mainXlSheet.Merge($"F{c}:I{c}");
                 }
             }
+            Log("Cleaning up tables . . .");
             if (largestColumnIndex != currentRightColumnIndex)
             {
                 for (int r = currentRightColumnIndex; r < largestColumnIndex; r++)
@@ -606,6 +623,7 @@ namespace Synovian_Character_Maker.Static_Classes
                     mainXlSheet.Merge($"J{r}:M{r}");
                 }
             }
+            Log("Cleaning up tables . . .");
 
             // Setup border
             mainXlSheet[$"A{largestColumnIndex}"].Style.FillPattern = IronXL.Styles.FillPattern.SolidForeground;
@@ -617,10 +635,16 @@ namespace Synovian_Character_Maker.Static_Classes
             mainXlSheet[$"N{currentLowestIndex}"].Style.FillPattern = IronXL.Styles.FillPattern.SolidForeground;
             mainXlSheet[$"N{currentLowestIndex}"].Style.SetBackgroundColor(System.Drawing.Color.Black);
             mainXlSheet.Merge($"N{currentLowestIndex}:N{largestColumnIndex - 1}");
+            Log("Making final border");
 
             // Setup companion worksheet
             if (characterSheet.companionSheet != null)
+            {
                 CreateCompanionSheetForExcel(characterSheet.companionSheet, ref workBook);
+                Log("Made companion sheet");
+            }
+            else
+                Log("No Companion Sheet, skipping . . . ");
 
             // Save the excel file.
             workBook.SaveAs(url);
