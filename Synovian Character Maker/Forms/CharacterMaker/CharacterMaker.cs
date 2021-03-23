@@ -56,13 +56,13 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
         public void WriteLog(string message)
         {
             string text = logTextBox.Text;
-            text += $"{message}\n";
+            text += $"{DateTime.Now.TimeOfDay.Hours}:{DateTime.Now.TimeOfDay.Minutes} : {message}\n";
             logTextBox.Text = text;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            WriteLog("Updated filters");
             filterTab.ShowDialog();
             FilterLibraryAbilities(filterTab.filters);
             FilterCharacterAbilities(filterTab.filters);
@@ -86,6 +86,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                 string[] subitems = { ability.Name, ability.s_rank, ability.s_alignment, ability.s_ability_School };
                 libraryView.Items.Add(new ListViewItem(subitems));
             }
+            WriteLog("Updated library list.");
         }
 
         private void FilterCharacterAbilities(Filters filters)
@@ -107,6 +108,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                     characterAbilitiesView.Items.Add(new ListViewItem(subitems));
                 }
             }
+            WriteLog("Updated character list");
         }
 
         private void CharacterMaker_FormClosing(object sender, FormClosingEventArgs e)
@@ -134,6 +136,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                 FilterLibraryAbilities(filterTab.filters);
                 FilterCharacterAbilities(filterTab.filters);
             }
+            WriteLog($"Added {ability.Name} to character");
         }
 
         private void saveTxtButton_Click(object sender, EventArgs e)
@@ -161,26 +164,48 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
         private void saveTxt_FileOk(object sender, CancelEventArgs e)
         {
             DataWriter.WriteCharacterToDiskTxt(current_characterSheet);
+            WriteLog("Saved Character to disk as txt.");
         }
 
         private void loadTxtButton_Click(object sender, EventArgs e)
         {
-            openTxt.Title = "Open Txt";
-            openTxt.InitialDirectory = Globals.CharacterFolder;
-            openTxt.DefaultExt = ".txt";
-            openTxt.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            openTxt.ShowDialog();
+            openCharacterDialog.Title = "Open Txt";
+            openCharacterDialog.InitialDirectory = Globals.CharacterFolder;
+            openCharacterDialog.DefaultExt = ".txt";
+            openCharacterDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            openCharacterDialog.ShowDialog();
         }
 
         private void openTxt_FileOk(object sender, CancelEventArgs e)
         {
-            if (Program.characterLibrary.TryGetCharacter(openTxt.SafeFileName.Split('.')[0], out CharacterSheet sheet))
+            if (Program.characterLibrary.TryGetCharacter(openCharacterDialog.SafeFileName.Split('.')[0], out CharacterSheet sheet))
             {
                 current_characterSheet = sheet;
             }    
             else
             {
-                current_characterSheet = DataReader.ReadSheetFromTxtDisk(openTxt.SafeFileName);
+                string extension = openCharacterDialog.SafeFileName.Split('.')[1];
+
+                if (extension == "txt")
+                {
+                    current_characterSheet = DataReader.ReadSheetFromTxtDisk(openCharacterDialog.SafeFileName);
+                }
+                else if (extension == "zip")
+                {
+                    current_characterSheet = DataReader.ReadSheetFromZipDisk(openCharacterDialog.FileName);
+                }
+                else if (extension == "xls" || extension == "xlsx")
+                {
+                    current_characterSheet = DataReader.LoadExelSheet(openCharacterDialog.FileName, ((extension == ".xls") ? IronXL.ExcelFileFormat.XLS : IronXL.ExcelFileFormat.XLSX));
+                }
+                else
+                {
+#if DEBUG
+                    throw new Exception($"{extension} is not a valid extension to use");
+#else
+                    MessageBox.Show($"{extension} is not a valid extension to use", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+#endif
+                }
             }
 
             UpdateLabels();
@@ -190,6 +215,8 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                                           new List<Ability_Schools>());
             filters.Fill();
             FilterLibraryAbilities(filters);
+            FilterCharacterAbilities(filters);
+            WriteLog("Opened new character");
         }
 
         private void saveZipButton_Click(object sender, EventArgs e)
@@ -209,6 +236,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                 return;
 
             DataWriter.WriteCharacterToDiskZip(current_characterSheet, saveZip.FileName, zipExportOptions.exportSettings);
+            WriteLog("Saved character as zip to disk.");
         }
 
         private void companionButton_Click(object sender, EventArgs e)
@@ -241,6 +269,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                 FilterLibraryAbilities(filterTab.filters);
                 FilterCharacterAbilities(filterTab.filters);
             }
+            WriteLog($"Removed {ability.Name} from character.");
         }
 
         private void calculateButton_Click(object sender, EventArgs e)
@@ -275,9 +304,13 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
                 if (usedSkillPoints > SkillPointsMax)
                 {
-                    calculatorLog.AddToLog($"There are {usedSkillPoints - SkillPointsMax} more than the character's max of {SkillPointsMax}.");
+                    calculatorLog.AddToLog($"There are {usedSkillPoints - SkillPointsMax} more skillpoints being used than the character's max of {SkillPointsMax}.");
                     valid = false;
                     numErrors++;
+                }
+                else
+                {
+                    calculatorLog.AddToLog($"Used {usedSkillPoints} skill points of the character's {SkillPointsMax}.");
                 }
             }
             // Calculate all feat points
@@ -300,6 +333,10 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                     calculatorLog.AddToLog($"There are {usedFeatPoints - FeatPointMax} more than the character's max of {FeatPointMax}.");
                     valid = false;
                     numErrors++;
+                }
+                else
+                {
+                    calculatorLog.AddToLog($"Used {usedFeatPoints} feat points of the character's {FeatPointMax}");
                 }
             }
             // Calculate if the sheet has right number of schools
@@ -485,6 +522,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             calculatorLog.AddToLog($"Results are in: your sheet is {((valid == true) ? "valid" : "invalid")}.");
             calculatorLog.AddToLog($"Number of errors: {numErrors}");
             calculatorLog.ShowDialog();
+            WriteLog("Did big brain math.");
         }
 
         private void saveExcelButton_Click(object sender, EventArgs e)
@@ -498,7 +536,11 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
         private void saveExcel_FileOk(object sender, CancelEventArgs e)
         {
+            ExcelExportProgressWindow excelExportProgressWindow = new ExcelExportProgressWindow();
+            excelExportProgressWindow.Show();
             DataWriter.ExportCharacterSheetExcel(current_characterSheet, saveExcel.FileName, (saveExcel.FileName.Split('.')[1] == "xlsx") ? DataWriter.ExcelFormats.XLSX : DataWriter.ExcelFormats.XLS);
+            WriteLog("Saved character to disk as excel");
+            excelExportProgressWindow.CloseForm();
         }
 
         private void characterDetailsButton_Click(object sender, EventArgs e)
@@ -515,7 +557,26 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                 characterAbilitiesView.Items.Clear();
                 FilterLibraryAbilities(filterTab.filters);
                 FilterCharacterAbilities(filterTab.filters);
+                WriteLog("Emptied character.");
             }
+        }
+
+        private void loadZipButton_Click(object sender, EventArgs e)
+        {
+            openCharacterDialog.Title = "Open Zip";
+            openCharacterDialog.InitialDirectory = Globals.CharacterFolder;
+            openCharacterDialog.DefaultExt = ".zip";
+            openCharacterDialog.Filter = "Zip files (*.zip)|*.zip|All files (*.*)|*.*";
+            openCharacterDialog.ShowDialog();
+        }
+
+        private void loadExcelButton_Click(object sender, EventArgs e)
+        {
+            openCharacterDialog.Title = "Open Excel";
+            openCharacterDialog.InitialDirectory = Globals.CharacterFolder;
+            openCharacterDialog.DefaultExt = ".xlsx";
+            openCharacterDialog.Filter = "Xlsx files (*.xslx)|*.xlsx|Xls files (*.xls)|*.xls|All files (*.*)|*.*";
+            openCharacterDialog.ShowDialog();
         }
     }
 }
