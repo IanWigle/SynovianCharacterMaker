@@ -246,5 +246,7 @@ namespace Synovian_Character_Maker.Data_Classes
             }
             return vs.ToArray();
         }
+
+        public void Empty() => _abilities.Clear();
     }
 }

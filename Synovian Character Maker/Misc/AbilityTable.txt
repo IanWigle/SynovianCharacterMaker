@@ -4421,7 +4421,7 @@
     "ability_School": 12,
     "skillCostOverride": 1,
     "prereqs": [
-      403
+      402
     ],
     "isFeat": false
   },
@@ -4432,7 +4432,7 @@
     "ability_School": 12,
     "skillCostOverride": 1,
     "prereqs": [
-      404
+      403
     ],
     "isFeat": false
   },

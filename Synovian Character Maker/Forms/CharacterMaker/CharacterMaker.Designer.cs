@@ -61,6 +61,7 @@
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.companionButton = new System.Windows.Forms.Button();
             this.calculateButton = new System.Windows.Forms.Button();
+            this.characterDetailsButton = new System.Windows.Forms.Button();
             this.characterAbilitiesView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -70,7 +71,7 @@
             this.openTxt = new System.Windows.Forms.OpenFileDialog();
             this.saveZip = new System.Windows.Forms.SaveFileDialog();
             this.saveExcel = new System.Windows.Forms.SaveFileDialog();
-            this.characterDetailsButton = new System.Windows.Forms.Button();
+            this.clearSheetButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -398,6 +399,7 @@
             this.tableLayoutPanel6.Controls.Add(this.companionButton, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.calculateButton, 1, 0);
             this.tableLayoutPanel6.Controls.Add(this.characterDetailsButton, 0, 1);
+            this.tableLayoutPanel6.Controls.Add(this.clearSheetButton, 1, 1);
             this.tableLayoutPanel6.Location = new System.Drawing.Point(6, 19);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 2;
@@ -425,6 +427,16 @@
             this.calculateButton.Text = "Calculate Sheet";
             this.calculateButton.UseVisualStyleBackColor = true;
             this.calculateButton.Click += new System.EventHandler(this.calculateButton_Click);
+            // 
+            // characterDetailsButton
+            // 
+            this.characterDetailsButton.Location = new System.Drawing.Point(3, 61);
+            this.characterDetailsButton.Name = "characterDetailsButton";
+            this.characterDetailsButton.Size = new System.Drawing.Size(185, 53);
+            this.characterDetailsButton.TabIndex = 2;
+            this.characterDetailsButton.Text = "Character Details";
+            this.characterDetailsButton.UseVisualStyleBackColor = true;
+            this.characterDetailsButton.Click += new System.EventHandler(this.characterDetailsButton_Click);
             // 
             // characterAbilitiesView
             // 
@@ -482,15 +494,15 @@
             this.saveExcel.DefaultExt = "xlsx";
             this.saveExcel.FileOk += new System.ComponentModel.CancelEventHandler(this.saveExcel_FileOk);
             // 
-            // characterDetailsButton
+            // clearSheetButton
             // 
-            this.characterDetailsButton.Location = new System.Drawing.Point(3, 61);
-            this.characterDetailsButton.Name = "characterDetailsButton";
-            this.characterDetailsButton.Size = new System.Drawing.Size(185, 53);
-            this.characterDetailsButton.TabIndex = 2;
-            this.characterDetailsButton.Text = "Character Details";
-            this.characterDetailsButton.UseVisualStyleBackColor = true;
-            this.characterDetailsButton.Click += new System.EventHandler(this.characterDetailsButton_Click);
+            this.clearSheetButton.Location = new System.Drawing.Point(194, 61);
+            this.clearSheetButton.Name = "clearSheetButton";
+            this.clearSheetButton.Size = new System.Drawing.Size(185, 53);
+            this.clearSheetButton.TabIndex = 3;
+            this.clearSheetButton.Text = "Clear Sheet";
+            this.clearSheetButton.UseVisualStyleBackColor = true;
+            this.clearSheetButton.Click += new System.EventHandler(this.clearSheetButton_Click);
             // 
             // CharacterMaker
             // 
@@ -564,5 +576,6 @@
         private System.Windows.Forms.Button calculateButton;
         private System.Windows.Forms.SaveFileDialog saveExcel;
         private System.Windows.Forms.Button characterDetailsButton;
+        private System.Windows.Forms.Button clearSheetButton;
     }
 }

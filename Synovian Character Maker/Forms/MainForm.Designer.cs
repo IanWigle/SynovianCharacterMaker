@@ -464,7 +464,7 @@
             // 
             // previewBox
             // 
-            this.previewBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("previewBox.InitialImage")));
+            this.previewBox.InitialImage = null;
             this.previewBox.Location = new System.Drawing.Point(6, 19);
             this.previewBox.Name = "previewBox";
             this.previewBox.Size = new System.Drawing.Size(364, 514);

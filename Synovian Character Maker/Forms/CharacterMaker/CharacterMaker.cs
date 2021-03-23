@@ -335,8 +335,19 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                     {
                         if (ability.Rank > Rank.Apprentice)
                         {
+                            if (ability.ability_School > Ability_Schools.Ability_Forms) continue;
+
                             Ability_Schools schoolEnum = ability.ability_School;
                             Ability ability_School = Program.abilityLibrary.GetSchool(schoolEnum);
+                            if (ability_School == null)
+                            {
+#if DEBUG
+                                throw new Exception($"The ability school {Enum.GetName(typeof(Ability_Schools),ability.ability_School)} does not exist");
+#else
+                                MessageBox.Show($"The ability school {Enum.GetName(typeof(Ability_Schools),ability.ability_School)} does not exist", "Error!", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                                continue;
+#endif
+                            }
                             if (!current_characterSheet.abilities.Contains(ability_School.ID))
                             {
                                 valid = false;
@@ -494,6 +505,17 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
         {
             CharacterDetailsWindow characterDetailsWindow = new CharacterDetailsWindow();
             characterDetailsWindow.ShowDialog();
+        }
+
+        private void clearSheetButton_Click(object sender, EventArgs e)
+        {
+            if(MessageBox.Show("Are you sure you want to clear your sheet?","Notice!",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                current_characterSheet.Empty();
+                characterAbilitiesView.Items.Clear();
+                FilterLibraryAbilities(filterTab.filters);
+                FilterCharacterAbilities(filterTab.filters);
+            }
         }
     }
 }
