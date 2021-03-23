@@ -16,6 +16,8 @@ namespace Synovian_Character_Maker.Forms
 {
     public partial class MainForm : Form
     {
+        Image defaultPreview = null;
+
         public MainForm()
         {
             InitializeComponent();
@@ -34,6 +36,22 @@ namespace Synovian_Character_Maker.Forms
             keepMenuOpenBox.Checked = Program.programSettings.HideMainMenu;
             zipsOverTxtBox.Checked = Program.programSettings.FocusOnZipsOverTxts;
             songNameLabel.Text = $"Song : {Program.audioPlayer.SongName()}";
+
+            try
+            {
+                FAQBox.LoadFile($"{Globals.DataFolder}\\FAQ.rtf",RichTextBoxStreamType.RichText);
+
+                defaultPreview = Image.FromFile(Globals.PreviewDefault);
+            }
+            catch(Exception e)
+            {
+#if DEBUG
+                throw e;
+#else
+                MessageBox.Show(e.Message,"Error!",MessageBoxButtons.OK,MessageBoxIcon.Error);
+#endif
+            }
+
         }
 
         private void exitButton_Click(object sender, EventArgs e) => Close();
@@ -149,10 +167,7 @@ namespace Synovian_Character_Maker.Forms
             Program.programSettings.AudioVolume = numericVolume.Value;
         }
 
-        private void numericVolume_Click(object sender, EventArgs e)
-        {
-            numericVolume.Value = (numericVolume.Value > (decimal)1.0) ? (decimal)1.0 : numericVolume.Value;
-        }
+        private void numericVolume_Click(object sender, EventArgs e) => numericVolume.Value = (numericVolume.Value > (decimal)1.0) ? (decimal)1.0 : numericVolume.Value;
 
         private void keepMenuOpenBox_CheckedChanged(object sender, EventArgs e) => Program.programSettings.HideMainMenu = keepMenuOpenBox.Checked;
 
@@ -160,7 +175,77 @@ namespace Synovian_Character_Maker.Forms
 
         private void openCharacter_FileOk(object sender, CancelEventArgs e)
         {
+            string extension = openCharacter.FileName.Split('.')[1];
 
+            DataReader.DataReadTypes dataReadTypes = DataReader.DataReadTypes.max;
+
+            foreach(DataReader.DataReadTypes dataRead in (DataReader.DataReadTypes[])Enum.GetValues(typeof(DataReader.DataReadTypes)))
+            {
+                if(Enum.GetName(typeof(DataReader.DataReadTypes),dataRead) == extension)
+                {
+                    dataReadTypes = dataRead;
+                }
+            }
+
+            CharacterSheet characterSheet = null;
+
+            switch (dataReadTypes)
+            {
+                case DataReader.DataReadTypes.txt:
+                    {
+                        characterSheet = DataReader.ReadSheetFromTxtDisk(openCharacter.FileName);
+                        break;
+                    }
+                case DataReader.DataReadTypes.zip:
+                    {
+                        characterSheet = DataReader.ReadSheetFromZipDisk(openCharacter.FileName);
+                        break;
+                    }
+                case DataReader.DataReadTypes.xls:
+                    {
+                        characterSheet = DataReader.LoadExelSheet(openCharacter.FileName, IronXL.ExcelFileFormat.XLS);
+                        break;
+                    }
+                case DataReader.DataReadTypes.xlsx:
+                    {
+                        characterSheet = DataReader.LoadExelSheet(openCharacter.FileName);
+                        break;
+                    }
+                default:
+                    {
+#if DEBUG
+                        throw new Exception("Was unable to get the get the correct file type of the selected file to load.");
+#else
+                        MessageBox.Show("Was unable to get the correct file type of the selected file to load.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
+#endif
+                    }
+            }
+
+            if (Helpers.TryGetForm("CharacterMaker", out Form form))
+            {
+                form.Visible = true;
+                (form as CharacterMaker.CharacterMaker).UseDifferentCharacter(characterSheet);
+            }
+            else
+            {
+                CharacterMaker.CharacterMaker characterMaker = new CharacterMaker.CharacterMaker(characterSheet);
+                characterMaker.Show();
+            }
+            Visible = Program.programSettings.HideMainMenu;
+        }
+
+        private void characterView_Click(object sender, EventArgs e)
+        {
+            string charName = characterView.FocusedItem.Text;
+
+            if (Program.characterLibrary.TryGetCharacter(charName, out CharacterSheet characterSheet))
+            {
+                if (characterSheet._image != null)
+                    previewBox.Image = characterSheet._image;
+                else
+                    previewBox.Image = defaultPreview;
+            }
         }
     }
 }

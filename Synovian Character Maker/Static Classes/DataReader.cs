@@ -398,7 +398,16 @@ namespace Synovian_Character_Maker.Static_Classes
 
         public static CharacterSheet ReadSheetFromTxtDisk(string name)
         {
-            string fileData = File.ReadAllText($"{Globals.CharacterFolder}\\{name}");
+            string fileData = "";
+
+            if (name.Contains(Globals.CharacterFolder))
+            {
+                fileData = File.ReadAllText($"{name}");
+            }
+            else if (!name.Contains("\\"))
+                fileData = File.ReadAllText($"{Globals.CharacterFolder}\\{name}");
+            else
+                fileData = File.ReadAllText(name);
 
             JsonDocument jsonDocument = JsonDocument.Parse(fileData);
             JsonElement rootElement = jsonDocument.RootElement;
@@ -444,6 +453,144 @@ namespace Synovian_Character_Maker.Static_Classes
             }
 
             return null;
+        }
+
+        public static CharacterSheet ReadSheetFromZipDisk(string url)
+        {
+            CharacterSheet GetCharacterSheet(string file)
+            {
+                string fileData = File.ReadAllText(file);
+
+                JsonDocument jsonDocument = JsonDocument.Parse(fileData);
+                JsonElement rootElement = jsonDocument.RootElement;
+
+                string name = "";
+                string species = "";
+                string description = "";
+                Rank rank = Rank.Invalid;
+                Ability_Alignment ability_Alignment = Ability_Alignment.Ability_Invalid;
+                List<int> vs = new List<int>();
+                CompanionSheet companionSheet = null;
+
+                if (rootElement.TryGetProperty("Name", out JsonElement jsonElement))
+                {
+                    name = jsonElement.GetString();
+                }
+                if (rootElement.TryGetProperty("Rank", out JsonElement jsonElement1))
+                {
+                    rank = (Rank)jsonElement1.GetInt32();
+                }
+                if (rootElement.TryGetProperty("alignment", out JsonElement jsonElement2))
+                {
+                    ability_Alignment = (Ability_Alignment)jsonElement2.GetInt32();
+                }
+                if (rootElement.TryGetProperty("abilities", out JsonElement jsonElement3))
+                {
+                    foreach (JsonElement jsonElement4 in jsonElement3.EnumerateArray())
+                    {
+                        vs.Add(jsonElement4.GetInt32());
+                    }
+                }
+                if (rootElement.TryGetProperty("species", out JsonElement jsonElement5))
+                {
+                    species = jsonElement5.GetString();
+                }
+                if (rootElement.TryGetProperty("companionSheet", out JsonElement compElement))
+                {
+                    if (compElement.GetRawText() != "null")
+                    {
+                        string compName = "";
+                        Data_Classes.CompanionSheet.CompanionType primaryType = CompanionSheet.CompanionType.None;
+                        List<Data_Classes.CompanionSheet.CompanionType> secondaryTypes = new List<CompanionSheet.CompanionType>();
+                        List<int> abilities = new List<int>();
+
+                        if (compElement.TryGetProperty("companionName", out JsonElement jsonElement4))
+                            compName = jsonElement4.GetString();
+                        if (compElement.TryGetProperty("primaryCompanionType", out JsonElement jsonElement6))
+                            primaryType = (Data_Classes.CompanionSheet.CompanionType)jsonElement6.GetInt32();
+                        if (compElement.TryGetProperty("additionalCompanionTypes", out JsonElement jsonElement7))
+                        {
+                            foreach (JsonElement jsonElement8 in jsonElement7.EnumerateArray())
+                            {
+                                secondaryTypes.Add((Data_Classes.CompanionSheet.CompanionType)jsonElement8.GetInt32());
+                            }
+                        }
+                        if (compElement.TryGetProperty("abilities", out JsonElement jsonElement9))
+                        {
+                            foreach (JsonElement jsonElement8 in jsonElement9.EnumerateArray())
+                            {
+                                abilities.Add(jsonElement8.GetInt32());
+                            }
+                        }
+
+                        if (compName != "" && primaryType != CompanionSheet.CompanionType.None)
+                        {
+                            companionSheet = new CompanionSheet(compName, primaryType, secondaryTypes, abilities);
+                        }
+                    }
+                }
+                if (rootElement.TryGetProperty("characterSpecies", out JsonElement jsonElement10))
+                {
+                    species = jsonElement10.GetString();
+                }
+                if (rootElement.TryGetProperty("characterDescription", out JsonElement jsonElement11))
+                {
+                    description = jsonElement11.GetString();
+                }
+
+                if (name != "" && rank != Rank.Invalid && ability_Alignment != Ability_Alignment.Ability_Invalid)
+                {
+                    DateTime dateTime = File.GetLastWriteTime(file);
+                    string dateTimeofMod = (dateTime.Day > 9) ? dateTime.Day.ToString() : ("0" + dateTime.Day.ToString());
+                    dateTimeofMod += "-" + ((dateTime.Month > 9) ? dateTime.Month.ToString() : ("0" + dateTime.Month.ToString()));
+                    dateTimeofMod += "-" + dateTime.Year.ToString();
+
+                    CharacterSheet new_characterSheet = new CharacterSheet(name,
+                                                                       rank,
+                                                                       ability_Alignment,
+                                                                       vs,
+                                                                       dateTimeofMod,
+                                                                       null,
+                                                                       species,
+                                                                       CharacterSheet.SheetFileType.Txt);
+                    new_characterSheet.characterDescription = description;
+                    if (companionSheet != null) new_characterSheet.companionSheet = companionSheet;
+                    return new_characterSheet;
+                }
+                else
+                    return null;
+            }
+
+            // Get the zip archive
+            FileStream fileStream = File.Open(url, FileMode.Open);
+            Archive archive = new Archive(fileStream);
+
+            if (!Directory.Exists(Globals.TempFolder))
+                Directory.CreateDirectory(Globals.TempFolder);
+
+            archive.ExtractToDirectory(Globals.TempFolder);
+
+            string jsonString = "";
+            string imageString = "";
+            string[] acceptedImageFormats = { ".jpg", ".png", ".bmp", ".gif", ".ico", ".wdp", ".tiff" };
+
+            foreach (var entry in Directory.GetFiles(Globals.TempFolder))
+            {
+                FileInfo fileInfo = new FileInfo(entry);
+
+                if (fileInfo != null)
+                {
+                    if (fileInfo.Extension == ".txt")
+                        jsonString = fileInfo.FullName;
+                    else if (acceptedImageFormats.Contains(fileInfo.Extension))
+                        imageString = fileInfo.FullName;
+                }
+            }
+
+            CharacterSheet characterSheet = GetCharacterSheet(jsonString);
+            characterSheet._image = Image.FromFile(imageString);
+            characterSheet.imageExtension = imageString.Split('\\')[imageString.Split('\\').Count() - 1].Split('.')[1];
+            return characterSheet;
         }
 
         /// <summary>

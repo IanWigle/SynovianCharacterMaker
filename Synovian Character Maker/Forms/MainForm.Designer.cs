@@ -63,9 +63,13 @@
             this.zipsOverTxtBox = new System.Windows.Forms.CheckBox();
             this.openSongFile = new System.Windows.Forms.OpenFileDialog();
             this.openCharacter = new System.Windows.Forms.OpenFileDialog();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.FAQBox = new System.Windows.Forms.RichTextBox();
+            this.previewBox = new System.Windows.Forms.PictureBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -79,12 +83,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericVolume)).BeginInit();
             this.groupBox6.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -121,6 +128,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.previewBox);
             this.groupBox3.Location = new System.Drawing.Point(767, 3);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(376, 539);
@@ -135,6 +143,7 @@
             this.groupBox2.Size = new System.Drawing.Size(376, 539);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Recent Characters";
             // 
             // characterView
             // 
@@ -150,6 +159,7 @@
             this.characterView.TabIndex = 0;
             this.characterView.UseCompatibleStateImageBehavior = false;
             this.characterView.View = System.Windows.Forms.View.Details;
+            this.characterView.Click += new System.EventHandler(this.characterView_Click);
             this.characterView.DoubleClick += new System.EventHandler(this.characterView_DoubleClick);
             // 
             // nameColumn
@@ -433,6 +443,35 @@
             // 
             this.openCharacter.FileOk += new System.ComponentModel.CancelEventHandler(this.openCharacter_FileOk);
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.FAQBox);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(1160, 557);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "FAQ";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // FAQBox
+            // 
+            this.FAQBox.Location = new System.Drawing.Point(3, 3);
+            this.FAQBox.Name = "FAQBox";
+            this.FAQBox.ReadOnly = true;
+            this.FAQBox.Size = new System.Drawing.Size(1154, 551);
+            this.FAQBox.TabIndex = 0;
+            this.FAQBox.Text = "";
+            // 
+            // previewBox
+            // 
+            this.previewBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("previewBox.InitialImage")));
+            this.previewBox.Location = new System.Drawing.Point(6, 19);
+            this.previewBox.Name = "previewBox";
+            this.previewBox.Size = new System.Drawing.Size(364, 514);
+            this.previewBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.previewBox.TabIndex = 0;
+            this.previewBox.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -445,6 +484,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -462,6 +502,8 @@
             this.groupBox6.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -502,6 +544,9 @@
         private System.Windows.Forms.CheckBox keepMenuOpenBox;
         private System.Windows.Forms.CheckBox zipsOverTxtBox;
         private System.Windows.Forms.OpenFileDialog openCharacter;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.RichTextBox FAQBox;
+        private System.Windows.Forms.PictureBox previewBox;
     }
 }
 

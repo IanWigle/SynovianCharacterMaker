@@ -244,6 +244,7 @@
     </Compile>
     <None Include="App Config files\app.manifest" />
     <None Include="Editor Files\ClassDiagram1.cd" />
+    <None Include="Misc\FAQ.rtf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -298,6 +299,8 @@ xcopy "$(ProjectDir)Misc\StringDescriptionTable.txt" "$(SolutionDir)Output\Main\
 xcopy "$(ProjectDir)Misc\StringNameTable.txt" "$(SolutionDir)Output\Main\$(Configuration)\Data\" /Y /Q
 xcopy "$(ProjectDir)Misc\Settings.txt" "$(SolutionDir)Output\Main\$(Configuration)\Data\" /Y /Q
 xcopy "$(ProjectDir)Misc\StatRules.txt" "$(SolutionDir)Output\Main\$(Configuration)\Data\" /Y /Q
-xcopy "$(ProjectDir)Assets\Audio\AFriendAudio.wav" "$(SolutionDir)Output\Main\$(Configuration)\Data\Audio\" /Y /Q</PostBuildEvent>
+xcopy "$(ProjectDir)Assets\Audio\AFriendAudio.wav" "$(SolutionDir)Output\Main\$(Configuration)\Data\Audio\" /Y /Q
+xcopy "$(ProjectDir)Misc\FAQ.rtf" "$(SolutionDir)Output\Main\$(Configuration)\Data\" /Y /Q
+xcopy "$(ProjectDir)Assets\Graphics\Preview.bmp" "$(SolutionDir)Output\Main\$(Configuration)\Data\Assets\" /Y /Q</PostBuildEvent>
   </PropertyGroup>
 </Project>
