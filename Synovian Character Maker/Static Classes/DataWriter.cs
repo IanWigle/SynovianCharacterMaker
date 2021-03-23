@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -360,8 +358,30 @@ namespace Synovian_Character_Maker.Static_Classes
             // Forms 
             int startingFormIndex = 4;
             string[] forms = characterSheet.GetAbilitiesOfSchool(Ability_Schools.Ability_Forms);
-            foreach (string form in forms)
+            string[] validFormNames = { "Niman", "Shii Cho", "Makashi", "Soresu", "Ataru", "Shien/Djem-so", "Juyo",
+                                        "Trakata","Saber Staff","Jar'kai","Saber Pike","Channel", "Affinitiy", "Mastery",
+                                        "Potency", "Mentalism"};
+            List<string> vs = new List<string>();
+
+            // Grab only the furthest versions of all forms the character has to be presented.
+            foreach(string _formName in validFormNames)
             {
+                List<string> vs1 = new List<string>();
+                foreach(string _form in forms)
+                {
+                    if (_form.Contains(_formName))
+                    {
+                        vs1.Add(_form);
+                    }
+                }
+                
+                if (vs1.Count() > 0) vs.Add(vs1.Last());
+            }
+
+            foreach (string form in vs)
+            {
+                if (form == "School Of Forms") continue;
+
                 mainXlSheet[$"J{startingFormIndex}"].StringValue = form;
                 mainXlSheet[$"J{startingFormIndex}"].Style.VerticalAlignment = IronXL.Styles.VerticalAlignment.Center;
                 mainXlSheet[$"J{startingFormIndex}"].Style.HorizontalAlignment = IronXL.Styles.HorizontalAlignment.Center;
