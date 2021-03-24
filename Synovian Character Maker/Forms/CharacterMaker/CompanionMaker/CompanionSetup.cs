@@ -137,5 +137,11 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
             if (e.KeyCode == Keys.Enter)
                 validateCheck();
         }
+
+        private void CompanionSetup_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                Close();
+        }
     }
 }

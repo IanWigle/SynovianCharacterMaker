@@ -43,7 +43,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(152, 444);
+            this.button1.Location = new System.Drawing.Point(153, 444);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -59,8 +59,10 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.logBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "CalculatorLog";
             this.Text = "CalculatorLog";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CalculatorLog_KeyDown);
             this.ResumeLayout(false);
 
         }

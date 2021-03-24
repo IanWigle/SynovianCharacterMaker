@@ -214,8 +214,10 @@
             this.ClientSize = new System.Drawing.Size(1187, 546);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "CompanionMaker";
             this.Text = "CompanionMaker";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CompanionMaker_KeyDown);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

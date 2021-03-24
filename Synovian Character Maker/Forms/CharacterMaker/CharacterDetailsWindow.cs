@@ -44,5 +44,11 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             loadedNewImage = true;
             characterImage.Image = Image.FromFile(openImageDialog.FileName);
         }
+
+        private void CharacterDetailsWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                Close();
+        }
     }
 }

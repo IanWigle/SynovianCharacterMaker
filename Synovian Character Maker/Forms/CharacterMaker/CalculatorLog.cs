@@ -26,5 +26,11 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
         {
             Close();
         }
+
+        private void CalculatorLog_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                Close();
+        }
     }
 }

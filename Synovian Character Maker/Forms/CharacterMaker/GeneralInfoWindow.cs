@@ -76,7 +76,13 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            saveImmediatly = checkBox1.Checked;
+            //saveImmediatly = checkBox1.Checked;
+        }
+
+        private void GeneralInfoWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                Close();
         }
     }
 }

@@ -217,8 +217,10 @@
             this.ClientSize = new System.Drawing.Size(646, 269);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "CompanionSetup";
             this.Text = "CompanionSetup";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CompanionSetup_KeyDown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

@@ -451,9 +451,11 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "FilterTab";
             this.Text = "FilterTab";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FilterTab_FormClosing);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FilterTab_KeyDown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.schoolsGroup.ResumeLayout(false);
             this.schoolsGroup.PerformLayout();

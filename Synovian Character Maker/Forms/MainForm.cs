@@ -18,6 +18,18 @@ namespace Synovian_Character_Maker.Forms
     {
         Image defaultPreview = null;
 
+        enum TutorialMode
+        {
+            Creation = 0,
+            SaveLoad,
+            Calculator,
+            Filters,
+            CompanionSetup,
+            CompanionAbilities,
+            MiscMusic
+        }
+
+
         public MainForm()
         {
             InitializeComponent();
@@ -45,13 +57,10 @@ namespace Synovian_Character_Maker.Forms
             }
             catch(Exception e)
             {
-#if DEBUG
-                throw e;
-#else
-                MessageBox.Show(e.Message,"Error!",MessageBoxButtons.OK,MessageBoxIcon.Error);
-#endif
+                Helpers.ExceptionHandle(e);
             }
 
+            ChangeActiveTutorial(TutorialMode.Creation);
         }
 
         private void exitButton_Click(object sender, EventArgs e) => Close();
@@ -213,12 +222,8 @@ namespace Synovian_Character_Maker.Forms
                     }
                 default:
                     {
-#if DEBUG
-                        throw new Exception("Was unable to get the get the correct file type of the selected file to load.");
-#else
-                        MessageBox.Show("Was unable to get the correct file type of the selected file to load.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        break;
-#endif
+                        Helpers.ExceptionHandle("Was unable to get the get the correct file type of the selected file to load.");
+                        return;
                     }
             }
 
@@ -247,5 +252,55 @@ namespace Synovian_Character_Maker.Forms
                     previewBox.Image = defaultPreview;
             }
         }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                Close();
+        }
+
+        private void ChangeActiveTutorial(TutorialMode tutorialMode)
+        {
+            switch (tutorialMode)
+            {
+                case TutorialMode.Creation:
+                    tutorialTextBox.LoadFile($"{Globals.DataFolder}\\Tutorials\\TutorialBasicCreation.rtf", RichTextBoxStreamType.RichText);
+                    break;
+                case TutorialMode.SaveLoad:
+                    tutorialTextBox.LoadFile($"{Globals.DataFolder}\\Tutorials\\TutorialSaveLoad.rtf", RichTextBoxStreamType.RichText);
+                    break;
+                case TutorialMode.Calculator:
+                    tutorialTextBox.LoadFile($"{Globals.DataFolder}\\Tutorials\\TutorialCalculator.rtf", RichTextBoxStreamType.RichText);
+                    break;
+                case TutorialMode.Filters:
+                    tutorialTextBox.LoadFile($"{Globals.DataFolder}\\Tutorials\\TutorialFilters.rtf", RichTextBoxStreamType.RichText);
+                    break;
+                case TutorialMode.CompanionSetup:
+                    tutorialTextBox.LoadFile($"{Globals.DataFolder}\\Tutorials\\TutorialCompanionSetup.rtf", RichTextBoxStreamType.RichText);
+                    break;
+                case TutorialMode.CompanionAbilities:
+                    tutorialTextBox.LoadFile($"{Globals.DataFolder}\\Tutorials\\TutorialCompaionAbilities.rtf", RichTextBoxStreamType.RichText);
+                    break;
+                case TutorialMode.MiscMusic:
+                    break;
+                default:
+                    return;
+            }
+        }
+
+        private void makingYourCharacterToolStripMenuItem_Click(object sender, EventArgs e) => ChangeActiveTutorial(TutorialMode.Creation);
+
+        private void savingYourCharacterToolStripMenuItem_Click(object sender, EventArgs e) => ChangeActiveTutorial(TutorialMode.SaveLoad);
+
+        private void calculatorToolStripMenuItem_Click(object sender, EventArgs e) => ChangeActiveTutorial(TutorialMode.Calculator);
+
+        private void filtersToolStripMenuItem_Click(object sender, EventArgs e) => ChangeActiveTutorial(TutorialMode.Filters);
+
+        private void settingUpToolStripMenuItem_Click(object sender, EventArgs e) => ChangeActiveTutorial(TutorialMode.CompanionSetup);
+
+        private void abilitiesToolStripMenuItem_Click(object sender, EventArgs e) => ChangeActiveTutorial(TutorialMode.CompanionAbilities);
+
+        private void musicToolStripMenuItem_Click(object sender, EventArgs e) => ChangeActiveTutorial(TutorialMode.MiscMusic);
+
     }
 }

@@ -33,6 +33,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.previewBox = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.characterView = new System.Windows.Forms.ListView();
             this.nameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -61,15 +62,28 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.keepMenuOpenBox = new System.Windows.Forms.CheckBox();
             this.zipsOverTxtBox = new System.Windows.Forms.CheckBox();
-            this.openSongFile = new System.Windows.Forms.OpenFileDialog();
-            this.openCharacter = new System.Windows.Forms.OpenFileDialog();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.FAQBox = new System.Windows.Forms.RichTextBox();
-            this.previewBox = new System.Windows.Forms.PictureBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.tutorialTextBox = new System.Windows.Forms.RichTextBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.basicsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.makingYourCharacterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.savingYourCharacterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.calculatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.filtersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.companionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.abilitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miscToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.musicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openSongFile = new System.Windows.Forms.OpenFileDialog();
+            this.openCharacter = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -84,7 +98,8 @@
             this.groupBox6.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
+            this.tabPage4.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -92,6 +107,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -134,6 +150,16 @@
             this.groupBox3.Size = new System.Drawing.Size(376, 539);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
+            // 
+            // previewBox
+            // 
+            this.previewBox.InitialImage = null;
+            this.previewBox.Location = new System.Drawing.Point(6, 19);
+            this.previewBox.Name = "previewBox";
+            this.previewBox.Size = new System.Drawing.Size(364, 514);
+            this.previewBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.previewBox.TabIndex = 0;
+            this.previewBox.TabStop = false;
             // 
             // groupBox2
             // 
@@ -434,15 +460,6 @@
             this.zipsOverTxtBox.UseVisualStyleBackColor = true;
             this.zipsOverTxtBox.CheckedChanged += new System.EventHandler(this.zipsOverTxtBox_CheckedChanged);
             // 
-            // openSongFile
-            // 
-            this.openSongFile.FileName = "openFileDialog1";
-            this.openSongFile.FileOk += new System.ComponentModel.CancelEventHandler(this.openSongFile_FileOk);
-            // 
-            // openCharacter
-            // 
-            this.openCharacter.FileOk += new System.ComponentModel.CancelEventHandler(this.openCharacter_FileOk);
-            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.FAQBox);
@@ -462,15 +479,124 @@
             this.FAQBox.TabIndex = 0;
             this.FAQBox.Text = "";
             // 
-            // previewBox
+            // tabPage4
             // 
-            this.previewBox.InitialImage = null;
-            this.previewBox.Location = new System.Drawing.Point(6, 19);
-            this.previewBox.Name = "previewBox";
-            this.previewBox.Size = new System.Drawing.Size(364, 514);
-            this.previewBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.previewBox.TabIndex = 0;
-            this.previewBox.TabStop = false;
+            this.tabPage4.Controls.Add(this.tutorialTextBox);
+            this.tabPage4.Controls.Add(this.menuStrip1);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(1160, 557);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Tutorial";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // tutorialTextBox
+            // 
+            this.tutorialTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tutorialTextBox.Location = new System.Drawing.Point(0, 24);
+            this.tutorialTextBox.Name = "tutorialTextBox";
+            this.tutorialTextBox.ReadOnly = true;
+            this.tutorialTextBox.Size = new System.Drawing.Size(1160, 533);
+            this.tutorialTextBox.TabIndex = 1;
+            this.tutorialTextBox.Text = "";
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.basicsToolStripMenuItem,
+            this.companionsToolStripMenuItem,
+            this.miscToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1160, 24);
+            this.menuStrip1.TabIndex = 0;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // basicsToolStripMenuItem
+            // 
+            this.basicsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.makingYourCharacterToolStripMenuItem,
+            this.savingYourCharacterToolStripMenuItem,
+            this.calculatorToolStripMenuItem,
+            this.filtersToolStripMenuItem});
+            this.basicsToolStripMenuItem.Name = "basicsToolStripMenuItem";
+            this.basicsToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.basicsToolStripMenuItem.Text = "Basics";
+            // 
+            // makingYourCharacterToolStripMenuItem
+            // 
+            this.makingYourCharacterToolStripMenuItem.Name = "makingYourCharacterToolStripMenuItem";
+            this.makingYourCharacterToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.makingYourCharacterToolStripMenuItem.Text = "Making Your Character";
+            this.makingYourCharacterToolStripMenuItem.Click += new System.EventHandler(this.makingYourCharacterToolStripMenuItem_Click);
+            // 
+            // savingYourCharacterToolStripMenuItem
+            // 
+            this.savingYourCharacterToolStripMenuItem.Name = "savingYourCharacterToolStripMenuItem";
+            this.savingYourCharacterToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.savingYourCharacterToolStripMenuItem.Text = "Saving Your Character";
+            this.savingYourCharacterToolStripMenuItem.Click += new System.EventHandler(this.savingYourCharacterToolStripMenuItem_Click);
+            // 
+            // calculatorToolStripMenuItem
+            // 
+            this.calculatorToolStripMenuItem.Name = "calculatorToolStripMenuItem";
+            this.calculatorToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.calculatorToolStripMenuItem.Text = "Calculator";
+            this.calculatorToolStripMenuItem.Click += new System.EventHandler(this.calculatorToolStripMenuItem_Click);
+            // 
+            // filtersToolStripMenuItem
+            // 
+            this.filtersToolStripMenuItem.Name = "filtersToolStripMenuItem";
+            this.filtersToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.filtersToolStripMenuItem.Text = "Filters";
+            this.filtersToolStripMenuItem.Click += new System.EventHandler(this.filtersToolStripMenuItem_Click);
+            // 
+            // companionsToolStripMenuItem
+            // 
+            this.companionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingUpToolStripMenuItem,
+            this.abilitiesToolStripMenuItem});
+            this.companionsToolStripMenuItem.Name = "companionsToolStripMenuItem";
+            this.companionsToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.companionsToolStripMenuItem.Text = "Companions";
+            // 
+            // settingUpToolStripMenuItem
+            // 
+            this.settingUpToolStripMenuItem.Name = "settingUpToolStripMenuItem";
+            this.settingUpToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.settingUpToolStripMenuItem.Text = "Setting Up";
+            this.settingUpToolStripMenuItem.Click += new System.EventHandler(this.settingUpToolStripMenuItem_Click);
+            // 
+            // abilitiesToolStripMenuItem
+            // 
+            this.abilitiesToolStripMenuItem.Name = "abilitiesToolStripMenuItem";
+            this.abilitiesToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.abilitiesToolStripMenuItem.Text = "Abilities";
+            this.abilitiesToolStripMenuItem.Click += new System.EventHandler(this.abilitiesToolStripMenuItem_Click);
+            // 
+            // miscToolStripMenuItem
+            // 
+            this.miscToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.musicToolStripMenuItem});
+            this.miscToolStripMenuItem.Name = "miscToolStripMenuItem";
+            this.miscToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.miscToolStripMenuItem.Text = "Misc";
+            // 
+            // musicToolStripMenuItem
+            // 
+            this.musicToolStripMenuItem.Name = "musicToolStripMenuItem";
+            this.musicToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+            this.musicToolStripMenuItem.Text = "Music";
+            this.musicToolStripMenuItem.Click += new System.EventHandler(this.musicToolStripMenuItem_Click);
+            // 
+            // openSongFile
+            // 
+            this.openSongFile.FileName = "openFileDialog1";
+            this.openSongFile.FileOk += new System.ComponentModel.CancelEventHandler(this.openSongFile_FileOk);
+            // 
+            // openCharacter
+            // 
+            this.openCharacter.FileOk += new System.ComponentModel.CancelEventHandler(this.openCharacter_FileOk);
             // 
             // MainForm
             // 
@@ -479,12 +605,16 @@
             this.ClientSize = new System.Drawing.Size(1192, 607);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Main Menu";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -503,7 +633,10 @@
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).EndInit();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -547,6 +680,19 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.RichTextBox FAQBox;
         private System.Windows.Forms.PictureBox previewBox;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem basicsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem makingYourCharacterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem savingYourCharacterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem calculatorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem filtersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem companionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingUpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem abilitiesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miscToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem musicToolStripMenuItem;
+        private System.Windows.Forms.RichTextBox tutorialTextBox;
     }
 }
 

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace Synovian_Character_Maker.Static_Classes
@@ -60,6 +57,27 @@ namespace Synovian_Character_Maker.Static_Classes
                     return casted_form;
             }
             return null;
+        }
+
+        public static void ExceptionHandle(string message)
+        {
+#if DEBUG
+            Debug.Write(message);
+            throw new Exception(message);
+#else
+            MessageBox.Show(message,"Error!",MessageBoxButtons.OK,MessageBoxIcon.Error);
+#endif
+        }
+
+        public static void ExceptionHandle(Exception e)
+        {
+#if DEBUG
+            Debug.Write(e.Message);
+            Debug.Write(e.InnerException.Message);
+            throw e;
+#else
+            MessageBox.Show(e.Message,"Error!",MessageBoxButtons.OK,MessageBoxIcon.Error);
+#endif
         }
     }
 }

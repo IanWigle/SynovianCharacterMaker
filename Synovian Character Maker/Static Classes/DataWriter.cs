@@ -40,8 +40,7 @@ namespace Synovian_Character_Maker.Static_Classes
             }
             catch (Exception e)
             {
-                Debug.Write(e.Message);
-                MessageBox.Show(e.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Helpers.ExceptionHandle(e);
             }
         }
 
@@ -62,8 +61,7 @@ namespace Synovian_Character_Maker.Static_Classes
             }
             catch (Exception e)
             {
-                Debug.Write(e.Message);
-                MessageBox.Show(e.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Helpers.ExceptionHandle(e);
             }
         }
 
@@ -102,8 +100,7 @@ namespace Synovian_Character_Maker.Static_Classes
             }
             catch (Exception e)
             {
-                Debug.Write(e.Message);
-                MessageBox.Show(e.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Helpers.ExceptionHandle(e);
             }
         }
 
@@ -137,8 +134,7 @@ namespace Synovian_Character_Maker.Static_Classes
             }
             catch (Exception e)
             {
-                Debug.Write(e.Message);
-                MessageBox.Show(e.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Helpers.ExceptionHandle(e);
                 return false;
             }
         }
@@ -201,8 +197,12 @@ namespace Synovian_Character_Maker.Static_Classes
                     archive.Save(zipFile, new Aspose.Zip.Saving.ArchiveSaveOptions());
                 }
 
-                foreach (string file1 in filesToZip)
-                    File.Delete(file1);
+                try
+                {
+                    foreach (string file1 in filesToZip)
+                        File.Delete(file1);
+                }
+                catch(Exception e) { Helpers.ExceptionHandle(e); }
             }
         }
 
@@ -272,16 +272,19 @@ namespace Synovian_Character_Maker.Static_Classes
                         mainXlSheet[cell1.AddressString].Style.RightBorder.SetColor(System.Drawing.Color.Black);
                     }
                 }
-
-                mainXlSheet[cell].Style.BottomBorder.Type = IronXL.Styles.BorderType.Medium;
-                mainXlSheet[cell].Style.BottomBorder.SetColor(System.Drawing.Color.Black);
-                mainXlSheet[cell].Style.TopBorder.Type = IronXL.Styles.BorderType.Medium;
-                mainXlSheet[cell].Style.TopBorder.SetColor(System.Drawing.Color.Black);
-                mainXlSheet[cell].Style.LeftBorder.Type = IronXL.Styles.BorderType.Medium;
-                mainXlSheet[cell].Style.LeftBorder.SetColor(System.Drawing.Color.Black);
-                mainXlSheet[cell].Style.RightBorder.Type = IronXL.Styles.BorderType.Medium;
-                mainXlSheet[cell].Style.RightBorder.SetColor(System.Drawing.Color.Black);
+                else
+                {
+                    mainXlSheet[cell].Style.BottomBorder.Type = IronXL.Styles.BorderType.Medium;
+                    mainXlSheet[cell].Style.BottomBorder.SetColor(System.Drawing.Color.Black);
+                    mainXlSheet[cell].Style.TopBorder.Type = IronXL.Styles.BorderType.Medium;
+                    mainXlSheet[cell].Style.TopBorder.SetColor(System.Drawing.Color.Black);
+                    mainXlSheet[cell].Style.LeftBorder.Type = IronXL.Styles.BorderType.Medium;
+                    mainXlSheet[cell].Style.LeftBorder.SetColor(System.Drawing.Color.Black);
+                    mainXlSheet[cell].Style.RightBorder.Type = IronXL.Styles.BorderType.Medium;
+                    mainXlSheet[cell].Style.RightBorder.SetColor(System.Drawing.Color.Black);
+                }
             }
+
             // Top Header spacer
             mainXlSheet["A1"].Style.FillPattern = IronXL.Styles.FillPattern.SolidForeground;
             mainXlSheet["A1"].Style.SetBackgroundColor(System.Drawing.Color.Black);
@@ -568,7 +571,6 @@ namespace Synovian_Character_Maker.Static_Classes
                 if (ability_Schools == Ability_Schools.Ability_Forms) continue;
                 string[] abilities = characterSheet.GetAbilitiesOfSchool(ability_Schools);
                 if (abilities.Count() == 0) continue;
-
                 
                 switch (currentColumn)
                 {
@@ -656,7 +658,7 @@ namespace Synovian_Character_Maker.Static_Classes
                     Process.Start(@url);
                 }
             }
-            catch (Exception e) { }
+            catch (Exception e) { Helpers.ExceptionHandle(e); }
 
             return workBook;
         }
@@ -710,11 +712,17 @@ namespace Synovian_Character_Maker.Static_Classes
             xlSheet["C6"].StringValue = Program.statRules.CompanionDroidDataDictionary[companionSheet.primaryCompanionType].skillPoints.ToString();
             xlSheet.Merge("C6:D6");
 
+            int currentIndex = 10;
             foreach (int i in companionSheet.abilities)
             {
                 if (Program.abilityLibrary.TryGetAbility(i, out Ability ability))
                 {
-
+                    xlSheet[$"A{currentIndex}"].StringValue = ability.Name;
+                    xlSheet.Merge($"A{currentIndex}:C{currentIndex}");
+                    xlSheet[$"D{currentIndex}"].Int32Value = ability.skillCostOverride;
+                    xlSheet[$"D{currentIndex}"].Style.HorizontalAlignment = IronXL.Styles.HorizontalAlignment.Right;
+                    xlSheet.Merge($"D{currentIndex}:E{currentIndex}");
+                    currentIndex++;
                 }
             }
 

@@ -1,11 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Resources;
 using System.Windows.Forms;
 using Synovian_Character_Maker.Forms;
 using Synovian_Character_Maker.Static_Classes;
 using Synovian_Character_Maker.Data_Classes;
+
+using System.IO;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace Synovian_Character_Maker
 {
@@ -52,25 +55,29 @@ namespace Synovian_Character_Maker
             Application.SetCompatibleTextRenderingDefault(false);
             Application.EnableVisualStyles();
 
-            _programSettings = new ProgramSettings();
-            DataReader.ReadSettings(ref _programSettings);
+            try
+            {
+                _programSettings = new ProgramSettings();
+                DataReader.ReadSettings(ref _programSettings);
 
-            _statRules = new StatRules();
-            DataReader.ReadStatRules(ref _statRules);
+                _statRules = new StatRules();
+                DataReader.ReadStatRules(ref _statRules);
 
-            _abilityLibrary = new AbilityLibrary();
-            DataReader.ReadAbilities(ref _abilityLibrary);
+                _abilityLibrary = new AbilityLibrary();
+                DataReader.ReadAbilities(ref _abilityLibrary);
 
-            _characterLibrary = new CharacterLibrary();
-            DataReader.ReadAllSheets(ref _characterLibrary);
+                _characterLibrary = new CharacterLibrary();
+                DataReader.ReadAllSheets(ref _characterLibrary);
 
-            _audioPlayer = new AudioPlayer(defaultSong);
-            DataReader.LoadAudioSettings(ref _audioPlayer);
+                _audioPlayer = new AudioPlayer(defaultSong);
+                DataReader.LoadAudioSettings(ref _audioPlayer);
 
-            if(args.Contains("-ability_maker") || openAbilityMaker == true)
-                Application.Run(new AbilityMaker());
-            else
-                Application.Run(new MainForm());
+                if(args.Contains("-ability_maker") || openAbilityMaker == true)
+                    Application.Run(new AbilityMaker());
+                else
+                    Application.Run(new MainForm());
+            }
+            catch(Exception e) { Helpers.ExceptionHandle(e); }
         }
 
         public static CharacterSheet GetOpenedSheet()

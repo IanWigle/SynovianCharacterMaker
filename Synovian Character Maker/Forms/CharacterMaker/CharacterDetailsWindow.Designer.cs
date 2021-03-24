@@ -107,9 +107,11 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.characterImage);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "CharacterDetailsWindow";
             this.Text = "CharacterDetailsWindow";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CharacterDetailsWindow_FormClosing);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CharacterDetailsWindow_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.characterImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

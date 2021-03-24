@@ -124,7 +124,7 @@ namespace Synovian_Character_Maker.Data_Classes
                             }
                             catch (Exception e)
                             {
-                                
+                                Helpers.ExceptionHandle(e);
                                 return false;
                             }
                         }
@@ -137,6 +137,7 @@ namespace Synovian_Character_Maker.Data_Classes
                             }
                             catch (Exception e)
                             {
+                                Helpers.ExceptionHandle(e);
                                 return false;
                             }
                         }

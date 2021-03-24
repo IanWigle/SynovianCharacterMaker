@@ -15,7 +15,6 @@ namespace Synovian_Character_Maker.Static_Classes
         /// https://github.com/naudio/NAudio
         /// 
 
-
         private WaveOutEvent outputDevice;
         private AudioFileReader audioFile;
         
@@ -32,6 +31,7 @@ namespace Synovian_Character_Maker.Static_Classes
             }
         }
         private bool _onLoop;
+
         public decimal volume
         {
             get => (decimal)outputDevice.Volume;
@@ -48,58 +48,69 @@ namespace Synovian_Character_Maker.Static_Classes
             }
         }
 
-
         public AudioPlayer(string audioFileUrl)
         {
             if (audioFileUrl != "")
             {
-                outputDevice = new WaveOutEvent();
-                audioFile = new AudioFileReader($"{Globals.AudioFolder}\\{audioFileUrl}");
-                outputDevice.Init(audioFile);
-                outputDevice.PlaybackStopped += OnPlaybackStopped;
-                outputDevice.Play();
-                onLoop = true;
+                try
+                {
+                    outputDevice = new WaveOutEvent();
+                    audioFile = new AudioFileReader($"{Globals.AudioFolder}\\{audioFileUrl}");
+                    outputDevice.Init(audioFile);
+                    outputDevice.PlaybackStopped += OnPlaybackStopped;
+                    outputDevice.Play();
+                    onLoop = true;
+                }
+                catch(Exception e) { Helpers.ExceptionHandle(e); }
             }
         }
 
         public AudioPlayer(string audioFileUrl, bool loop = true)
         {
-            if (audioFileUrl != "")
+            try
             {
-                outputDevice = new WaveOutEvent();
-                audioFile = new AudioFileReader(audioFileUrl);
-                outputDevice.Init(audioFile);
-                outputDevice.PlaybackStopped += OnPlaybackStopped;
-                outputDevice.Play();
-                onLoop = loop;
+                if (audioFileUrl != "")
+                {
+                    outputDevice = new WaveOutEvent();
+                    audioFile = new AudioFileReader(audioFileUrl);
+                    outputDevice.Init(audioFile);
+                    outputDevice.PlaybackStopped += OnPlaybackStopped;
+                    outputDevice.Play();
+                    onLoop = loop;
+                }
             }
+            catch(Exception e) { Helpers.ExceptionHandle(e); }
         }
 
         public void ChangeSong(string audioFileUrl)
         {
-            if (outputDevice == null)
+            try
             {
+                if (outputDevice == null)
+                {
+                    outputDevice = new WaveOutEvent();
+                    audioFile = new AudioFileReader(audioFileUrl);
+                    outputDevice.Init(audioFile);
+                    outputDevice.PlaybackStopped += OnPlaybackStopped;
+                    outputDevice.Play();
+                    return;
+                }
+
+                if (outputDevice.PlaybackState == PlaybackState.Playing)
+                {
+                    outputDevice.Stop();
+                }
+                outputDevice.Dispose();
+                outputDevice = null;
+                audioFile.Dispose();
+                audioFile = null;
                 outputDevice = new WaveOutEvent();
                 audioFile = new AudioFileReader(audioFileUrl);
                 outputDevice.Init(audioFile);
                 outputDevice.PlaybackStopped += OnPlaybackStopped;
                 outputDevice.Play();
-                return;
             }
-
-            if (outputDevice.PlaybackState == PlaybackState.Playing)
-            {
-                outputDevice.Stop();
-            }
-            outputDevice.Dispose();
-            outputDevice = null;
-            audioFile.Dispose();
-            audioFile = null;
-            outputDevice = new WaveOutEvent();
-            audioFile = new AudioFileReader(audioFileUrl);
-            outputDevice.Init(audioFile);
-            outputDevice.PlaybackStopped += OnPlaybackStopped;
-            outputDevice.Play();
+            catch(Exception e) { Helpers.ExceptionHandle(e); }
         }
 
         public TimeSpan CurrentTime() => audioFile.CurrentTime;

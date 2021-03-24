@@ -32,14 +32,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>App Config files\app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
     <ApplicationIcon>Assets\Graphics\SynoImage.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>Synovian_Character_Maker.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>App Config files\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Aspose.Zip, Version=21.1.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
@@ -250,10 +251,17 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="App Config files\app.manifest" />
     <None Include="Editor Files\ClassDiagram1.cd" />
     <None Include="Misc\FAQ.rtf" />
+    <None Include="Misc\Tutorials\TutorialBasicCreation.rtf" />
+    <None Include="Misc\Tutorials\TutorialCalculator.rtf" />
+    <None Include="Misc\Tutorials\TutorialCompaionAbilities.rtf" />
+    <None Include="Misc\Tutorials\TutorialCompanionSetup.rtf" />
+    <None Include="Misc\Tutorials\TutorialFilters.rtf" />
+    <None Include="Misc\Tutorials\TutorialSaveLoad.rtf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -270,6 +278,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Audio\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Graphics\Preview.bmp" />
@@ -303,13 +312,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)Misc\AbilityTable.txt" "$(SolutionDir)Output\Main\$(Configuration)\Data\" /Y /Q
-xcopy "$(ProjectDir)Misc\StringDescriptionTable.txt" "$(SolutionDir)Output\Main\$(Configuration)\Data\" /Y /Q
-xcopy "$(ProjectDir)Misc\StringNameTable.txt" "$(SolutionDir)Output\Main\$(Configuration)\Data\" /Y /Q
-xcopy "$(ProjectDir)Misc\Settings.txt" "$(SolutionDir)Output\Main\$(Configuration)\Data\" /Y /Q
-xcopy "$(ProjectDir)Misc\StatRules.txt" "$(SolutionDir)Output\Main\$(Configuration)\Data\" /Y /Q
-xcopy "$(ProjectDir)Assets\Audio\AFriendAudio.wav" "$(SolutionDir)Output\Main\$(Configuration)\Data\Audio\" /Y /Q
-xcopy "$(ProjectDir)Misc\FAQ.rtf" "$(SolutionDir)Output\Main\$(Configuration)\Data\" /Y /Q
-xcopy "$(ProjectDir)Assets\Graphics\Preview.bmp" "$(SolutionDir)Output\Main\$(Configuration)\Data\Assets\" /Y /Q</PostBuildEvent>
+    <PostBuildEvent>xcopy /I /E /Y "$(ProjectDir)Misc" "$(SolutionDir)Output\Main\$(Configuration)\Data"
+xcopy /I /E /Y "$(ProjectDir)Misc\Tutorials" "$(SolutionDir)Output\Main\$(Configuration)\Data\Tutorials"
+xcopy /I /E /Y "$(ProjectDir)Assets\Audio" "$(SolutionDir)Output\Main\$(Configuration)\Data\Audio"
+xcopy /I /E /Y "$(ProjectDir)Assets\Graphics" "$(SolutionDir)Output\Main\$(Configuration)\Data\Assets"
+
+</PostBuildEvent>
   </PropertyGroup>
 </Project>

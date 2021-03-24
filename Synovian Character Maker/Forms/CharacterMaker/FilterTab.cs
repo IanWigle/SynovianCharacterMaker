@@ -372,5 +372,11 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
             filters.Fill();
         }
+
+        private void FilterTab_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                Close();
+        }
     }
 }

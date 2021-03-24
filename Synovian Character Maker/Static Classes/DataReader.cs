@@ -312,7 +312,7 @@ namespace Synovian_Character_Maker.Static_Classes
             }
             catch(Exception e)
             {
-                MessageBox.Show(e.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Helpers.ExceptionHandle(e);
             }
         }
 

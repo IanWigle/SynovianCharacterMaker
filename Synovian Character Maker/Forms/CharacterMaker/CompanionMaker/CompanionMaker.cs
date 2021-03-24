@@ -124,5 +124,11 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
             else
                 return;
         }
+
+        private void CompanionMaker_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                Close();
+        }
     }
 }
