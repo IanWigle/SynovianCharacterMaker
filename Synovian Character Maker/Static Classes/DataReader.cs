@@ -635,13 +635,19 @@ namespace Synovian_Character_Maker.Static_Classes
             foreach(Rank _rank in (Rank[])Enum.GetValues(typeof(Rank)))
             {
                 if (s_rank == Enum.GetName(typeof(Rank), _rank))
+                {
                     rank = _rank;
+                    break;
+                }
             }
             string s_alignment = mainSheet["B5"].StringValue.Replace("Alignment: ", "");
             foreach(Ability_Alignment _alignment in (Ability_Alignment[])Enum.GetValues(typeof(Ability_Alignment)))
             {
                 if (s_alignment == Enum.GetName(typeof(Ability_Alignment), _alignment).Replace("Ability_",""))
+                {
                     ability_Alignment = _alignment;
+                    break;
+                }
             }
             species = mainSheet["B6"].StringValue.Replace("Species: ", "");
             currentIndex++;
@@ -694,12 +700,16 @@ namespace Synovian_Character_Maker.Static_Classes
 
             // Incremant for page break and for the two headers
             currentIndex += 3;
+            if (mainSheet[$"B{currentIndex}"].StringValue == "") currentIndex += 3;
 
             int leftColumnAbilities = currentIndex;
             int ceneterColumnAbilities = currentIndex;
             int rightColumnAbilities = currentIndex;
 
-            string[] headerNames = { "Offense Abilities", "Survival Abilities", "Understanding Abilities", "Mentalism Abilities", "Defense Abilities", "Arms Abilities", "Engineering Abilities" };
+            string[] headerNames = { "Offense Abilities", "Survival Abilities", "Understanding Abilities", 
+                                     "Mentalism Abilities", "Defense Abilities", "Arms Abilities", 
+                                     "Engineering Abilities","Medical Abilities", "Mobility Abilities",
+                                     "Technology Abilities", "Close_Quarters Abilities"};
                         
             void HandleColumn(string cellColumn, ref int columnIndex)
             {
