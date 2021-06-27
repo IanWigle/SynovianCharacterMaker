@@ -212,12 +212,12 @@ namespace Synovian_Character_Maker.Forms
                     }
                 case DataReader.DataReadTypes.xls:
                     {
-                        characterSheet = DataReader.LoadExelSheet(openCharacter.FileName, IronXL.ExcelFileFormat.XLS);
+                        characterSheet = ExcelManager.ImportSheet(openCharacter.FileName);
                         break;
                     }
                 case DataReader.DataReadTypes.xlsx:
                     {
-                        characterSheet = DataReader.LoadExelSheet(openCharacter.FileName);
+                        characterSheet = ExcelManager.ImportSheet(openCharacter.FileName);
                         break;
                     }
                 default:

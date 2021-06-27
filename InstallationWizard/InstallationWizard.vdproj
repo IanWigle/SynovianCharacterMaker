@@ -75,6 +75,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_14EF4F84AAE040768BF889CF7676D7C7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_15289CE72DA30AC30773466BA3A77BFE"
         "OwnerKey" = "8:_17D16A03FB304C9E99E3F8399FD52386"
         "MsmSig" = "8:_UNDEFINED"
@@ -285,6 +291,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_3C75E00E26734B13BAAA951BBAF65967"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_3DE4F1AD00E0A07649F76A13D5A7A54E"
         "OwnerKey" = "8:_17D16A03FB304C9E99E3F8399FD52386"
         "MsmSig" = "8:_UNDEFINED"
@@ -328,6 +340,12 @@
         "Entry"
         {
         "MsmKey" = "8:_48B741E1D86740C5804EC9E8A63D14D6"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4BC39D01CB314B5791A8B729B7C5A1D1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -471,6 +489,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_6D3312A137D34F879984E226BD00C5EE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_6DC6A6459EF44B77E24B9BE7BA036226"
         "OwnerKey" = "8:_17D16A03FB304C9E99E3F8399FD52386"
         "MsmSig" = "8:_UNDEFINED"
@@ -581,6 +605,12 @@
         {
         "MsmKey" = "8:_88146D27C155D21137DEE6C5DC04F0F7"
         "OwnerKey" = "8:_8FEE00EE4A543E5076AF27C769B3E1DE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_88E62B12A83441509F353B22FA5076B9"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -725,6 +755,12 @@
         {
         "MsmKey" = "8:_ABFD5F8FBA61517DFF47FD5F6E8164F0"
         "OwnerKey" = "8:_17D16A03FB304C9E99E3F8399FD52386"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_ACA804E30AA44E3BBD9E7DFC56D9113C"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1029,6 +1065,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E6DB55D1DA35404D9F81696C7A386B06"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_EE73ED82D886B98B261AC7E5FF025C9B"
         "OwnerKey" = "8:_17D16A03FB304C9E99E3F8399FD52386"
         "MsmSig" = "8:_UNDEFINED"
@@ -1091,6 +1133,12 @@
         {
         "MsmKey" = "8:_F427B9CA55C8969B7C1EB80079BBBD2A"
         "OwnerKey" = "8:_17D16A03FB304C9E99E3F8399FD52386"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F44D935A85D6457097F160D089E39E93"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -2148,6 +2196,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_14EF4F84AAE040768BF889CF7676D7C7"
+            {
+            "SourcePath" = "8:..\\Output\\Main\\Release\\Data\\Tutorials\\TutorialSaveLoad.rtf"
+            "TargetName" = "8:TutorialSaveLoad.rtf"
+            "Tag" = "8:"
+            "Folder" = "8:_EB80496372C94FA892010FAAFE7C79F0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_15289CE72DA30AC30773466BA3A77BFE"
             {
             "AssemblyRegister" = "3:1"
@@ -3056,6 +3124,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3C75E00E26734B13BAAA951BBAF65967"
+            {
+            "SourcePath" = "8:..\\Output\\Main\\Release\\Data\\Tutorials\\TutorialFilters.rtf"
+            "TargetName" = "8:TutorialFilters.rtf"
+            "Tag" = "8:"
+            "Folder" = "8:_EB80496372C94FA892010FAAFE7C79F0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3DE4F1AD00E0A07649F76A13D5A7A54E"
             {
             "AssemblyRegister" = "3:1"
@@ -3279,6 +3367,26 @@
             "TargetName" = "8:FAQ.rtf"
             "Tag" = "8:"
             "Folder" = "8:_3CB616A5FA454E189CBB978B45BAC9B8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4BC39D01CB314B5791A8B729B7C5A1D1"
+            {
+            "SourcePath" = "8:..\\Output\\Main\\Release\\Data\\Tutorials\\TutorialBasicCreation.rtf"
+            "TargetName" = "8:TutorialBasicCreation.rtf"
+            "Tag" = "8:"
+            "Folder" = "8:_EB80496372C94FA892010FAAFE7C79F0"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -3714,6 +3822,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6D3312A137D34F879984E226BD00C5EE"
+            {
+            "SourcePath" = "8:..\\Output\\Main\\Release\\Data\\Tutorials\\TutorialCompanionSetup.rtf"
+            "TargetName" = "8:TutorialCompanionSetup.rtf"
+            "Tag" = "8:"
+            "Folder" = "8:_EB80496372C94FA892010FAAFE7C79F0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6DC6A6459EF44B77E24B9BE7BA036226"
@@ -4272,6 +4400,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_88E62B12A83441509F353B22FA5076B9"
+            {
+            "SourcePath" = "8:..\\Output\\Main\\Release\\Data\\Assets\\SynoImage.ico"
+            "TargetName" = "8:SynoImage.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_8C41770D50B243F987EDE6BF722B1971"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8B1D63E9B2414572AAB9C093325F4133"
@@ -4912,6 +5060,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ACA804E30AA44E3BBD9E7DFC56D9113C"
+            {
+            "SourcePath" = "8:..\\Output\\Main\\Release\\Data\\Assets\\SynoBanner.bmp"
+            "TargetName" = "8:SynoBanner.bmp"
+            "Tag" = "8:"
+            "Folder" = "8:_8C41770D50B243F987EDE6BF722B1971"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B1C217FBAA8E41C9B19B66ADDF80B0DD"
@@ -6090,6 +6258,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E6DB55D1DA35404D9F81696C7A386B06"
+            {
+            "SourcePath" = "8:..\\Output\\Main\\Release\\Data\\Tutorials\\TutorialCompaionAbilities.rtf"
+            "TargetName" = "8:TutorialCompaionAbilities.rtf"
+            "Tag" = "8:"
+            "Folder" = "8:_EB80496372C94FA892010FAAFE7C79F0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EE73ED82D886B98B261AC7E5FF025C9B"
             {
             "AssemblyRegister" = "3:1"
@@ -6307,6 +6495,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F44D935A85D6457097F160D089E39E93"
+            {
+            "SourcePath" = "8:..\\Output\\Main\\Release\\Data\\Tutorials\\TutorialCalculator.rtf"
+            "TargetName" = "8:TutorialCalculator.rtf"
+            "Tag" = "8:"
+            "Folder" = "8:_EB80496372C94FA892010FAAFE7C79F0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -6339,6 +6547,17 @@
                             "Condition" = "8:"
                             "Transitive" = "11:FALSE"
                             "Property" = "8:_15C78ED8AC864007A57E2B3C35706BBA"
+                                "Folders"
+                                {
+                                }
+                            }
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_EB80496372C94FA892010FAAFE7C79F0"
+                            {
+                            "Name" = "8:Tutorials"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_381BE5551B7E48EEB6F46BF45D007B5F"
                                 "Folders"
                                 {
                                 }
@@ -7174,7 +7393,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_17D16A03FB304C9E99E3F8399FD52386"
             {
-            "SourcePath" = "8:..\\Synovian Character Maker\\obj\\Debug\\Synovian Character Maker.exe"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_1016739D16484A7CB5150FB7E386B17B"

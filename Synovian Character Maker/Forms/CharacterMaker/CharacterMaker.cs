@@ -196,7 +196,8 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                 }
                 else if (extension == "xls" || extension == "xlsx")
                 {
-                    current_characterSheet = DataReader.LoadExelSheet(openCharacterDialog.FileName, ((extension == ".xls") ? IronXL.ExcelFileFormat.XLS : IronXL.ExcelFileFormat.XLSX));
+                    //current_characterSheet = DataReader.LoadExelSheet(openCharacterDialog.FileName, ((extension == ".xls") ? IronXL.ExcelFileFormat.XLS : IronXL.ExcelFileFormat.XLSX));
+                    current_characterSheet = ExcelManager.ImportSheet(openCharacterDialog.FileName);
                 }
                 else
                 {

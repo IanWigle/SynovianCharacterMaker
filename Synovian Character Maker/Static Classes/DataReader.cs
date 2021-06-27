@@ -8,7 +8,6 @@ using System.Drawing;
 using Synovian_Character_Maker.Data_Classes;
 
 using Aspose.Zip;
-using IronXL;
 
 namespace Synovian_Character_Maker.Static_Classes
 {
@@ -300,12 +299,14 @@ namespace Synovian_Character_Maker.Static_Classes
                     }
                     else if (extension == "xls")
                     {
-                        CharacterSheet characterSheet = LoadExelSheet(fullFile, ExcelFileFormat.XLS);
+                        //CharacterSheet characterSheet = LoadExelSheet(fullFile, ExcelFileFormat.XLS);
+                        CharacterSheet characterSheet = ExcelManager.ImportSheet(fullFile);
                         characterLibrary.AddCharacter(characterSheet);
                     }
                     else if (extension == "xlsx")
                     {
-                        CharacterSheet characterSheet = LoadExelSheet(fullFile, ExcelFileFormat.XLSX);
+                        //CharacterSheet characterSheet = LoadExelSheet(fullFile, ExcelFileFormat.XLSX);
+                        CharacterSheet characterSheet = ExcelManager.ImportSheet(fullFile);
                         characterLibrary.AddCharacter(characterSheet);
                     }
                 }
@@ -616,6 +617,7 @@ namespace Synovian_Character_Maker.Static_Classes
             }
         }
 
+        /*
         public static CharacterSheet LoadExelSheet(string url, IronXL.ExcelFileFormat excelFileFormat = ExcelFileFormat.XLSX)
         {
             WorkBook workBook = WorkBook.Load(url);
@@ -782,5 +784,6 @@ namespace Synovian_Character_Maker.Static_Classes
 
             return characterSheet;
         }
+        */
     }
 }

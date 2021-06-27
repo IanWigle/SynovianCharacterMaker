@@ -73,7 +73,7 @@ namespace Synovian_Character_Maker.Static_Classes
         {
 #if DEBUG
             Debug.Write(e.Message);
-            Debug.Write(e.InnerException.Message);
+            if (e.InnerException != null) Debug.Write(e.InnerException.Message);
             throw e;
 #else
             MessageBox.Show(e.Message,"Error!",MessageBoxButtons.OK,MessageBoxIcon.Error);
