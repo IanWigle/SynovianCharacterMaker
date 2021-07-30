@@ -63,8 +63,12 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
             {
                 case CompanionSelection.Beast:
                     {
-
-
+                        CompanionSheet companionSheet = new CompanionSheet(compNameText.Text, beastSpeciesText.Text);
+                        Static_Classes.Helpers.GetForm<CharacterMaker>().current_characterSheet.companionSheet = companionSheet;
+                        Static_Classes.Helpers.GetForm<CharacterMaker>().WriteLog($"Make companion named {companionSheet.companionName}");
+                        Beast_Companion_Maker beast_Companion_Maker = new Beast_Companion_Maker();
+                        Close();
+                        beast_Companion_Maker.ShowDialog();
                         break;
                     }
                 case CompanionSelection.Droid:
@@ -110,8 +114,16 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
                 valid = false;
             if (companionSelection == CompanionSelection.NoChoice)
                 valid = false;
-            if (companionType == CompanionSheet.CompanionType.None)
-                valid = false;
+            else if (companionSelection == CompanionSelection.Droid)
+            {
+                if (companionType == CompanionSheet.CompanionType.None)
+                    valid = false;
+            }
+            else if (companionSelection == CompanionSelection.Beast)
+            {
+                if (beastSpeciesText.Text == "")
+                    valid = false;
+            }
             if (droidSelection.Checked == true && beastSelect.Checked == true)
                 valid = false;
             if (valid)
@@ -136,6 +148,12 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
 
             companionPreviewLabel.Text = previewlabelText +
                 ((companionType != CompanionSheet.CompanionType.None) ? "Droid (" + Enum.GetName(typeof(CompanionSheet.CompanionType), companionType).Replace('_',' ') + ")" : "Droid");
+        }
+
+        private void beastSpeciesText_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                validateCheck();
         }
     }
 }

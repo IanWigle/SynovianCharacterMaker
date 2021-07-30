@@ -8,11 +8,11 @@ using System.Net.Sockets;
 using Synovian_Character_Maker.Data_Classes;
 using Synovian_Character_Maker.Forms.Experimental;
 
-namespace Synovian_Character_Maker.Static_Classes.Networking
+namespace Synovian_Character_Maker.Static_Classes.Networking.TCP
 {
-    public class TCP
+    public class TCPManager
     {
-        public TCP(bool useLAN = false, bool askForIP = false)
+        public TCPManager(bool useLAN = false, bool askForIP = false)
         {
             if (IP == "" && askForIP)
             {
@@ -30,7 +30,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking
             }
         }
 
-        ~TCP()
+        ~TCPManager()
         {
 
         }

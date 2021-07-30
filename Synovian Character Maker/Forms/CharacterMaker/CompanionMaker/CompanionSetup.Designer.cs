@@ -38,10 +38,10 @@
             this.makeCompanion = new System.Windows.Forms.Button();
             this.compNameText = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.droidComboOptions = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.beastSpeciesText = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.droidComboOptions = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -148,14 +148,22 @@
             this.panel1.Size = new System.Drawing.Size(370, 72);
             this.panel1.TabIndex = 3;
             // 
-            // label1
+            // beastSpeciesText
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(105, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Specific Droid Types";
+            this.beastSpeciesText.Location = new System.Drawing.Point(160, 26);
+            this.beastSpeciesText.Name = "beastSpeciesText";
+            this.beastSpeciesText.Size = new System.Drawing.Size(128, 20);
+            this.beastSpeciesText.TabIndex = 3;
+            this.beastSpeciesText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.beastSpeciesText_KeyDown);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(157, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(131, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Beast Companion Species";
             // 
             // droidComboOptions
             // 
@@ -175,21 +183,14 @@
             this.droidComboOptions.TabIndex = 1;
             this.droidComboOptions.SelectedIndexChanged += new System.EventHandler(this.droidComboOptions_SelectedIndexChanged);
             // 
-            // label2
+            // label1
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(157, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(131, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Beast Companion Species";
-            // 
-            // beastSpeciesText
-            // 
-            this.beastSpeciesText.Location = new System.Drawing.Point(160, 26);
-            this.beastSpeciesText.Name = "beastSpeciesText";
-            this.beastSpeciesText.Size = new System.Drawing.Size(128, 20);
-            this.beastSpeciesText.TabIndex = 3;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(105, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Specific Droid Types";
             // 
             // CompanionSetup
             // 

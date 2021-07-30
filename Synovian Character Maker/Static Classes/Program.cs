@@ -19,7 +19,6 @@ namespace Synovian_Character_Maker
         {
             get => _isClosing;
         }
-
         static private bool _isClosing = false;
 
         /// <summary>
@@ -71,6 +70,7 @@ namespace Synovian_Character_Maker
             List<string> argList = args.ToList();
 
             argList.Add("-TCN");
+            argList.Add("-Google");
 
             args = argList.ToArray();
 #endif

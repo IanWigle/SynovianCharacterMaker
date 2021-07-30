@@ -38,7 +38,7 @@ namespace Synovian_Character_Maker.Forms.Experimental
 
         private void button2_Click(object sender, EventArgs e)
         {
-            textBox1.Text = Static_Classes.Networking.TCP.GetLocalIPAddress();
+            textBox1.Text = Static_Classes.Networking.TCP.TCPManager.GetLocalIPAddress();
         }
     }
 }

@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CharacterMaker));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.serverSubmissionButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rankLabel = new System.Windows.Forms.Label();
@@ -72,7 +73,7 @@
             this.openCharacterDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveZip = new System.Windows.Forms.SaveFileDialog();
             this.saveExcel = new System.Windows.Forms.SaveFileDialog();
-            this.serverSubmissionButton = new System.Windows.Forms.Button();
+            this.googleDriveButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -112,6 +113,18 @@
             this.groupBox1.Size = new System.Drawing.Size(263, 639);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            // 
+            // serverSubmissionButton
+            // 
+            this.serverSubmissionButton.Enabled = false;
+            this.serverSubmissionButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.serverSubmissionButton.Location = new System.Drawing.Point(6, 582);
+            this.serverSubmissionButton.Name = "serverSubmissionButton";
+            this.serverSubmissionButton.Size = new System.Drawing.Size(251, 51);
+            this.serverSubmissionButton.TabIndex = 1;
+            this.serverSubmissionButton.Text = "Send Sheet to Server";
+            this.serverSubmissionButton.UseVisualStyleBackColor = true;
+            this.serverSubmissionButton.Click += new System.EventHandler(this.serverSubmissionButton_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -362,9 +375,9 @@
             this.tableLayoutPanel5.Location = new System.Drawing.Point(414, 3);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 2;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 74.47916F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.52083F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(405, 576);
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 67.92453F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 32.07547F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(405, 636);
             this.tableLayoutPanel5.TabIndex = 1;
             // 
             // groupBox6
@@ -388,10 +401,11 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.googleDriveButton);
             this.groupBox7.Controls.Add(this.tableLayoutPanel6);
-            this.groupBox7.Location = new System.Drawing.Point(3, 432);
+            this.groupBox7.Location = new System.Drawing.Point(3, 435);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(394, 141);
+            this.groupBox7.Size = new System.Drawing.Size(394, 195);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             // 
@@ -404,7 +418,7 @@
             this.tableLayoutPanel6.Controls.Add(this.calculateButton, 1, 0);
             this.tableLayoutPanel6.Controls.Add(this.characterDetailsButton, 0, 1);
             this.tableLayoutPanel6.Controls.Add(this.clearSheetButton, 1, 1);
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(6, 19);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(6, 12);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 2;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -508,17 +522,16 @@
             this.saveExcel.DefaultExt = "xlsx";
             this.saveExcel.FileOk += new System.ComponentModel.CancelEventHandler(this.saveExcel_FileOk);
             // 
-            // serverSubmissionButton
+            // googleDriveButton
             // 
-            this.serverSubmissionButton.Enabled = false;
-            this.serverSubmissionButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.serverSubmissionButton.Location = new System.Drawing.Point(6, 582);
-            this.serverSubmissionButton.Name = "serverSubmissionButton";
-            this.serverSubmissionButton.Size = new System.Drawing.Size(251, 51);
-            this.serverSubmissionButton.TabIndex = 1;
-            this.serverSubmissionButton.Text = "Send Sheet to Server";
-            this.serverSubmissionButton.UseVisualStyleBackColor = true;
-            this.serverSubmissionButton.Click += new System.EventHandler(this.serverSubmissionButton_Click);
+            this.googleDriveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.googleDriveButton.Location = new System.Drawing.Point(9, 135);
+            this.googleDriveButton.Name = "googleDriveButton";
+            this.googleDriveButton.Size = new System.Drawing.Size(376, 54);
+            this.googleDriveButton.TabIndex = 1;
+            this.googleDriveButton.Text = "Send Sheet to Google Drive";
+            this.googleDriveButton.UseVisualStyleBackColor = true;
+            this.googleDriveButton.Click += new System.EventHandler(this.googleDriveButton_Click);
             // 
             // CharacterMaker
             // 
@@ -594,5 +607,6 @@
         private System.Windows.Forms.Button characterDetailsButton;
         private System.Windows.Forms.Button clearSheetButton;
         private System.Windows.Forms.Button serverSubmissionButton;
+        private System.Windows.Forms.Button googleDriveButton;
     }
 }

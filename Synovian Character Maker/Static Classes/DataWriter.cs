@@ -124,7 +124,7 @@ namespace Synovian_Character_Maker.Static_Classes
         /// </summary>
         /// <param name="characterSheet">The sheet to go to disk.</param>
         /// <returns>Will return true if successful, false if failed.</returns>
-        public static bool WriteCharacterToDiskTxt(CharacterSheet characterSheet)
+        public static bool WriteCharacterToDiskTxt(CharacterSheet characterSheet, string customDirectory = "")
         {
             if (!Directory.Exists(Globals.CharacterFolder))
                 Directory.CreateDirectory(Globals.CharacterFolder);
@@ -134,17 +134,24 @@ namespace Synovian_Character_Maker.Static_Classes
                 WriteIndented = true,
             };
 
-            if (File.Exists($"{Globals.CharacterFolder}\\{characterSheet.Name}.zip") ||
+
+            if (customDirectory == "")
+            {
+                if (File.Exists($"{Globals.CharacterFolder}\\{characterSheet.Name}.zip") ||
                 File.Exists($"{Globals.CharacterFolder}\\{characterSheet.Name}.xls") ||
                 File.Exists($"{Globals.CharacterFolder}\\{characterSheet.Name}.xlsx"))
                 {
                     return false;
                 }
+            }
+            
 
             try
             {
+                if (customDirectory == "")
+                    customDirectory = $"{Globals.CharacterFolder}\\{characterSheet.Name}.txt"; 
                 string jsonString = JsonSerializer.Serialize(characterSheet, options);
-                File.WriteAllText($"{Globals.CharacterFolder}\\{characterSheet.Name}.txt", jsonString);
+                File.WriteAllText(customDirectory, jsonString);
                 return true;
             }
             catch (Exception e)

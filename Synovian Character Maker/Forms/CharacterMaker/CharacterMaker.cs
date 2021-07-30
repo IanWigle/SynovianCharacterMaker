@@ -28,6 +28,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                                         new List<Ability_Schools>());
             filters.Fill();
             serverSubmissionButton.Enabled = Program.programArgs.Contains("-TCN");
+            googleDriveButton.Enabled = Program.programArgs.Contains("-Google");
             FilterLibraryAbilities(filters);
             FilterCharacterAbilities(filters);
         }
@@ -250,8 +251,21 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             }
             else
             {
-                CompanionMaker.DroidCompanionMaker companionMaker = new CompanionMaker.DroidCompanionMaker();
-                companionMaker.ShowDialog();
+                switch (current_characterSheet.companionSheet.primaryCompanionType)
+                {
+                    case CompanionSheet.CompanionType.Beast:
+                        {
+                            CompanionMaker.Beast_Companion_Maker beast_Companion_Maker = new CompanionMaker.Beast_Companion_Maker();
+                            beast_Companion_Maker.ShowDialog();
+                            break;
+                        }
+                    default:
+                        {
+                            CompanionMaker.DroidCompanionMaker companionMaker = new CompanionMaker.DroidCompanionMaker();
+                            companionMaker.ShowDialog();
+                            break;
+                        }
+                }                
             }
         }
 
@@ -538,11 +552,8 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
         private void saveExcel_FileOk(object sender, CancelEventArgs e)
         {
-            ExcelExportProgressWindow excelExportProgressWindow = new ExcelExportProgressWindow();
-            excelExportProgressWindow.Show();
             DataWriter.ExportCharacterSheetExcel(current_characterSheet, saveExcel.FileName, (saveExcel.FileName.Split('.')[1] == "xlsx") ? DataWriter.ExcelFormats.XLSX : DataWriter.ExcelFormats.XLS);
             WriteLog("Saved character to disk as excel");
-            excelExportProgressWindow.CloseForm();
         }
 
         private void characterDetailsButton_Click(object sender, EventArgs e)
@@ -585,10 +596,16 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
         {
             if(Program.programArgs.Contains("-TCN"))
             {
-                Static_Classes.Networking.TCP tCP = new Static_Classes.Networking.TCP(false, true);
+                Static_Classes.Networking.TCP.TCPManager tCP = new Static_Classes.Networking.TCP.TCPManager(false, true);
                 Experimental.SheetSubmission sheetSubmission = new Experimental.SheetSubmission();
                 tCP.SendSheet(current_characterSheet);
             }
+        }
+
+        private void googleDriveButton_Click(object sender, EventArgs e)
+        {
+            DataWriter.ExportCharacterSheetExcel(current_characterSheet, $"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx", DataWriter.ExcelFormats.XLSX);
+            Static_Classes.Networking.GoogleDrive.GoogleDriveManager.SubmitSheetToDrive($"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx");
         }
     }
 }

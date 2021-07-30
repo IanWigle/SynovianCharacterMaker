@@ -6,6 +6,8 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Diagnostics;
+using System.Windows.Forms;
+
 using SpreadsheetLight;
 
 using Synovian_Character_Maker.Data_Classes;
@@ -568,15 +570,26 @@ namespace Synovian_Character_Maker.Static_Classes
             sLDocument.SelectWorksheet(characterSheet.Name);
             sLDocument.SaveAs(url);
 
-            try
+            if (false)
             {
-                if (Directory.Exists(@"C:\Program Files (x86)\Microsoft Office\root\Office16") && File.Exists(@"C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE")
-                    && Program.isClosing == false)
+                try
                 {
-                    Process.Start(@url);
+                    if (Directory.Exists(@"C:\Program Files (x86)\Microsoft Office\root\Office16") && File.Exists(@"C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE")
+                        && Program.isClosing == false)
+                    {
+                        Process.Start(@url);
+                    }
                 }
-            }
-            catch (Exception e) { Helpers.ExceptionHandle(e); }
+                catch (Exception e) { Helpers.ExceptionHandle(e); }
+            }            
+
+            //if(Program.programArgs.Contains("-Google"))
+            //{
+            //    if (MessageBox.Show("Would you like to send your sheet to your google drive?", "Question!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            //    {
+            //        Static_Classes.Networking.GoogleDrive.GoogleDriveManager.SubmitSheetToDrive(url);
+            //    }
+            //}
         }
 
         public static CharacterSheet ImportSheet(string url)

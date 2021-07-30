@@ -11,6 +11,12 @@ namespace Synovian_Character_Maker.Data_Classes
         public string companionName { get => _companionName; }
         string _companionName;
 
+        public string companionSpecies { get => _companionSpecies; }
+        string _companionSpecies;
+
+        public string companionHistory { get => _companionHistory; }
+        string _companionHistory;
+
         public enum CompanionType
         {
             None = 0,
@@ -122,6 +128,17 @@ namespace Synovian_Character_Maker.Data_Classes
             }
         }
 
+        // Used for beast companions
+        public CompanionSheet(string name, string species)
+        {
+            _companionName = name;
+            _companionSpecies = species;
+
+            _primaryCompanionType = CompanionType.Beast;
+
+            abilities = new List<int>();
+        }
+
         static public int DetermineSkillPointsByType(CompanionType companionType)
         {
             switch(companionType)
@@ -158,6 +175,11 @@ namespace Synovian_Character_Maker.Data_Classes
             if (Program.abilityLibrary.TryGetAbility(ability, out Ability ability1))
                 return ContainsAbility(ability1.ID);
             return false;
+        }
+
+        public void SetCompanionHistory(string history)
+        {
+            _companionHistory = history;
         }
     }
 }
