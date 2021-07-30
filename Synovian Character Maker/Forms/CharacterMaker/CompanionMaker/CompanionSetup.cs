@@ -15,7 +15,8 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
     public partial class CompanionSetup : Form
     {
         CompanionSheet.CompanionType companionType = CompanionSheet.CompanionType.None;
-
+        
+        private string previewlabelText;
         enum CompanionSelection
         {
             NoChoice,
@@ -32,54 +33,73 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
             InitializeComponent();
             makeCompanion.Enabled = false;
             compNameText.Text = startingText;
+            previewlabelText = companionPreviewLabel.Text;
+            droidComboOptions.Enabled = false;
+            beastSpeciesText.Enabled = false;
         }
 
         private void beastSelect_CheckedChanged(object sender, EventArgs e)
         {
-            if (beastSelect.Checked == false)
-                return;
+            beastSpeciesText.Enabled = beastSelect.Checked;
 
             companionSelection = CompanionSelection.Beast;
+            companionPreviewLabel.Text = previewlabelText + "Beast";
+            validateCheck();
         }
 
         private void droidSelection_CheckedChanged(object sender, EventArgs e)
         {
-            if (droidSelection.Checked == false)
-                return;
+            droidComboOptions.Enabled = droidSelection.Checked;
 
             companionSelection = CompanionSelection.Droid;
+            companionPreviewLabel.Text = previewlabelText + 
+                ((companionType != CompanionSheet.CompanionType.None) ? "Droid (" + Enum.GetName(typeof(CompanionSheet.CompanionType), companionType) + ")" : "Droid");
+            validateCheck();
         }
 
         private void makeCompanion_Click(object sender, EventArgs e)
         {
-            CompanionSheet.CompanionType primaryCompanionType = companionType;
-            List<CompanionSheet.CompanionType> secondaryCompanionType = new List<CompanionSheet.CompanionType>();
-            switch (primaryCompanionType)
+            switch (companionSelection)
             {
-                case CompanionSheet.CompanionType.Research_Droid:
-                    secondaryCompanionType.Add(CompanionSheet.CompanionType.Medical_Droid);
-                    secondaryCompanionType.Add(CompanionSheet.CompanionType.Engineering_Droid);
-                    secondaryCompanionType.Add(CompanionSheet.CompanionType.Astromech_Droid);
-                    break;
-                case CompanionSheet.CompanionType.Security_Droid:
-                    secondaryCompanionType.Add(CompanionSheet.CompanionType.Battle_Droid);
-                    break;
-                case CompanionSheet.CompanionType.Assassin_Droid:
-                    secondaryCompanionType.Add(CompanionSheet.CompanionType.Battle_Droid);
-                    break;
-                default:
-                    break;
-            }
-            CompanionSheet companionSheet = new CompanionSheet(compNameText.Text, primaryCompanionType, secondaryCompanionType);
+                case CompanionSelection.Beast:
+                    {
 
-            if(Static_Classes.Helpers.TryGetForm(typeof(CharacterMaker),out Form form))
-            {
-                (form as CharacterMaker).current_characterSheet.companionSheet = companionSheet;
-                (form as CharacterMaker).WriteLog($"Made the companion {companionSheet.companionName}");
-                CompanionMaker companionMaker = new CompanionMaker();
 
-                Close();
-                companionMaker.ShowDialog();
+                        break;
+                    }
+                case CompanionSelection.Droid:
+                    {
+                        CompanionSheet.CompanionType primaryCompanionType = companionType;
+                        List<CompanionSheet.CompanionType> secondaryCompanionType = new List<CompanionSheet.CompanionType>();
+                        switch (primaryCompanionType)
+                        {
+                            case CompanionSheet.CompanionType.Research_Droid:
+                                secondaryCompanionType.Add(CompanionSheet.CompanionType.Medical_Droid);
+                                secondaryCompanionType.Add(CompanionSheet.CompanionType.Engineering_Droid);
+                                secondaryCompanionType.Add(CompanionSheet.CompanionType.Astromech_Droid);
+                                break;
+                            case CompanionSheet.CompanionType.Security_Droid:
+                                secondaryCompanionType.Add(CompanionSheet.CompanionType.Battle_Droid);
+                                break;
+                            case CompanionSheet.CompanionType.Assassin_Droid:
+                                secondaryCompanionType.Add(CompanionSheet.CompanionType.Battle_Droid);
+                                break;
+                            default:
+                                break;
+                        }
+                        CompanionSheet companionSheet = new CompanionSheet(compNameText.Text, primaryCompanionType, secondaryCompanionType);
+
+                        if (Static_Classes.Helpers.TryGetForm(typeof(CharacterMaker), out Form form))
+                        {
+                            (form as CharacterMaker).current_characterSheet.companionSheet = companionSheet;
+                            (form as CharacterMaker).WriteLog($"Made the companion {companionSheet.companionName}");
+                            DroidCompanionMaker companionMaker = new DroidCompanionMaker();
+
+                            Close();
+                            companionMaker.ShowDialog();
+                        }
+                        break;
+                    }
             }
         }
 
@@ -92,44 +112,10 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
                 valid = false;
             if (companionType == CompanionSheet.CompanionType.None)
                 valid = false;
+            if (droidSelection.Checked == true && beastSelect.Checked == true)
+                valid = false;
             if (valid)
                 makeCompanion.Enabled = true;
-        }
-
-        private void researchChoice_Click(object sender, EventArgs e)
-        {
-            companionType = CompanionSheet.CompanionType.Research_Droid;
-            validateCheck();
-        }
-
-        private void astromechChoice_Click(object sender, EventArgs e)
-        {
-            companionType = CompanionSheet.CompanionType.Astromech_Droid;
-            validateCheck();
-        }
-
-        private void protocolChoice_Click(object sender, EventArgs e)
-        {
-            companionType = CompanionSheet.CompanionType.Protocol_Droid;
-            validateCheck();
-        }
-
-        private void battleChoice_Click(object sender, EventArgs e)
-        {
-            companionType = CompanionSheet.CompanionType.Battle_Droid;
-            validateCheck();
-        }
-
-        private void securityChoice_Click(object sender, EventArgs e)
-        {
-            companionType = CompanionSheet.CompanionType.Security_Droid;
-            validateCheck();
-        }
-
-        private void assassinChoice_Click(object sender, EventArgs e)
-        {
-            companionType = CompanionSheet.CompanionType.Assassin_Droid;
-            validateCheck();
         }
 
         private void compNameText_KeyUp(object sender, KeyEventArgs e)
@@ -142,6 +128,14 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
         {
             if (e.KeyCode == Keys.Escape)
                 Close();
+        }
+
+        private void droidComboOptions_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            companionType = (CompanionSheet.CompanionType)((droidComboOptions.SelectedIndex >= 2) ? droidComboOptions.SelectedIndex + 1: droidComboOptions.SelectedIndex);
+
+            companionPreviewLabel.Text = previewlabelText +
+                ((companionType != CompanionSheet.CompanionType.None) ? "Droid (" + Enum.GetName(typeof(CompanionSheet.CompanionType), companionType).Replace('_',' ') + ")" : "Droid");
         }
     }
 }

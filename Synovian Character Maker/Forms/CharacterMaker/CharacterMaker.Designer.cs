@@ -72,6 +72,7 @@
             this.openCharacterDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveZip = new System.Windows.Forms.SaveFileDialog();
             this.saveExcel = new System.Windows.Forms.SaveFileDialog();
+            this.serverSubmissionButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -99,15 +100,16 @@
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1515, 588);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1515, 648);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.serverSubmissionButton);
             this.groupBox1.Controls.Add(this.tableLayoutPanel2);
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(263, 582);
+            this.groupBox1.Size = new System.Drawing.Size(263, 639);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -311,7 +313,7 @@
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1235, 582);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1235, 642);
             this.tableLayoutPanel4.TabIndex = 1;
             // 
             // libraryView
@@ -324,7 +326,7 @@
             this.libraryView.HideSelection = false;
             this.libraryView.Location = new System.Drawing.Point(3, 3);
             this.libraryView.Name = "libraryView";
-            this.libraryView.Size = new System.Drawing.Size(405, 576);
+            this.libraryView.Size = new System.Drawing.Size(405, 636);
             this.libraryView.TabIndex = 0;
             this.libraryView.UseCompatibleStateImageBehavior = false;
             this.libraryView.View = System.Windows.Forms.View.Details;
@@ -460,7 +462,7 @@
             this.characterAbilitiesView.HideSelection = false;
             this.characterAbilitiesView.Location = new System.Drawing.Point(825, 3);
             this.characterAbilitiesView.Name = "characterAbilitiesView";
-            this.characterAbilitiesView.Size = new System.Drawing.Size(406, 576);
+            this.characterAbilitiesView.Size = new System.Drawing.Size(406, 636);
             this.characterAbilitiesView.TabIndex = 2;
             this.characterAbilitiesView.UseCompatibleStateImageBehavior = false;
             this.characterAbilitiesView.View = System.Windows.Forms.View.Details;
@@ -506,11 +508,23 @@
             this.saveExcel.DefaultExt = "xlsx";
             this.saveExcel.FileOk += new System.ComponentModel.CancelEventHandler(this.saveExcel_FileOk);
             // 
+            // serverSubmissionButton
+            // 
+            this.serverSubmissionButton.Enabled = false;
+            this.serverSubmissionButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.serverSubmissionButton.Location = new System.Drawing.Point(6, 582);
+            this.serverSubmissionButton.Name = "serverSubmissionButton";
+            this.serverSubmissionButton.Size = new System.Drawing.Size(251, 51);
+            this.serverSubmissionButton.TabIndex = 1;
+            this.serverSubmissionButton.Text = "Send Sheet to Server";
+            this.serverSubmissionButton.UseVisualStyleBackColor = true;
+            this.serverSubmissionButton.Click += new System.EventHandler(this.serverSubmissionButton_Click);
+            // 
             // CharacterMaker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1539, 612);
+            this.ClientSize = new System.Drawing.Size(1539, 672);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CharacterMaker";
@@ -579,5 +593,6 @@
         private System.Windows.Forms.SaveFileDialog saveExcel;
         private System.Windows.Forms.Button characterDetailsButton;
         private System.Windows.Forms.Button clearSheetButton;
+        private System.Windows.Forms.Button serverSubmissionButton;
     }
 }

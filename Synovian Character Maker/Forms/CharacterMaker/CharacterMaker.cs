@@ -27,6 +27,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                                         new List<Ability_Alignment>(),
                                         new List<Ability_Schools>());
             filters.Fill();
+            serverSubmissionButton.Enabled = Program.programArgs.Contains("-TCN");
             FilterLibraryAbilities(filters);
             FilterCharacterAbilities(filters);
         }
@@ -249,7 +250,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             }
             else
             {
-                CompanionMaker.CompanionMaker companionMaker = new CompanionMaker.CompanionMaker();
+                CompanionMaker.DroidCompanionMaker companionMaker = new CompanionMaker.DroidCompanionMaker();
                 companionMaker.ShowDialog();
             }
         }
@@ -578,6 +579,16 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             openCharacterDialog.DefaultExt = ".xlsx";
             openCharacterDialog.Filter = "Xlsx files (*.xslx)|*.xlsx|Xls files (*.xls)|*.xls|All files (*.*)|*.*";
             openCharacterDialog.ShowDialog();
+        }
+
+        private void serverSubmissionButton_Click(object sender, EventArgs e)
+        {
+            if(Program.programArgs.Contains("-TCN"))
+            {
+                Static_Classes.Networking.TCP tCP = new Static_Classes.Networking.TCP(false, true);
+                Experimental.SheetSubmission sheetSubmission = new Experimental.SheetSubmission();
+                tCP.SendSheet(current_characterSheet);
+            }
         }
     }
 }

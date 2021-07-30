@@ -1,20 +1,26 @@
 ﻿using System;
 using System.Linq;
-using System.Resources;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Synovian_Character_Maker.Forms;
 using Synovian_Character_Maker.Static_Classes;
 using Synovian_Character_Maker.Data_Classes;
-
-using System.IO;
-using System.Text;
-using System.Security.Cryptography;
 
 namespace Synovian_Character_Maker
 {
     static class Program
     {
         static bool openAbilityMaker = false;
+
+        /// <summary>
+        /// A flag that signifies whether the program is closing. Returns true if closing.
+        /// </summary>
+        static public bool isClosing
+        {
+            get => _isClosing;
+        }
+
+        static private bool _isClosing = false;
 
         /// <summary>
         /// Main library for all registered abilities.
@@ -45,6 +51,12 @@ namespace Synovian_Character_Maker
         static private AudioPlayer _audioPlayer = null;
         static private string defaultSong = "AFriendAudio.wav";
 
+        static public string[] programArgs
+        {
+            get => _programArgs;
+        }
+        static private string[] _programArgs;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -54,6 +66,14 @@ namespace Synovian_Character_Maker
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.EnableVisualStyles();
+
+#if DEBUG
+            List<string> argList = args.ToList();
+
+            argList.Add("-TCN");
+
+            args = argList.ToArray();
+#endif
 
             try
             {
@@ -72,10 +92,15 @@ namespace Synovian_Character_Maker
                 _audioPlayer = new AudioPlayer(defaultSong);
                 DataReader.LoadAudioSettings(ref _audioPlayer);
 
+                _programArgs = args;
+
                 if(args.Contains("-ability_maker") || openAbilityMaker == true)
                     Application.Run(new AbilityMaker());
                 else
                     Application.Run(new MainForm());
+
+                _isClosing = true;
+                _characterLibrary.ExportSheets();
             }
             catch(Exception e) { Helpers.ExceptionHandle(e); }
         }

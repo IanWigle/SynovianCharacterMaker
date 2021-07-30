@@ -25,6 +25,11 @@ namespace Synovian_Character_Maker.Data_Classes
 
         ~CharacterLibrary()
         {
+            
+        }
+
+        public void ExportSheets()
+        {
             Static_Classes.DataWriter.ExportAllCharacterSheets(_characterSheets);
         }
 

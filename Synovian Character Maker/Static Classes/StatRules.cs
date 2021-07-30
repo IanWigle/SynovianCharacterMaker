@@ -38,7 +38,8 @@ namespace Synovian_Character_Maker.Static_Classes
 
         ~StatRules()
         {
-            DataWriter.ExportStatRules(this);
+            if (DataWriter.ExportRules.EXPORT_STATRULES)
+                DataWriter.ExportStatRules(this);
         }
     }
 }

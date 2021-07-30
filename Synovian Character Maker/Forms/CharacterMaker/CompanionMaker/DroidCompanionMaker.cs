@@ -10,13 +10,21 @@ using System.Windows.Forms;
 
 namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
 {
-    public partial class CompanionMaker : Form
+    public partial class DroidCompanionMaker : Form
     {
-        public CompanionMaker()
+        private Data_Classes.CompanionSheet companionSheet;
+        public DroidCompanionMaker()
         {
             InitializeComponent();
             nameBox.Text = Static_Classes.Helpers.GetForm<CharacterMaker>().current_characterSheet.companionSheet.companionName;
             RefreshList();
+
+            companionSheet = Static_Classes.Helpers.GetForm<CharacterMaker>().current_characterSheet.companionSheet;
+
+            if(companionSheet._image != null)
+            {
+                droidCompanionPicture.Image = companionSheet._image;
+            }
         }
 
         private void textBox1_KeyUp(object sender, KeyEventArgs e)
@@ -26,8 +34,6 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
 
         private void RefreshList()
         {
-            Data_Classes.CompanionSheet companionSheet = Static_Classes.Helpers.GetForm<CharacterMaker>().current_characterSheet.companionSheet;
-
             if (companionSheet == null)
                 return;
             else
@@ -129,6 +135,27 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
         {
             if (e.KeyCode == Keys.Escape)
                 Close();
+        }
+
+        private void loadpictureButton_Click(object sender, EventArgs e)
+        {
+            loadPictureDialog.Title = "Open Image";
+            loadPictureDialog.DefaultExt = ".jpg";
+            loadPictureDialog.Filter = "jpg files (*.jpg)|*.jpg|bmp files (*.bmp)|*.bmp|gif files (*.gif)|*.gif|ico images (*.ico)|*.ico|png images (*.png)|*.png|wdp images (*.wdp)|*.wdp|tiff images (*.tiff)|*.tiff|All files (*.*)|*.*";
+            loadPictureDialog.ShowDialog();
+        }
+
+        private void loadPictureDialog_FileOk(object sender, CancelEventArgs e)
+        {
+            droidCompanionPicture.Image = Image.FromFile(loadPictureDialog.FileName);
+        }
+
+        private void DroidCompanionMaker_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(droidCompanionPicture.Image != null)
+            {
+                Static_Classes.Helpers.GetForm<CharacterMaker>().current_characterSheet.companionSheet._image = droidCompanionPicture.Image;
+            }
         }
     }
 }

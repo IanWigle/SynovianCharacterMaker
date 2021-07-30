@@ -18,12 +18,15 @@ namespace Synovian_Character_Maker.Static_Classes
         {
             if (url == "") url = $"{Globals.CharacterFolder}\\{characterSheet.Name}.xlsx";
 
-            SLDocument sLDocument = new SLDocument();
+            string filename = url.Split('\\')[url.Split('\\').Length - 1].Split('.')[0];
 
+            SLDocument sLDocument = new SLDocument();
             System.Drawing.Color GREY = System.Drawing.Color.DarkGray;
             System.Drawing.Color BLACK = System.Drawing.Color.Black;
             System.Drawing.Color PURPLE = System.Drawing.Color.DarkViolet;
             System.Drawing.Color RED = System.Drawing.Color.Red;
+
+            sLDocument.RenameWorksheet(SLDocument.DefaultFirstSheetName, characterSheet.Name);
 
             void MergeCells(string range)
             {
@@ -125,9 +128,21 @@ namespace Synovian_Character_Maker.Static_Classes
                     string originCell = cell.Split(':')[0];
                     string endCell = cell.Split(':')[1];
 
-                    string s_originColumn = Regex.Replace(originCell, @"[\d-]", string.Empty);
+                    // Remove all numbers
+                    string s_originColumn = "";
+                    try
+                    {
+                        s_originColumn = Regex.Replace(originCell, @"[\d-]", "");
+                    }
+                    catch(Exception e)
+                    {
+                        s_originColumn = new string(originCell.Where(c => c != '-' && (c < '0' || c > '9')).ToArray());
+                    }
+
                     int i_originColumn = char.ToUpper(s_originColumn.ToCharArray()[0]) - 64;
-                    int i_originRow = int.Parse(Regex.Replace(originCell,"[^0-9]",""));
+                    int i_originRow = 0;
+                    string test1 = Regex.Replace(originCell,"[^0-9]","");
+                    i_originRow = int.Parse(test1);
 
                     string s_endColumn = Regex.Replace(endCell, @"[\d-]", string.Empty);
                     int i_endColumn = char.ToUpper(s_endColumn.ToCharArray()[0]) - 63;
@@ -220,57 +235,60 @@ namespace Synovian_Character_Maker.Static_Classes
                 }
             }
 
-            SetCellBackgroundColor("A1", BLACK);
-            MergeCells("A1:N1");
+            // Setup Top header of character sheet
+            {
+                SetCellBackgroundColor("A1", BLACK);
+                MergeCells("A1:N1");
 
-            WriteCell("B2", characterSheet.Name);
-            BoldCell("B2");
-            CenterText("B2");
-            MakeBorder("B2:M2");
-            SetCellBackgroundColor("B2", GREY);
-            MergeCells("B2:M2");
+                WriteCell("B2", characterSheet.Name);
+                BoldCell("B2");
+                CenterText("B2");
+                MakeBorder("B2:M2");
+                SetCellBackgroundColor("B2", GREY);
+                MergeCells("B2:M2");
 
-            WriteCell("B3", "Character Information");
-            BoldCell("B3");
-            CenterText("B3");
-            MakeBorder("B3:E3");
-            SetCellBackgroundColor("B3", GREY);
-            MergeCells("B3:E3");
+                WriteCell("B3", "Character Information");
+                BoldCell("B3");
+                CenterText("B3");
+                MakeBorder("B3:E3");
+                SetCellBackgroundColor("B3", GREY);
+                MergeCells("B3:E3");
 
-            WriteCell("F3", "Specialized Trees");
-            BoldCell("F3");
-            CenterText("F3");
-            MakeBorder("F3:I3");
-            SetCellBackgroundColor("F3", GREY);
-            MergeCells("F3:I3");
+                WriteCell("F3", "Specialized Trees");
+                BoldCell("F3");
+                CenterText("F3");
+                MakeBorder("F3:I3");
+                SetCellBackgroundColor("F3", GREY);
+                MergeCells("F3:I3");
 
-            WriteCell("J3", "Saber/Force Forms");
-            BoldCell("J3");
-            CenterText("J3");
-            MakeBorder("J3:M3");
-            SetCellBackgroundColor("J3", GREY);
-            MergeCells("J3:M3");
+                WriteCell("J3", "Saber/Force Forms");
+                BoldCell("J3");
+                CenterText("J3");
+                MakeBorder("J3:M3");
+                SetCellBackgroundColor("J3", GREY);
+                MergeCells("J3:M3");
 
-            WriteCell("B4", $"Rank: {characterSheet.s_rank}");
-            BoldCell("B4");
-            CenterText("B4");
-            MakeBorder("B4:E4");
-            SetCellBackgroundColor("B4", GREY);
-            MergeCells("B4:E4");
+                WriteCell("B4", $"Rank: {characterSheet.s_rank}");
+                BoldCell("B4");
+                CenterText("B4");
+                MakeBorder("B4:E4");
+                SetCellBackgroundColor("B4", GREY);
+                MergeCells("B4:E4");
 
-            WriteCell("B5", $"Alignment: {characterSheet.s_alignment}");
-            BoldCell("B5");
-            CenterText("B5");
-            MakeBorder("B5:E5");
-            SetCellBackgroundColor("B5", GREY);
-            MergeCells("B5:E5");
+                WriteCell("B5", $"Alignment: {characterSheet.s_alignment}");
+                BoldCell("B5");
+                CenterText("B5");
+                MakeBorder("B5:E5");
+                SetCellBackgroundColor("B5", GREY);
+                MergeCells("B5:E5");
 
-            WriteCell("B6", $"Species: {characterSheet.characterSpecies}");
-            BoldCell("B6");
-            CenterText("B6");
-            MakeBorder("B6:E6");
-            SetCellBackgroundColor("B6", GREY);
-            MergeCells("B6:E6");
+                WriteCell("B6", $"Species: {characterSheet.characterSpecies}");
+                BoldCell("B6");
+                CenterText("B6");
+                MakeBorder("B6:E6");
+                SetCellBackgroundColor("B6", GREY);
+                MergeCells("B6:E6");
+            }
 
             int startingSchoolIndex = 4;
             string[] schools = characterSheet.GetAllSchools();
@@ -290,7 +308,7 @@ namespace Synovian_Character_Maker.Static_Classes
             string[] validFormNames = { "Niman", "Shii Cho", "Makashi", "Soresu", "Ataru", "Shien/Djem-so", "Juyo",
                                         "Trakata","Saber Staff","Jar'kai","Saber Pike","Channel", "Affinitiy", "Mastery",
                                         "Potency", "Mentalism"};
-            List<string> vs = new List<string>();
+            List<string> FurthestForms = new List<string>();
 
             // Grab only the furthest versions of all forms the character has to be presented.
             foreach (string _formName in validFormNames)
@@ -304,10 +322,10 @@ namespace Synovian_Character_Maker.Static_Classes
                     }
                 }
 
-                if (vs1.Count() > 0) vs.Add(vs1.Last());
+                if (vs1.Count() > 0) FurthestForms.Add(vs1.Last());
             }
 
-            foreach(string form in vs)
+            foreach(string form in FurthestForms)
             {
                 if (form == "School Of Forms") continue;
 
@@ -319,6 +337,8 @@ namespace Synovian_Character_Maker.Static_Classes
                 MergeCells($"J{startingFormIndex}:M{startingFormIndex}");
                 startingFormIndex++;
             }
+
+
 
             int currentLowestIndex = (startingSchoolIndex > startingFormIndex) ? startingSchoolIndex : startingFormIndex;
             if (currentLowestIndex <= 6) currentLowestIndex = 7;
@@ -379,13 +399,13 @@ namespace Synovian_Character_Maker.Static_Classes
                 BoldCell($"B{currentLeftColumnIndex}");
                 CenterText($"B{currentLeftColumnIndex}");
                 SetCellBackgroundColor($"B{currentLeftColumnIndex}", GREY);
-                MakeBorder($"B{currentLowestIndex}:D{currentLeftColumnIndex}");
+                MakeBorder($"B{currentLeftColumnIndex}:D{currentLeftColumnIndex}");
                 MergeCells($"B{currentLeftColumnIndex}:D{currentLeftColumnIndex}");
 
                 WriteCell($"E{currentLeftColumnIndex}", "Status");
                 BoldCell($"E{currentLeftColumnIndex}");
                 CenterText($"E{currentLeftColumnIndex}");
-                MakeBorder($"E{currentLowestIndex}");
+                MakeBorder($"E{currentLeftColumnIndex}");
                 SetCellBackgroundColor($"E{currentLeftColumnIndex}", GREY);
                 currentLeftColumnIndex++;
 
@@ -517,11 +537,41 @@ namespace Synovian_Character_Maker.Static_Classes
             SetCellBackgroundColor($"N{currentLowestIndex}", BLACK);
             MergeCells($"N{currentLowestIndex}:N{largestColumnIndex - 1}");
 
+            // Create metadata sheet
+            sLDocument.AddWorksheet("CharacterMakerData");
+            WriteCell("A1", "This sheet is used for the charactermaker. If you want to load this sheet into the maker, keep this data in this sheet");
+            SLStyle newstyle = new SLStyle();
+            newstyle.SetVerticalAlignment(VerticalAlignmentValues.Top);
+            newstyle.SetWrapText(true);
+            sLDocument.SetCellStyle("A1", newstyle);
+
+            MergeCells("A1:I3");
+
+            string prereqFormsString = "";
+
+            string[] allformabilities = characterSheet.GetAbilitiesOfSchool(Ability_Schools.Ability_Forms);
+            foreach(string formAbility in allformabilities)
+            {
+                if (FurthestForms.Contains(formAbility))
+                    continue;
+                else
+                {
+                    if(Program.abilityLibrary.TryGetAbility(formAbility, out Ability ability))
+                    {
+                        prereqFormsString += $"{ability.ID},";
+                    }
+                }
+            }
+
+            WriteCell("A4", prereqFormsString);
+
+            sLDocument.SelectWorksheet(characterSheet.Name);
             sLDocument.SaveAs(url);
 
             try
             {
-                if (Directory.Exists(@"C:\Program Files (x86)\Microsoft Office\root\Office16") && File.Exists(@"C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE"))
+                if (Directory.Exists(@"C:\Program Files (x86)\Microsoft Office\root\Office16") && File.Exists(@"C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE")
+                    && Program.isClosing == false)
                 {
                     Process.Start(@url);
                 }
@@ -563,6 +613,7 @@ namespace Synovian_Character_Maker.Static_Classes
                 }
             }
 
+            // Get all schools
             int s_s_i = 4;
             do
             {
@@ -584,14 +635,15 @@ namespace Synovian_Character_Maker.Static_Classes
                 }
             } while (true);
 
+            // Get all forms
             int s_f_i = 4;
             do
             {
-                if (sl.GetCellValueAsString($"I{s_f_i}") == "")
+                if (sl.GetCellValueAsString($"J{s_f_i}") == "")
                     break;
                 else
                 {
-                    string s_form_name = sl.GetCellValueAsString($"F{s_f_i}");
+                    string s_form_name = sl.GetCellValueAsString($"J{s_f_i}");
 
                     if(Program.abilityLibrary.TryGetAbility(s_form_name, out Ability ability))
                     {
@@ -608,6 +660,7 @@ namespace Synovian_Character_Maker.Static_Classes
             int s_ability_name = (s_s_i > s_f_i) ? s_s_i : s_f_i;
             s_ability_name += 2;
             int starting_name_value = s_ability_name;
+
 
             // Read all abilities
             // Start with left column
@@ -676,6 +729,22 @@ namespace Synovian_Character_Maker.Static_Classes
                     }
                 }
             } while (true);
+
+            if(sl.SelectWorksheet("CharacterMakerData") == true)
+            {
+                string otherFormIDs = sl.GetCellValueAsString("A4");
+                string[] ids = otherFormIDs.Split(',');
+                foreach(string id in ids)
+                {
+                    if (id == "")
+                        break;
+                    // If the ability library contains the ability id AND the loaded list of abilities does NOT contain the id already
+                    if(Program.abilityLibrary.Contains(int.Parse(id)) && !abilities.Contains(int.Parse(id)))
+                    {
+                        abilities.Add(int.Parse(id));
+                    }
+                }
+            }
 
             CharacterSheet characterSheet = new CharacterSheet(name, 
                                                                rank, 

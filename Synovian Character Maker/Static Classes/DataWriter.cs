@@ -16,6 +16,12 @@ namespace Synovian_Character_Maker.Static_Classes
 {
     static public class DataWriter
     {
+        static public class ExportRules
+        {
+            public const bool EXPORT_STATRULES = false;
+            public const bool EXPORT_ABILITYLIBRARY = false;
+        }
+
         public enum ExcelFormats
         {
             XLS,
@@ -48,15 +54,25 @@ namespace Synovian_Character_Maker.Static_Classes
             if (!Directory.Exists(Globals.DataFolder))
                 Directory.CreateDirectory(Globals.DataFolder);
 
-            var options = new JsonSerializerOptions
+            var options = new JsonSerializerOptions 
             {
                 WriteIndented = true,
             };
 
             try
             {
-                string jsonString = JsonSerializer.Serialize(statRules, options);
-                File.WriteAllText($"{Globals.DataFolder}\\StatRules.txt", jsonString);
+                //string jsonString = JsonSerializer.Serialize(statRules, options);
+                //File.WriteAllText($"{Globals.DataFolder}\\StatRules.txt", jsonString);
+
+                //List<int> feats = new List<int>();
+                //List<int> skills = new List<int>();
+                //List<int> schools = new List<int>();
+                //List<int> masteries = new List<int>();
+                //List<StatRules.CompanionDroidData> droidData = new List<StatRules.CompanionDroidData>();
+
+
+
+                string HP_Rules;
             }
             catch (Exception e)
             {

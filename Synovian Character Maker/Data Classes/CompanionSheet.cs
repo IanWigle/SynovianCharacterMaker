@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Text.Json.Serialization;
+using System.Drawing;
 
 namespace Synovian_Character_Maker.Data_Classes
 {
@@ -15,7 +14,6 @@ namespace Synovian_Character_Maker.Data_Classes
         public enum CompanionType
         {
             None = 0,
-            Beast,
             Research_Droid,
             Medical_Droid,
             Engineering_Droid,
@@ -24,6 +22,7 @@ namespace Synovian_Character_Maker.Data_Classes
             Battle_Droid,
             Security_Droid,
             Assassin_Droid,
+            Beast,
             Max
         }
 
@@ -32,6 +31,8 @@ namespace Synovian_Character_Maker.Data_Classes
 
         public List<CompanionType> additionalCompanionTypes { get => _additionalCompanionTypes; }
         List<CompanionType> _additionalCompanionTypes = new List<CompanionType>();
+
+        public Image _image = null;
 
         [JsonIgnore]
         public string s_primaryCompanionType { get => Enum.GetName(typeof(CompanionType), _primaryCompanionType).Replace("_", " "); }

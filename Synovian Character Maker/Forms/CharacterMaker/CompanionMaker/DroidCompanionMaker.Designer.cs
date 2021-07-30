@@ -1,6 +1,6 @@
 ﻿namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
 {
-    partial class CompanionMaker
+    partial class DroidCompanionMaker
     {
         /// <summary>
         /// Required designer variable.
@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CompanionMaker));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DroidCompanionMaker));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.loadpictureButton = new System.Windows.Forms.Button();
+            this.droidCompanionPicture = new System.Windows.Forms.PictureBox();
             this.deleteCharButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.descriptionBox = new System.Windows.Forms.RichTextBox();
@@ -44,11 +46,14 @@
             this.companionList = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.loadPictureDialog = new System.Windows.Forms.OpenFileDialog();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.droidCompanionPicture)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
@@ -76,6 +81,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.loadpictureButton);
+            this.groupBox1.Controls.Add(this.droidCompanionPicture);
             this.groupBox1.Controls.Add(this.deleteCharButton);
             this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Controls.Add(this.groupBox2);
@@ -84,6 +91,25 @@
             this.groupBox1.Size = new System.Drawing.Size(289, 540);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            // 
+            // loadpictureButton
+            // 
+            this.loadpictureButton.Location = new System.Drawing.Point(208, 508);
+            this.loadpictureButton.Name = "loadpictureButton";
+            this.loadpictureButton.Size = new System.Drawing.Size(75, 23);
+            this.loadpictureButton.TabIndex = 4;
+            this.loadpictureButton.Text = "Load Picture";
+            this.loadpictureButton.UseVisualStyleBackColor = true;
+            this.loadpictureButton.Click += new System.EventHandler(this.loadpictureButton_Click);
+            // 
+            // droidCompanionPicture
+            // 
+            this.droidCompanionPicture.Location = new System.Drawing.Point(9, 261);
+            this.droidCompanionPicture.Name = "droidCompanionPicture";
+            this.droidCompanionPicture.Size = new System.Drawing.Size(274, 241);
+            this.droidCompanionPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.droidCompanionPicture.TabIndex = 3;
+            this.droidCompanionPicture.TabStop = false;
             // 
             // deleteCharButton
             // 
@@ -97,8 +123,9 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.descriptionBox);
-            this.groupBox3.Location = new System.Drawing.Point(9, 135);
+            this.groupBox3.Location = new System.Drawing.Point(9, 90);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(274, 165);
             this.groupBox3.TabIndex = 1;
@@ -106,10 +133,10 @@
             // 
             // descriptionBox
             // 
-            this.descriptionBox.Location = new System.Drawing.Point(10, 19);
+            this.descriptionBox.Location = new System.Drawing.Point(10, 32);
             this.descriptionBox.Name = "descriptionBox";
             this.descriptionBox.ReadOnly = true;
-            this.descriptionBox.Size = new System.Drawing.Size(258, 140);
+            this.descriptionBox.Size = new System.Drawing.Size(258, 127);
             this.descriptionBox.TabIndex = 0;
             this.descriptionBox.Text = "";
             // 
@@ -119,7 +146,7 @@
             this.groupBox2.Controls.Add(this.nameBox);
             this.groupBox2.Location = new System.Drawing.Point(9, 19);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(274, 110);
+            this.groupBox2.Size = new System.Drawing.Size(274, 65);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Data";
@@ -207,7 +234,21 @@
             this.columnHeader2.Text = "Description";
             this.columnHeader2.Width = 226;
             // 
-            // CompanionMaker
+            // loadPictureDialog
+            // 
+            this.loadPictureDialog.FileName = "openFileDialog1";
+            this.loadPictureDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.loadPictureDialog_FileOk);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(10, 14);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(95, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Companion History";
+            // 
+            // DroidCompanionMaker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -215,15 +256,18 @@
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Name = "CompanionMaker";
-            this.Text = "CompanionMaker";
+            this.Name = "DroidCompanionMaker";
+            this.Text = "Droid Companion Maker";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DroidCompanionMaker_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CompanionMaker_KeyDown);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.droidCompanionPicture)).EndInit();
             this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
@@ -251,5 +295,9 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.Button deleteCharButton;
+        private System.Windows.Forms.Button loadpictureButton;
+        private System.Windows.Forms.PictureBox droidCompanionPicture;
+        private System.Windows.Forms.OpenFileDialog loadPictureDialog;
+        private System.Windows.Forms.Label label2;
     }
 }
