@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
@@ -28,7 +24,6 @@ namespace Synovian_Character_Maker.Forms
             CompanionAbilities,
             MiscMusic
         }
-
 
         public MainForm()
         {
@@ -61,6 +56,8 @@ namespace Synovian_Character_Maker.Forms
             }
 
             ChangeActiveTutorial(TutorialMode.Creation);
+
+            licenseBox.LoadFile($"{Globals.DataFolder}\\LICENSE", RichTextBoxStreamType.PlainText);
         }
 
         private void exitButton_Click(object sender, EventArgs e) => Close();

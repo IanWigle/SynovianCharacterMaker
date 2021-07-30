@@ -79,6 +79,8 @@
             this.musicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openSongFile = new System.Windows.Forms.OpenFileDialog();
             this.openCharacter = new System.Windows.Forms.OpenFileDialog();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.licenseBox = new System.Windows.Forms.RichTextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -100,6 +102,7 @@
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -108,6 +111,7 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -598,6 +602,26 @@
             // 
             this.openCharacter.FileOk += new System.ComponentModel.CancelEventHandler(this.openCharacter_FileOk);
             // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.licenseBox);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(1160, 557);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "License";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // licenseBox
+            // 
+            this.licenseBox.Location = new System.Drawing.Point(3, 3);
+            this.licenseBox.Name = "licenseBox";
+            this.licenseBox.ReadOnly = true;
+            this.licenseBox.Size = new System.Drawing.Size(1154, 551);
+            this.licenseBox.TabIndex = 0;
+            this.licenseBox.Text = "";
+            this.licenseBox.ZoomFactor = 5F;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -637,6 +661,7 @@
             this.tabPage4.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -693,6 +718,8 @@
         private System.Windows.Forms.ToolStripMenuItem miscToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem musicToolStripMenuItem;
         private System.Windows.Forms.RichTextBox tutorialTextBox;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.RichTextBox licenseBox;
     }
 }
 
