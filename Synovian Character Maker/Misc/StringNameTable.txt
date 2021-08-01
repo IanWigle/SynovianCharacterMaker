@@ -127,7 +127,7 @@
   "125": "Consume Essence",
   "126": "Intermediate Dark Healing",
   "127": "Mask",
-  "128": "Corpse Vision",
+  "128": "Gravesight",
   "129": "Advanced Dark Healing",
   "130": "Spell of Concealment",
   "131": "Force Travel",
@@ -450,5 +450,6 @@
   "448": "Strategic Navigation",
   "449": "Defensive Systems",
   "450": "Speech Translation",
-  "451": "Torture Protocols"
+  "451": "Torture Protocols",
+  "452": "Corpse Vision"
 }

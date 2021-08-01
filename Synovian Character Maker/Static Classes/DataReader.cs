@@ -148,7 +148,7 @@ namespace Synovian_Character_Maker.Static_Classes
             // First, get all files in the sheets folder
             string[] files = Directory.GetFiles(Globals.CharacterFolder);
 
-            CharacterSheet GetCharacterSheet(string file)
+            CharacterSheet GetCharacterSheetFromTextJson(string file)
             {
                 string fileData = File.ReadAllText(file);
 
@@ -262,7 +262,7 @@ namespace Synovian_Character_Maker.Static_Classes
                         continue;
                     else if (extension == "txt")
                     {
-                        characterLibrary.AddCharacter(GetCharacterSheet(fullFile));
+                        characterLibrary.AddCharacter(GetCharacterSheetFromTextJson(fullFile));
                     }
                     else if (extension == "zip")
                     {
@@ -292,7 +292,7 @@ namespace Synovian_Character_Maker.Static_Classes
                             }
                         }
 
-                        CharacterSheet characterSheet = GetCharacterSheet(jsonString);
+                        CharacterSheet characterSheet = GetCharacterSheetFromTextJson(jsonString);
                         characterSheet._image = Image.FromFile(imageString);
                         characterSheet.imageExtension = imageString.Split('\\')[imageString.Split('\\').Count() - 1].Split('.')[1];
                         Program.characterLibrary.AddCharacter(characterSheet);

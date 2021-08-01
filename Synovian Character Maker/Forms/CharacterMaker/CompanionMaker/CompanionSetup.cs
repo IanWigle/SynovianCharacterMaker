@@ -80,7 +80,6 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
                             case CompanionSheet.CompanionType.Research_Droid:
                                 secondaryCompanionType.Add(CompanionSheet.CompanionType.Medical_Droid);
                                 secondaryCompanionType.Add(CompanionSheet.CompanionType.Engineering_Droid);
-                                secondaryCompanionType.Add(CompanionSheet.CompanionType.Astromech_Droid);
                                 break;
                             case CompanionSheet.CompanionType.Security_Droid:
                                 secondaryCompanionType.Add(CompanionSheet.CompanionType.Battle_Droid);

@@ -310,21 +310,27 @@ namespace Synovian_Character_Maker.Static_Classes
             string[] validFormNames = { "Niman", "Shii Cho", "Makashi", "Soresu", "Ataru", "Shien/Djem-so", "Juyo",
                                         "Trakata","Saber Staff","Jar'kai","Saber Pike","Channel", "Affinitiy", "Mastery",
                                         "Potency", "Mentalism"};
+            string[] formLevels = { "Basic", "Intermediate", "Advanced", "Master" };
             List<string> FurthestForms = new List<string>();
 
-            // Grab only the furthest versions of all forms the character has to be presented.
-            foreach (string _formName in validFormNames)
+            string GetFurthestVersionOfTree(string form)
             {
-                List<string> vs1 = new List<string>();
-                foreach (string _form in forms)
+                string highestLevel = "";
+
+                foreach(string level in formLevels)
                 {
-                    if (_form.Contains(_formName))
-                    {
-                        vs1.Add(_form);
-                    }
+                    if (characterSheet.Contains($"{level} {form}"))
+                        highestLevel = $"{level} {form}";
                 }
 
-                if (vs1.Count() > 0) FurthestForms.Add(vs1.Last());
+                return highestLevel;
+            }
+
+            foreach(string form in validFormNames)
+            {
+                string highestFormName = GetFurthestVersionOfTree(form);
+                if (highestFormName == "") continue;
+                else FurthestForms.Add(highestFormName);
             }
 
             foreach(string form in FurthestForms)
@@ -339,8 +345,6 @@ namespace Synovian_Character_Maker.Static_Classes
                 MergeCells($"J{startingFormIndex}:M{startingFormIndex}");
                 startingFormIndex++;
             }
-
-
 
             int currentLowestIndex = (startingSchoolIndex > startingFormIndex) ? startingSchoolIndex : startingFormIndex;
             if (currentLowestIndex <= 6) currentLowestIndex = 7;
@@ -570,18 +574,18 @@ namespace Synovian_Character_Maker.Static_Classes
             sLDocument.SelectWorksheet(characterSheet.Name);
             sLDocument.SaveAs(url);
 
-            if (false)
+            try
             {
-                try
+                if (Directory.Exists(@"C:\Program Files (x86)\Microsoft Office\root\Office16") && File.Exists(@"C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE")
+                    && Program.isClosing == false)
                 {
-                    if (Directory.Exists(@"C:\Program Files (x86)\Microsoft Office\root\Office16") && File.Exists(@"C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE")
-                        && Program.isClosing == false)
-                    {
-                        Process.Start(@url);
-                    }
+                    if (MessageBox.Show("Would you like to Open Excel?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                        return;
+
+                    Process.Start(@url);
                 }
-                catch (Exception e) { Helpers.ExceptionHandle(e); }
-            }            
+            }
+            catch (Exception e) { Helpers.ExceptionHandle(e); }          
 
             //if(Program.programArgs.Contains("-Google"))
             //{

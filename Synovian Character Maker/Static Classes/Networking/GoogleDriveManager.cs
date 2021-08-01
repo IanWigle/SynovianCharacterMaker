@@ -53,7 +53,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
 
 
             Google.Apis.Drive.v3.Data.File newFile = new Google.Apis.Drive.v3.Data.File();
-            newFile.Name = "Doctor Abrhame.xlsx";
+            newFile.Name = $"{file.Split('\\')[file.Split('\\').Length - 1].Split('.')[0]}.xlsx";
             newFile.Description = "A test file";
             newFile.MimeType = "application/vnd.google-apps.spreadsheet";
 
@@ -61,7 +61,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
             {
                 FilesResource.CreateMediaUpload request;
 
-                using (var stream = new System.IO.FileStream("Doctor Abrhame.xlsx", FileMode.Open))
+                using (var stream = new System.IO.FileStream(file, FileMode.Open))
                 {
                     request = service.Files.Create(newFile, stream, "spreadsheet/xlsx");
                     request.Fields = "id";

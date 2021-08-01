@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 using Synovian_Character_Maker.Data_Classes;
 using Synovian_Character_Maker.Static_Classes;
@@ -28,7 +29,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                                         new List<Ability_Schools>());
             filters.Fill();
             serverSubmissionButton.Enabled = Program.programArgs.Contains("-TCN");
-            googleDriveButton.Enabled = Program.programArgs.Contains("-Google");
+            //googleDriveButton.Enabled = Program.programArgs.Contains("-Google");
             FilterLibraryAbilities(filters);
             FilterCharacterAbilities(filters);
         }
@@ -388,7 +389,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                     {
                         if (ability.Rank > Rank.Apprentice)
                         {
-                            if (ability.ability_School > Ability_Schools.Ability_Forms) continue;
+                            if (ability.ability_School >= Ability_Schools.Ability_Forms) continue;
 
                             Ability_Schools schoolEnum = ability.ability_School;
                             Ability ability_School = Program.abilityLibrary.GetSchool(schoolEnum);
@@ -534,6 +535,119 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                     }
                 }
             }
+            // If the character has a companion, check if the sheet has the needed abilities
+            {
+                if (current_characterSheet.companionSheet == null)
+                    goto SkipCompaionChecks;
+
+                CompanionSheet.CompanionType companionType = current_characterSheet.companionSheet.primaryCompanionType;
+
+                if(companionType == CompanionSheet.CompanionType.Beast)
+                {
+                    if(!current_characterSheet.Contains("Dominate Mind") &&
+                       !current_characterSheet.Contains("Basic Animal Friendship"))
+                    {
+                        valid = false;
+                        numErrors++;
+
+                        calculatorLog.AddToLog("Having a beast companion requires you to have either Dominate Mind or at least Basic Animal Friendship");
+                    }
+                }
+                else if(companionType == CompanionSheet.CompanionType.Medical_Droid ||
+                        companionType == CompanionSheet.CompanionType.Research_Droid)
+                {
+                    if(!current_characterSheet.Contains("Basic Creation") ||
+                       !current_characterSheet.Contains("Basic Engineering") ||
+                       !current_characterSheet.Contains("Class I Droids"))
+                    {
+                        valid = false;
+                        numErrors++;
+
+                        string errorMessage = "You are missing: ";
+
+                        if (!current_characterSheet.Contains("Basic Creation"))
+                            errorMessage += "Basic Creation ";
+                        if (!current_characterSheet.Contains("Basic Engineering"))
+                            errorMessage += "Basic Engineering ";
+                        if (!current_characterSheet.Contains("Class I Droids"))
+                            errorMessage += "Class I Droids";
+
+                        errorMessage += " for your droid companion.";
+                        calculatorLog.AddToLog(errorMessage);
+                    }
+                }
+                else if (companionType == CompanionSheet.CompanionType.Engineering_Droid ||
+                         companionType == CompanionSheet.CompanionType.Astromech_Droid)
+                {
+                    if (!current_characterSheet.Contains("Basic Creation") ||
+                       !current_characterSheet.Contains("Basic Engineering") ||
+                       !current_characterSheet.Contains("Class II Droids"))
+                    {
+                        valid = false;
+                        numErrors++;
+
+                        string errorMessage = "You are missing: ";
+
+                        if (!current_characterSheet.Contains("Basic Creation"))
+                            errorMessage += "Basic Creation ";
+                        if (!current_characterSheet.Contains("Basic Engineering"))
+                            errorMessage += "Basic Engineering ";
+                        if (!current_characterSheet.Contains("Class II Droids"))
+                            errorMessage += "Class II Droids";
+
+                        errorMessage += " for your droid companion.";
+                        calculatorLog.AddToLog(errorMessage);
+                    }
+                }
+                else if (companionType == CompanionSheet.CompanionType.Protocol_Droid)
+                {
+                    if (!current_characterSheet.Contains("Intermediate Creation") ||
+                       !current_characterSheet.Contains("Basic Engineering") ||
+                       !current_characterSheet.Contains("Class III Droids"))
+                    {
+                        valid = false;
+                        numErrors++;
+
+                        string errorMessage = "You are missing: ";
+
+                        if (!current_characterSheet.Contains("Intermediate Creation"))
+                            errorMessage += "Intermediate Creation ";
+                        if (!current_characterSheet.Contains("Basic Engineering"))
+                            errorMessage += "Basic Engineering ";
+                        if (!current_characterSheet.Contains("Class III Droids"))
+                            errorMessage += "Class III Droids";
+
+                        errorMessage += " for your droid companion.";
+                        calculatorLog.AddToLog(errorMessage);
+                    }
+                }
+                else if (companionType == CompanionSheet.CompanionType.Battle_Droid ||
+                         companionType == CompanionSheet.CompanionType.Security_Droid ||
+                         companionType == CompanionSheet.CompanionType.Astromech_Droid)
+                {
+                    if (!current_characterSheet.Contains("Advanced Creation") ||
+                       !current_characterSheet.Contains("Basic Engineering") ||
+                       !current_characterSheet.Contains("Class IV Droids"))
+                    {
+                        valid = false;
+                        numErrors++;
+
+                        string errorMessage = "You are missing: ";
+
+                        if (!current_characterSheet.Contains("Advanced Creation"))
+                            errorMessage += "Advanced Creation ";
+                        if (!current_characterSheet.Contains("Basic Engineering"))
+                            errorMessage += "Basic Engineering ";
+                        if (!current_characterSheet.Contains("Class IV Droids"))
+                            errorMessage += "Class IV Droids";
+
+                        errorMessage += " for your droid companion.";
+                        calculatorLog.AddToLog(errorMessage);
+                    }
+                }
+
+                SkipCompaionChecks:;                
+            }
 
             calculatorLog.AddToLog($"Results are in: your sheet is {((valid == true) ? "valid" : "invalid")}.");
             calculatorLog.AddToLog($"Number of errors: {numErrors}");
@@ -604,8 +718,10 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
         private void googleDriveButton_Click(object sender, EventArgs e)
         {
+            if (!Directory.Exists(Globals.TempFolder)) Directory.CreateDirectory(Globals.TempFolder);
             DataWriter.ExportCharacterSheetExcel(current_characterSheet, $"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx", DataWriter.ExcelFormats.XLSX);
             Static_Classes.Networking.GoogleDrive.GoogleDriveManager.SubmitSheetToDrive($"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx");
+            File.Delete($"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx");
         }
     }
 }

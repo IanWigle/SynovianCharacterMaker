@@ -17,9 +17,9 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
         {
             InitializeComponent();
             nameBox.Text = Static_Classes.Helpers.GetForm<CharacterMaker>().current_characterSheet.companionSheet.companionName;
+            companionSheet = Static_Classes.Helpers.GetForm<CharacterMaker>().current_characterSheet.companionSheet;
             RefreshList();
 
-            companionSheet = Static_Classes.Helpers.GetForm<CharacterMaker>().current_characterSheet.companionSheet;
 
             if(companionSheet._image != null)
             {

@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synovian Character Maker", 
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "InstallationWizard", "InstallationWizard\InstallationWizard.vdproj", "{2DEFE69C-6018-4A83-B4A9-AE6C4E0CA4EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleDrive", "GoogleDriveTest\GoogleDrive\GoogleDrive.csproj", "{76CD5B27-5F28-43E9-BA7D-D5057D35D132}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleAPI", "GoogleDriveTest\GoogleDrive\GoogleAPI.csproj", "{76CD5B27-5F28-43E9-BA7D-D5057D35D132}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

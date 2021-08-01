@@ -450,5 +450,6 @@
   "448": "None",
   "449": "None",
   "450": "Equips the droid with an on board translation unit.",
-  "451": "Equips the droid with torture protocols."
+  "451": "Equips the droid with torture protocols.",
+  "452": "An ability that allows users to create visions of deceased friends/family who would say various messages that may bother a target."
 }
