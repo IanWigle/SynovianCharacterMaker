@@ -35,6 +35,7 @@
             this.droidCompanionPicture = new System.Windows.Forms.PictureBox();
             this.deleteCharButton = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.descriptionBox = new System.Windows.Forms.RichTextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -47,7 +48,6 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.loadPictureDialog = new System.Windows.Forms.OpenFileDialog();
-            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -131,11 +131,19 @@
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(10, 14);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(95, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Companion History";
+            // 
             // descriptionBox
             // 
             this.descriptionBox.Location = new System.Drawing.Point(10, 32);
             this.descriptionBox.Name = "descriptionBox";
-            this.descriptionBox.ReadOnly = true;
             this.descriptionBox.Size = new System.Drawing.Size(258, 127);
             this.descriptionBox.TabIndex = 0;
             this.descriptionBox.Text = "";
@@ -238,15 +246,6 @@
             // 
             this.loadPictureDialog.FileName = "openFileDialog1";
             this.loadPictureDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.loadPictureDialog_FileOk);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 14);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(95, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Companion History";
             // 
             // DroidCompanionMaker
             // 
