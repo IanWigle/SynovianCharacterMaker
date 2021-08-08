@@ -556,7 +556,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                 else if(companionType == CompanionSheet.CompanionType.Medical_Droid ||
                         companionType == CompanionSheet.CompanionType.Research_Droid)
                 {
-                    if(!current_characterSheet.Contains("Basic Creation") ||
+                    if(!current_characterSheet.Contains("Basic Creation")    ||
                        !current_characterSheet.Contains("Basic Engineering") ||
                        !current_characterSheet.Contains("Class I Droids"))
                     {
@@ -579,9 +579,9 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                 else if (companionType == CompanionSheet.CompanionType.Engineering_Droid ||
                          companionType == CompanionSheet.CompanionType.Astromech_Droid)
                 {
-                    if (!current_characterSheet.Contains("Basic Creation") ||
-                       !current_characterSheet.Contains("Basic Engineering") ||
-                       !current_characterSheet.Contains("Class II Droids"))
+                    if (!current_characterSheet.Contains("Basic Creation")    ||
+                        !current_characterSheet.Contains("Basic Engineering") ||
+                        !current_characterSheet.Contains("Class II Droids"))
                     {
                         valid = false;
                         numErrors++;
@@ -602,8 +602,8 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                 else if (companionType == CompanionSheet.CompanionType.Protocol_Droid)
                 {
                     if (!current_characterSheet.Contains("Intermediate Creation") ||
-                       !current_characterSheet.Contains("Basic Engineering") ||
-                       !current_characterSheet.Contains("Class III Droids"))
+                        !current_characterSheet.Contains("Basic Engineering")     ||
+                        !current_characterSheet.Contains("Class III Droids"))
                     {
                         valid = false;
                         numErrors++;
@@ -621,13 +621,13 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                         calculatorLog.AddToLog(errorMessage);
                     }
                 }
-                else if (companionType == CompanionSheet.CompanionType.Battle_Droid ||
+                else if (companionType == CompanionSheet.CompanionType.Battle_Droid   ||
                          companionType == CompanionSheet.CompanionType.Security_Droid ||
                          companionType == CompanionSheet.CompanionType.Astromech_Droid)
                 {
-                    if (!current_characterSheet.Contains("Advanced Creation") ||
-                       !current_characterSheet.Contains("Basic Engineering") ||
-                       !current_characterSheet.Contains("Class IV Droids"))
+                    if (!current_characterSheet.Contains("Advanced Creation")  ||
+                        !current_characterSheet.Contains("Basic Engineering")  ||
+                        !current_characterSheet.Contains("Class IV Droids"))
                     {
                         valid = false;
                         numErrors++;

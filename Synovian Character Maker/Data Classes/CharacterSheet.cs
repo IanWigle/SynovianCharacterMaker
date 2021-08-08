@@ -14,7 +14,8 @@ namespace Synovian_Character_Maker.Data_Classes
             Txt,
             Zip,
             Xls,
-            XlSx
+            XlSx,
+            Xlsx_Google
         }
 
         public string Name { get => _name; }
@@ -42,6 +43,7 @@ namespace Synovian_Character_Maker.Data_Classes
         [JsonIgnore]
         public SheetFileType sheetFileType { get => _sheetFileType; }
         SheetFileType _sheetFileType;
+        public void setFileType(SheetFileType fileType) => _sheetFileType = fileType;
 
         public string characterSpecies { get; set; }
 

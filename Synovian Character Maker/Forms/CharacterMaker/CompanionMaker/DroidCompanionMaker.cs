@@ -155,6 +155,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
             if(droidCompanionPicture.Image != null)
             {
                 Static_Classes.Helpers.GetForm<CharacterMaker>().current_characterSheet.companionSheet._image = droidCompanionPicture.Image;
+                Static_Classes.Helpers.GetForm<CharacterMaker>().current_characterSheet.companionSheet.SetCompanionHistory(descriptionBox.Text);
             }
         }
     }
