@@ -246,6 +246,8 @@ namespace Synovian_Character_Maker.Static_Classes
                     case CharacterSheet.SheetFileType.XlSx:
                         ExportCharacterSheetExcel(characterSheet, "", ExcelFormats.XLSX);
                         break;
+                    case CharacterSheet.SheetFileType.Xlsx_Google:
+                        break;
                     default:
                         WriteCharacterToDiskTxt(characterSheet);
                         break;

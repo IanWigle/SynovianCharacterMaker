@@ -543,33 +543,130 @@ namespace Synovian_Character_Maker.Static_Classes
             SetCellBackgroundColor($"N{currentLowestIndex}", BLACK);
             MergeCells($"N{currentLowestIndex}:N{largestColumnIndex - 1}");
 
-            // Create metadata sheet
-            sLDocument.AddWorksheet("CharacterMakerData");
-            WriteCell("A1", "This sheet is used for the charactermaker. If you want to load this sheet into the maker, keep this data in this sheet");
-            SLStyle newstyle = new SLStyle();
-            newstyle.SetVerticalAlignment(VerticalAlignmentValues.Top);
-            newstyle.SetWrapText(true);
-            sLDocument.SetCellStyle("A1", newstyle);
-
-            MergeCells("A1:I3");
-
-            string prereqFormsString = "";
-
-            string[] allformabilities = characterSheet.GetAbilitiesOfSchool(Ability_Schools.Ability_Forms);
-            foreach(string formAbility in allformabilities)
+            // If character has a companion, make a new sheet for it.
+            if(characterSheet.companionSheet != null)
             {
-                if (FurthestForms.Contains(formAbility))
-                    continue;
-                else
+                sLDocument.AddWorksheet("Companion");
+                if(characterSheet.companionSheet.primaryCompanionType == CompanionSheet.CompanionType.Beast)
                 {
-                    if(Program.abilityLibrary.TryGetAbility(formAbility, out Ability ability))
+                    WriteCell("A1", $"Companion Name : {characterSheet.companionSheet.companionName}");
+                    MergeCells("A1:D1");
+
+                    WriteCell("A2", $"Beast Race : {characterSheet.companionSheet.companionSpecies}");
+                    MergeCells("A2:D2");
+
+                    WriteCell("A3", $"Companion History : {characterSheet.companionSheet.companionHistory}");
+
+                    SLStyle sLStyle = new SLStyle();
+                    sLStyle.SetWrapText(true);
+                    sLStyle.SetVerticalAlignment(VerticalAlignmentValues.Top);
+
+                    sLDocument.SetCellStyle("A3", sLStyle);
+                    MergeCells("A3:G6");
+
+                    if(characterSheet.companionSheet._image != null)
                     {
-                        prereqFormsString += $"{ability.ID},";
+                        var ms = new MemoryStream();
+                        characterSheet.companionSheet._image.Save(ms, characterSheet.companionSheet._image.RawFormat);
+                    
+                        SpreadsheetLight.Drawing.SLPicture picture = new SpreadsheetLight.Drawing.SLPicture(ms.ToArray(), DocumentFormat.OpenXml.Packaging.ImagePartType.Jpeg);
+                        picture.SetPosition(8, 1);
+                        picture.ResizeInPercentage(10, 10);
+                    
+                        sLDocument.InsertPicture(picture);
+                    }
+                }
+                else if (characterSheet.companionSheet.primaryCompanionType >= CompanionSheet.CompanionType.Research_Droid)
+                {
+                    WriteCell("A1", $"Compaion Name : {characterSheet.companionSheet.companionName}");
+                    MergeCells("A1:D1");
+
+                    WriteCell("A2", $"Droid Type : {characterSheet.companionSheet.primaryCompanionType}");
+                    MergeCells("A2:D2");
+
+                    WriteCell("A3", $"Companion History : {characterSheet.companionSheet.companionHistory}");
+
+                    SLStyle sLStyle = new SLStyle();
+                    sLStyle.SetWrapText(true);
+                    sLStyle.SetVerticalAlignment(VerticalAlignmentValues.Top);
+
+                    sLDocument.SetCellStyle("A3",sLStyle);
+                    MergeCells("A3:L6");
+
+                    WriteCell("A8", "Abilities");
+                    MergeCells("A8:D8");
+
+                    WriteCell("A9", "Name");
+                    MergeCells("A9:D9");
+
+                    WriteCell("E9", "Description");
+                    MergeCells("E9:H9");
+
+                    WriteCell("I9","Droid Type");
+                    MergeCells("I9:L9");
+
+                    int currentRow = 10;
+
+                    foreach(int ability in characterSheet.companionSheet.abilities)
+                    {
+                        if(Program.abilityLibrary.TryGetAbility(ability, out Ability ability1))
+                        {
+                            WriteCell($"A{currentRow}", ability1.Name);
+                            MergeCells($"A{currentRow}:D{currentRow}");
+
+                            WriteCell($"E{currentRow}", ability1.description);
+                            MergeCells($"E{currentRow}:H{currentRow}");
+
+                            WriteCell($"I{currentRow}", ability1.s_prereqs[0]);
+                            MergeCells($"I{currentRow}:L{currentRow}");
+
+                            currentRow++;
+                        }
+                    }
+
+                    if (characterSheet.companionSheet._image != null)
+                    {
+                        var ms = new MemoryStream();
+                        characterSheet.companionSheet._image.Save(ms, characterSheet.companionSheet._image.RawFormat);
+
+                        SpreadsheetLight.Drawing.SLPicture picture = new SpreadsheetLight.Drawing.SLPicture(ms.ToArray(), DocumentFormat.OpenXml.Packaging.ImagePartType.Jpeg);
+                        picture.SetPosition((currentRow + 2), 1);
+                        picture.ResizeInPercentage(10, 10);
+
+                        sLDocument.InsertPicture(picture);
                     }
                 }
             }
 
-            WriteCell("A4", prereqFormsString);
+            // Create metadata sheet
+            {
+                sLDocument.AddWorksheet("CharacterMakerData");
+                WriteCell("A1", "This sheet is used for the charactermaker. If you want to load this sheet into the maker, keep this data in this sheet");
+                SLStyle newstyle = new SLStyle();
+                newstyle.SetVerticalAlignment(VerticalAlignmentValues.Top);
+                newstyle.SetWrapText(true);
+                sLDocument.SetCellStyle("A1", newstyle);
+
+                MergeCells("A1:I3");
+
+                string prereqFormsString = "";
+
+                string[] allformabilities = characterSheet.GetAbilitiesOfSchool(Ability_Schools.Ability_Forms);
+                foreach (string formAbility in allformabilities)
+                {
+                    if (FurthestForms.Contains(formAbility))
+                        continue;
+                    else
+                    {
+                        if (Program.abilityLibrary.TryGetAbility(formAbility, out Ability ability))
+                        {
+                            prereqFormsString += $"{ability.ID},";
+                        }
+                    }
+                }
+
+                WriteCell("A4", prereqFormsString);
+            }            
 
             sLDocument.SelectWorksheet(characterSheet.Name);
             sLDocument.SaveAs(url);
@@ -586,14 +683,6 @@ namespace Synovian_Character_Maker.Static_Classes
                 }
             }
             catch (Exception e) { Helpers.ExceptionHandle(e); }          
-
-            //if(Program.programArgs.Contains("-Google"))
-            //{
-            //    if (MessageBox.Show("Would you like to send your sheet to your google drive?", "Question!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            //    {
-            //        Static_Classes.Networking.GoogleDrive.GoogleDriveManager.SubmitSheetToDrive(url);
-            //    }
-            //}
         }
 
         public static CharacterSheet ImportSheet(string url)
@@ -761,6 +850,37 @@ namespace Synovian_Character_Maker.Static_Classes
                         abilities.Add(int.Parse(id));
                     }
                 }
+            }
+
+            if(sl.SelectWorksheet("Companion") == true)
+            {
+                string compName = sl.GetCellValueAsString("A1").Remove(0, 17);
+                string compType = sl.GetCellValueAsString("A2");
+                string compHistory = "";
+                Image compImage;
+                List<int> compAbil = new List<int>();
+
+                if(compType.Contains("Beast Race : "))
+                {
+                    compType.Remove(0, 13);
+                }
+                else if (compType.Contains("Droid Type : "))
+                {
+                    compType.Remove(0, 13);
+
+
+                }
+                else
+                {
+                    MessageBox.Show($"There was a problem reading the companion worksheet for the character {name}. The companion is not loaded", 
+                                    "Error!", 
+                                    MessageBoxButtons.OK, 
+                                    MessageBoxIcon.Error);
+                }
+
+                compHistory = sl.GetCellValueAsString("A3");
+
+                
             }
 
             CharacterSheet characterSheet = new CharacterSheet(name, 

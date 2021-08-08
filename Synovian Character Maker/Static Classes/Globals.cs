@@ -18,5 +18,6 @@ namespace Synovian_Character_Maker.Static_Classes
         public static string TempFolder { get => $"{Directory.GetCurrentDirectory()}\\Temp"; }
         public static string AudioFolder { get => $"{DataFolder}\\Audio"; }
         public static string PreviewDefault { get => $"{DataFolder}\\Assets\\Preview.bmp"; }
+        public static string GoogleDownloads { get => $"{Directory.GetCurrentDirectory()}\\GoogleDownloads"; }
     }
 }

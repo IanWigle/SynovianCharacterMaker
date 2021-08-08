@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Beast_Companion_Maker));
             this.compNameBox = new System.Windows.Forms.TextBox();
             this.compSpeciesBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -140,6 +141,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.compSpeciesBox);
             this.Controls.Add(this.compNameBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Beast_Companion_Maker";
             this.Text = "Beast_Companion_Maker";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Beast_Companion_Maker_FormClosing);

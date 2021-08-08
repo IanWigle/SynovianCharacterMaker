@@ -42,10 +42,11 @@
             this.modifiedColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.exitButton = new System.Windows.Forms.Button();
+            this.loadSheetFromGoogle = new System.Windows.Forms.Button();
             this.sheetFolButton = new System.Windows.Forms.Button();
             this.loadCharButton = new System.Windows.Forms.Button();
             this.newCharButton = new System.Windows.Forms.Button();
+            this.exitButton = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -77,10 +78,11 @@
             this.abilitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miscToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.musicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openSongFile = new System.Windows.Forms.OpenFileDialog();
-            this.openCharacter = new System.Windows.Forms.OpenFileDialog();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.licenseBox = new System.Windows.Forms.RichTextBox();
+            this.openSongFile = new System.Windows.Forms.OpenFileDialog();
+            this.openCharacter = new System.Windows.Forms.OpenFileDialog();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -225,38 +227,39 @@
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Controls.Add(this.exitButton, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.loadSheetFromGoogle, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.sheetFolButton, 0, 2);
             this.tableLayoutPanel2.Controls.Add(this.loadCharButton, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.newCharButton, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.exitButton, 0, 4);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(6, 19);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 4;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.RowCount = 5;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(364, 514);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
-            // exitButton
+            // loadSheetFromGoogle
             // 
-            this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.exitButton.Location = new System.Drawing.Point(3, 387);
-            this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(358, 122);
-            this.exitButton.TabIndex = 3;
-            this.exitButton.Text = "Exit";
-            this.exitButton.UseVisualStyleBackColor = true;
-            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
+            this.loadSheetFromGoogle.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.loadSheetFromGoogle.Location = new System.Drawing.Point(3, 309);
+            this.loadSheetFromGoogle.Name = "loadSheetFromGoogle";
+            this.loadSheetFromGoogle.Size = new System.Drawing.Size(358, 96);
+            this.loadSheetFromGoogle.TabIndex = 4;
+            this.loadSheetFromGoogle.Text = "Load Sheet From Google";
+            this.loadSheetFromGoogle.UseVisualStyleBackColor = true;
+            this.loadSheetFromGoogle.Click += new System.EventHandler(this.loadSheetFromGoogle_Click);
             // 
             // sheetFolButton
             // 
             this.sheetFolButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sheetFolButton.Location = new System.Drawing.Point(3, 259);
+            this.sheetFolButton.Location = new System.Drawing.Point(3, 207);
             this.sheetFolButton.Name = "sheetFolButton";
-            this.sheetFolButton.Size = new System.Drawing.Size(358, 122);
+            this.sheetFolButton.Size = new System.Drawing.Size(358, 96);
             this.sheetFolButton.TabIndex = 2;
             this.sheetFolButton.Text = "Sheets Folder";
             this.sheetFolButton.UseVisualStyleBackColor = true;
@@ -265,9 +268,9 @@
             // loadCharButton
             // 
             this.loadCharButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.loadCharButton.Location = new System.Drawing.Point(3, 131);
+            this.loadCharButton.Location = new System.Drawing.Point(3, 105);
             this.loadCharButton.Name = "loadCharButton";
-            this.loadCharButton.Size = new System.Drawing.Size(358, 122);
+            this.loadCharButton.Size = new System.Drawing.Size(358, 96);
             this.loadCharButton.TabIndex = 1;
             this.loadCharButton.Text = "Load Character";
             this.loadCharButton.UseVisualStyleBackColor = true;
@@ -278,11 +281,22 @@
             this.newCharButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.newCharButton.Location = new System.Drawing.Point(3, 3);
             this.newCharButton.Name = "newCharButton";
-            this.newCharButton.Size = new System.Drawing.Size(358, 122);
+            this.newCharButton.Size = new System.Drawing.Size(358, 96);
             this.newCharButton.TabIndex = 0;
             this.newCharButton.Text = "New Character";
             this.newCharButton.UseVisualStyleBackColor = true;
             this.newCharButton.Click += new System.EventHandler(this.newCharButton_Click);
+            // 
+            // exitButton
+            // 
+            this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.exitButton.Location = new System.Drawing.Point(3, 411);
+            this.exitButton.Name = "exitButton";
+            this.exitButton.Size = new System.Drawing.Size(358, 100);
+            this.exitButton.TabIndex = 3;
+            this.exitButton.Text = "Exit";
+            this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
             // 
             // tabPage2
             // 
@@ -302,6 +316,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.groupBox4, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.groupBox6, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.panel1, 0, 1);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(6, 6);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
@@ -356,7 +371,7 @@
             this.groupBox5.Controls.Add(this.tableLayoutPanel4);
             this.groupBox5.Location = new System.Drawing.Point(3, 32);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(374, 144);
+            this.groupBox5.Size = new System.Drawing.Size(540, 88);
             this.groupBox5.TabIndex = 2;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Current Song";
@@ -593,15 +608,6 @@
             this.musicToolStripMenuItem.Text = "Music";
             this.musicToolStripMenuItem.Click += new System.EventHandler(this.musicToolStripMenuItem_Click);
             // 
-            // openSongFile
-            // 
-            this.openSongFile.FileName = "openFileDialog1";
-            this.openSongFile.FileOk += new System.ComponentModel.CancelEventHandler(this.openSongFile_FileOk);
-            // 
-            // openCharacter
-            // 
-            this.openCharacter.FileOk += new System.ComponentModel.CancelEventHandler(this.openCharacter_FileOk);
-            // 
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.licenseBox);
@@ -621,6 +627,22 @@
             this.licenseBox.TabIndex = 0;
             this.licenseBox.Text = "";
             this.licenseBox.ZoomFactor = 5F;
+            // 
+            // openSongFile
+            // 
+            this.openSongFile.FileName = "openFileDialog1";
+            this.openSongFile.FileOk += new System.ComponentModel.CancelEventHandler(this.openSongFile_FileOk);
+            // 
+            // openCharacter
+            // 
+            this.openCharacter.FileOk += new System.ComponentModel.CancelEventHandler(this.openCharacter_FileOk);
+            // 
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(3, 275);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(568, 267);
+            this.panel1.TabIndex = 2;
             // 
             // MainForm
             // 
@@ -720,6 +742,8 @@
         private System.Windows.Forms.RichTextBox tutorialTextBox;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.RichTextBox licenseBox;
+        private System.Windows.Forms.Button loadSheetFromGoogle;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
