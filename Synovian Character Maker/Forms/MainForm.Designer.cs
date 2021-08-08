@@ -63,6 +63,7 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.keepMenuOpenBox = new System.Windows.Forms.CheckBox();
             this.zipsOverTxtBox = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.FAQBox = new System.Windows.Forms.RichTextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
@@ -82,7 +83,7 @@
             this.licenseBox = new System.Windows.Forms.RichTextBox();
             this.openSongFile = new System.Windows.Forms.OpenFileDialog();
             this.openCharacter = new System.Windows.Forms.OpenFileDialog();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.googleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -479,6 +480,13 @@
             this.zipsOverTxtBox.UseVisualStyleBackColor = true;
             this.zipsOverTxtBox.CheckedChanged += new System.EventHandler(this.zipsOverTxtBox_CheckedChanged);
             // 
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(3, 275);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(568, 267);
+            this.panel1.TabIndex = 2;
+            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.FAQBox);
@@ -524,7 +532,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.basicsToolStripMenuItem,
             this.companionsToolStripMenuItem,
-            this.miscToolStripMenuItem});
+            this.miscToolStripMenuItem,
+            this.googleToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1160, 24);
@@ -637,12 +646,12 @@
             // 
             this.openCharacter.FileOk += new System.ComponentModel.CancelEventHandler(this.openCharacter_FileOk);
             // 
-            // panel1
+            // googleToolStripMenuItem
             // 
-            this.panel1.Location = new System.Drawing.Point(3, 275);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(568, 267);
-            this.panel1.TabIndex = 2;
+            this.googleToolStripMenuItem.Name = "googleToolStripMenuItem";
+            this.googleToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.googleToolStripMenuItem.Text = "Google";
+            this.googleToolStripMenuItem.Click += new System.EventHandler(this.googleToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -744,6 +753,7 @@
         private System.Windows.Forms.RichTextBox licenseBox;
         private System.Windows.Forms.Button loadSheetFromGoogle;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ToolStripMenuItem googleToolStripMenuItem;
     }
 }
 

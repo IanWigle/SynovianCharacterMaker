@@ -24,7 +24,8 @@ namespace Synovian_Character_Maker.Forms
             Filters,
             CompanionSetup,
             CompanionAbilities,
-            MiscMusic
+            MiscMusic,
+            Google
         }
 
         public MainForm()
@@ -282,6 +283,9 @@ namespace Synovian_Character_Maker.Forms
                     break;
                 case TutorialMode.MiscMusic:
                     break;
+                case TutorialMode.Google:
+                    tutorialTextBox.LoadFile($"{Globals.DataFolder}\\Tutorials\\UsingGoogleDrive.rtf", RichTextBoxStreamType.RichText);
+                    break;
                 default:
                     return;
             }
@@ -323,5 +327,7 @@ namespace Synovian_Character_Maker.Forms
             }
 
         }
+
+        private void googleToolStripMenuItem_Click(object sender, EventArgs e) => ChangeActiveTutorial(TutorialMode.Google);
     }
 }
