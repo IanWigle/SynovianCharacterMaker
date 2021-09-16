@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Synovian_Character_Maker.Static_Classes
+﻿namespace Synovian_Character_Maker.Static_Classes
 {
     public class ProgramSettings
     {

@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Synovian_Character_Maker.Data_Classes
 {
     public class AbilityLibrary
     {
+        /// <summary>
+        /// Checks library if ability exists based on ID.
+        /// </summary>
+        /// <param name="id">Provided ability ID.</param>
+        /// <returns>Returns TRUE if ability is in the library</returns>
         public bool Contains(int id)
         {
             foreach (Ability ability in _abilities)
@@ -15,6 +18,11 @@ namespace Synovian_Character_Maker.Data_Classes
             return false;
         }
 
+        /// <summary>
+        /// Checks library if ability exists based on ability name.
+        /// </summary>
+        /// <param name="ability">Name of ability.</param>
+        /// <returns>Returns TRUE if ability is in the library</returns>
         public bool Contains(string ability)
         {
             foreach (Ability ability1 in _abilities)
@@ -22,7 +30,12 @@ namespace Synovian_Character_Maker.Data_Classes
             return false;
         }
 
-        public bool Contains(Ability ability) => _abilities.Contains(ability);
+        /// <summary>
+        /// Checks if library contains ability based on provided class.
+        /// </summary>
+        /// <param name="ability">Provided ability class.</param>
+        /// <returns>Returns TRUE if ability is in the library</returns>
+        public bool Contains(ref Ability ability) => _abilities.Contains(ability);
 
         /// <summary>
         /// Try and get an ability based on an provided id. Returns true if successful
@@ -123,17 +136,39 @@ namespace Synovian_Character_Maker.Data_Classes
             return false;
         }
 
+        /// <summary>
+        /// Gets ability flagged as a school by provided name.
+        /// </summary>
+        /// <param name="school">String name of ability.</param>
+        /// <returns>Returns ability class of school.</returns>
         public Ability GetSchool(string school) => GetAbility(school);
 
+        /// <summary>
+        /// Gets ability flagged as a school by provided enum value.
+        /// </summary>
+        /// <param name="ability_Schools">Unique enum value.</param>
+        /// <returns>Returns ability class of school.</returns>
         public Ability GetSchool(Ability_Schools ability_Schools)
         {
             return GetAbility(Enum.GetName(typeof(Ability_Schools), ability_Schools).Replace("Ability_", "School Of "));
         }
 
+        /// <summary>
+        /// Returns a copy of the ability list that can be modified.
+        /// </summary>
+        /// <returns>List<Ability> of all abilities.</returns>
         public List<Ability> GetAbilities() => new List<Ability>(_abilities);
 
+        /// <summary>
+        /// Clears thge library.
+        /// </summary>
         public void ClearList() => _abilities.Clear();
 
+        /// <summary>
+        /// Get ability with ability ID.
+        /// </summary>
+        /// <param name="id">Unique ID of desired ability.</param>
+        /// <returns>Returns the ability class of ability if found.</returns>
         public Ability GetAbility(int id)
         {
             foreach (Ability ability in _abilities)
@@ -141,6 +176,11 @@ namespace Synovian_Character_Maker.Data_Classes
             return null;
         }
 
+        /// <summary>
+        /// Get ability with string name of ability.
+        /// </summary>
+        /// <param name="name">The name of the ability..</param>
+        /// <returns>Returns the ability class of ability if found.</returns>
         public Ability GetAbility(string name)
         {
             foreach (Ability ability in _abilities)
@@ -149,11 +189,21 @@ namespace Synovian_Character_Maker.Data_Classes
             return null;
         }
 
-        public bool IsASchool(Ability ability)
+        /// <summary>
+        /// Checks if the provided ability class is a school.
+        /// </summary>
+        /// <param name="ability">The class of the ability.</param>
+        /// <returns>Returns true if a school ability.</returns>
+        public bool IsASchool(ref Ability ability)
         {
             return IsASchool(ability.Name);
         }
 
+        /// <summary>
+        /// Checks if the provided ability name is a school.
+        /// </summary>
+        /// <param name="ability">String name of the ability.</param>
+        /// <returns>Returns true if a school ability.</returns>
         public bool IsASchool(string ability)
         {
             foreach(Ability_Schools ability_Schools in (Ability_Schools[])Enum.GetValues(typeof(Ability_Schools)))
@@ -165,6 +215,11 @@ namespace Synovian_Character_Maker.Data_Classes
             return false;
         }
 
+        /// <summary>
+        /// Get a list of all ability classes of a specific ability school.
+        /// </summary>
+        /// <param name="ability_Schools">Unique enum value of school</param>
+        /// <returns>Returns a list of abilities of a List<Ability></returns>
         public List<Ability> GetAbilitiesOfSchool(Ability_Schools ability_Schools)
         {
             List<Ability> abilities = new List<Ability>();
@@ -175,6 +230,22 @@ namespace Synovian_Character_Maker.Data_Classes
                     abilities.Add(ability);
             }
 
+            return abilities;
+        }
+
+        /// <summary>
+        /// Searches the library that contains a specific string.
+        /// </summary>
+        /// <param name="str">String value to be searched.</param>
+        /// <returns>Returns a List<Ability> of abilities.</returns>
+        public List<Ability> GetAbilitiesContainingString(string str)
+        {
+            List<Ability> abilities = new List<Ability>();
+            foreach(Ability ability in _abilities)
+            {
+                if (ability.Name.Contains(str))
+                    abilities.Add(ability);
+            }
             return abilities;
         }
 

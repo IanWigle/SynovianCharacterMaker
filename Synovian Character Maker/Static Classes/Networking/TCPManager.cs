@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Text;
 using System.Text.Json;
-
 using System.Net;
 using System.Net.Sockets;
-
 using Synovian_Character_Maker.Data_Classes;
 using Synovian_Character_Maker.Forms.Experimental;
 
@@ -89,7 +87,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.TCP
         private const string IP = "";
         private string hostname = "";
         private const int port = 13;
-        private bool LAN = false;
+        //private bool LAN = false;
     }
 
     public struct TCP_DataPack

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
 using Synovian_Character_Maker.Static_Classes;
@@ -22,11 +19,6 @@ namespace Synovian_Character_Maker.Data_Classes
         public CharacterLibrary(List<CharacterSheet> characters)
         {
             _characterSheets = new List<CharacterSheet>(characters);
-        }
-
-        ~CharacterLibrary()
-        {
-            
         }
 
         public void ExportSheets()
@@ -63,35 +55,17 @@ namespace Synovian_Character_Maker.Data_Classes
         /// bool will return false if the program failed to save to disk.</returns>
         public bool AddCharacter(CharacterSheet characterSheet, bool automaticallyToFile = false)
         {
-            if(automaticallyToFile)
+            foreach (CharacterSheet sheet in _characterSheets)
             {
-                foreach (CharacterSheet sheet in _characterSheets)
+                if (sheet.Name == characterSheet.Name)
                 {
-                    if (sheet.Name == characterSheet.Name)
-                    {
-                        MessageBox.Show($"The character {sheet.Name} could not be added as it was already loaded in. Enter the sheets folder and remove the file you don't want.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return false;
-                    }
+                    MessageBox.Show($"The character {sheet.Name} could not be added as it was already loaded in. Enter the sheets folder and remove the file you don't want.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
                 }
-
-                _characterSheets.Add(characterSheet);
-
-                return DataWriter.WriteCharacterToDiskTxt(characterSheet);
             }
-            else
-            {
-                foreach (CharacterSheet sheet in _characterSheets)
-                {
-                    if (sheet.Name == characterSheet.Name)
-                    {
-                        MessageBox.Show($"The character {sheet.Name} could not be added as it was already loaded in. Enter the sheets folder and remove the file you don't want.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return false;
-                    }
-                }
 
-                _characterSheets.Add(characterSheet);
-                return true;
-            }
+            _characterSheets.Add(characterSheet);
+            return (automaticallyToFile == true) ? DataWriter.WriteCharacterToDiskTxt(characterSheet) : true;
         }
 
         /// <summary>

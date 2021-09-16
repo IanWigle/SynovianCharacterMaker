@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.IO;
-using System.Diagnostics;
-using System.Windows.Forms;
 
 // Third-Party references.
 using Aspose.Zip;
@@ -72,7 +69,7 @@ namespace Synovian_Character_Maker.Static_Classes
 
 
 
-                string HP_Rules;
+                //string HP_Rules;
             }
             catch (Exception e)
             {

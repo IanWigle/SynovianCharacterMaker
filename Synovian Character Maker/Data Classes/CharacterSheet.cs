@@ -135,7 +135,7 @@ namespace Synovian_Character_Maker.Data_Classes
 
         public void AddAbility(Ability ability)
         {
-            if (Program.abilityLibrary.Contains(ability) || !_abilities.Contains(ability.ID))
+            if (Program.abilityLibrary.Contains(ref ability) || !_abilities.Contains(ability.ID))
             {
                 _abilities.Add(ability.ID);
             }
@@ -169,9 +169,9 @@ namespace Synovian_Character_Maker.Data_Classes
             }
         }
 
-        public void RemoveAbility(Ability ability)
+        public void RemoveAbility(ref Ability ability)
         {
-            if (Program.abilityLibrary.Contains(ability) || !_abilities.Contains(ability.ID))
+            if (Program.abilityLibrary.Contains(ref ability) || !_abilities.Contains(ability.ID))
             {
                 _abilities.Remove(ability.ID);
             }
@@ -247,6 +247,84 @@ namespace Synovian_Character_Maker.Data_Classes
             return vs.ToArray();
         }
 
+        public string[] GetAbilitiesWithContaingString(string str)
+        {
+            List<string> vs = new List<string>();
+            List<Ability> existingAbilitiesWithStr = Program.abilityLibrary.GetAbilitiesContainingString(str);
+
+            foreach(Ability ability in existingAbilitiesWithStr)
+            {
+                if (abilities.Contains(ability.ID))
+                    vs.Add(ability.Name);
+            }
+
+            return vs.ToArray();
+        }
+
+        public string[] GetAbilitiesWithFilters(string str)
+        {
+            return GetAbilitiesWithContaingString(str);
+        }
+
+        public string[] GetAbilitiesWithFilters(string str, Rank rank)
+        {
+            List<string> vs = new List<string>();
+            List<Ability> existingAbilitiesWithStr = Program.abilityLibrary.GetAbilitiesContainingString(str);
+
+            foreach (Ability ability in existingAbilitiesWithStr)
+            {
+                if (abilities.Contains(ability.ID) && ability.Rank == rank)
+                    vs.Add(ability.Name);
+            }
+
+            return vs.ToArray();
+        }
+
+        public string[] GetAbilitiesWithFilters(string str, Rank rank, Ability_Alignment alignment)
+        {
+            List<string> vs = new List<string>();
+            List<Ability> existingAbilitiesWithStr = Program.abilityLibrary.GetAbilitiesContainingString(str);
+
+            foreach (Ability ability in existingAbilitiesWithStr)
+            {
+                if (abilities.Contains(ability.ID) && ability.Rank == rank && ability.alignment == alignment)
+                    vs.Add(ability.Name);
+            }
+
+            return vs.ToArray();
+        }
+
+        public string[] GetAbilitiesWithFilters(string str, Rank rank, Ability_Alignment alignment, Ability_Schools schools)
+        {
+            List<string> vs = new List<string>();
+            List<Ability> existingAbilitiesWithStr = Program.abilityLibrary.GetAbilitiesContainingString(str);
+
+            foreach (Ability ability in existingAbilitiesWithStr)
+            {
+                if (abilities.Contains(ability.ID) && ability.Rank == rank && ability.alignment == alignment && ability.ability_School == schools)
+                    vs.Add(ability.Name);
+            }
+
+            return vs.ToArray();
+        }
+
+        /// <summary>
+        /// Empty the character sheets list of abilities.
+        /// </summary>
         public void Empty() => _abilities.Clear();
+
+        public string[] GetAllDescriptionsBySchool(Ability_Schools schools)
+        {
+            List<string> descriptions = new List<string>();
+            foreach(int ability in abilities)
+            {
+                if (Program.abilityLibrary.TryGetAbility(ability, out Ability ability1))
+                {
+                    if (ability1.ability_School == schools)
+                        descriptions.Add(ability1.description);
+                }
+            }
+            return descriptions.ToArray();
+        }
     }
 }

@@ -5,9 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
-using System.Collections.Generic;
 using Synovian_Character_Maker.Static_Classes;
-using Synovian_Character_Maker.Static_Classes.Networking;
 using Synovian_Character_Maker.Data_Classes;
 
 namespace Synovian_Character_Maker.Forms
@@ -309,8 +307,11 @@ namespace Synovian_Character_Maker.Forms
         {
             Google.Google_Sheets google_Sheets = new Google.Google_Sheets();
             google_Sheets.ShowDialog();
-            CharacterSheet characterSheet = google_Sheets.sheet;
 
+            if (google_Sheets.sheet == null) return;
+
+            CharacterSheet characterSheet = google_Sheets.sheet;
+            Program.characterLibrary.AddCharacter(characterSheet);
             if (characterSheet != null)
             {
                 if (Helpers.TryGetForm("CharacterMaker", out Form form))

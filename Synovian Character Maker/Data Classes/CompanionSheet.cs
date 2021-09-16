@@ -181,5 +181,10 @@ namespace Synovian_Character_Maker.Data_Classes
         {
             _companionHistory = history;
         }
+
+        public void SetCompanionSpecies(string spec)
+        {
+            _companionSpecies = spec;
+        }
     }
 }

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
@@ -57,8 +52,8 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
             if(companionPicture.Image != null)
             {
                 Static_Classes.Helpers.GetForm<CharacterMaker>().current_characterSheet.companionSheet._image = companionPicture.Image;
-                Static_Classes.Helpers.GetForm<CharacterMaker>().current_characterSheet.companionSheet.SetCompanionHistory(compHistoryBox.Text);
             }
+            Static_Classes.Helpers.GetForm<CharacterMaker>().current_characterSheet.companionSheet.SetCompanionHistory(compHistoryBox.Text);
         }
     }
 }

@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Synovian_Character_Maker.Data_Classes;
@@ -131,8 +125,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
 
         private void compNameText_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-                validateCheck();
+            validateCheck();
         }
 
         private void CompanionSetup_KeyDown(object sender, KeyEventArgs e)
@@ -151,8 +144,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
 
         private void beastSpeciesText_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-                validateCheck();
+            validateCheck();
         }
     }
 }

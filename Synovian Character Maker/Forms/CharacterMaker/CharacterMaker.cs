@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
 using Synovian_Character_Maker.Data_Classes;
@@ -29,7 +25,6 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                                         new List<Ability_Schools>());
             filters.Fill();
             serverSubmissionButton.Enabled = Program.programArgs.Contains("-TCN");
-            //googleDriveButton.Enabled = Program.programArgs.Contains("-Google");
             FilterLibraryAbilities(filters);
             FilterCharacterAbilities(filters);
         }
@@ -312,6 +307,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                 {
                     if (Program.abilityLibrary.TryGetAbility(int_ability, out Ability ability))
                     {
+                        
                         if (ability.isFeat)
                             continue;
                         else
@@ -338,6 +334,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                 {
                     if (Program.abilityLibrary.TryGetAbility(int_ability, out Ability ability))
                     {
+                        if (ability.Name == "School Of Forms") continue;
                         if (ability.isFeat)
                             usedFeatPoints += ability.skillCostOverride;
                         else
@@ -347,7 +344,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
                 if (usedFeatPoints > FeatPointMax)
                 {
-                    calculatorLog.AddToLog($"There are {usedFeatPoints - FeatPointMax} more than the character's max of {FeatPointMax}.");
+                    calculatorLog.AddToLog($"There are {usedFeatPoints - FeatPointMax} more feat points than the character's max of {FeatPointMax}.");
                     valid = false;
                     numErrors++;
                 }
@@ -509,6 +506,72 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                             {
                                 valid = false;
                                 calculatorLog.AddToLog("Flow Walking requires Psychometry, plus either Farseeing or Darksight. You are missing Psychometry");
+                                numErrors++;
+                            }
+                        }
+                        else if (ability.Name == "Saber Staff" || ability.Name == "Jar'kai" || ability.Name == "Saber Pike")
+                        {
+                            int validNumCheck = 0;
+                            string[] intermeidateAbilities = current_characterSheet.GetAbilitiesWithFilters("Intermediate");
+                            foreach(string str in intermeidateAbilities)
+                            {
+                                if (Program.abilityLibrary.TryGetAbility(str, out Ability interAbility))
+                                {
+                                    if (interAbility.ability_School == Ability_Schools.Ability_Forms)
+                                    {
+                                        string[] forms = { "Niman", "Shii Cho", "Makashi", "Soresu", "Ataru", "Shien/Djem-so", "Juyo" };
+                                        foreach (string form in forms)
+                                        {
+                                            if (interAbility.Name.Contains(form))
+                                                validNumCheck++;
+                                            if (validNumCheck > 0)
+                                                break;
+                                        }
+                                    }
+                                }
+                                if (validNumCheck > 0)
+                                    break;
+                            }
+                            if (validNumCheck > 0)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                calculatorLog.AddToLog($"{ability.Name} requires at least 1 intermediate saber form.");
+                                numErrors++;
+                            }
+                        }
+                        else if(ability.Name == "Trakata")
+                        {
+                            int validNumCheck = 0;
+                            string[] intermeidateAbilities = current_characterSheet.GetAbilitiesWithFilters("Advanced");
+                            foreach (string str in intermeidateAbilities)
+                            {
+                                if (Program.abilityLibrary.TryGetAbility(str, out Ability interAbility))
+                                {
+                                    if (interAbility.ability_School == Ability_Schools.Ability_Forms)
+                                    {
+                                        string[] forms = { "Niman", "Shii Cho", "Makashi", "Soresu", "Ataru", "Shien/Djem-so", "Juyo" };
+                                        foreach (string form in forms)
+                                        {
+                                            if (interAbility.Name.Contains(form))
+                                                validNumCheck++;
+                                            if (validNumCheck > 0)
+                                                break;
+                                        }
+                                    }
+                                }
+                                else if (validNumCheck > 0)
+                                    break;
+                            }
+                            if (validNumCheck > 0)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                calculatorLog.AddToLog("Trakata requires at least 1 intermediate saber form.");
                                 numErrors++;
                             }
                         }
@@ -722,6 +785,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             DataWriter.ExportCharacterSheetExcel(current_characterSheet, $"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx", DataWriter.ExcelFormats.XLSX);
             Static_Classes.Networking.GoogleDrive.GoogleDriveManager.SubmitSheetToDrive($"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx");
             File.Delete($"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx");
+            WriteLog("Sent sheet to google drive.");
         }
     }
 }

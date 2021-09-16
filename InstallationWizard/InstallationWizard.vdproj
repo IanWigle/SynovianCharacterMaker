@@ -153,6 +153,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_4DED7CAE5DB442B29E4D7A442CB6A52E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_5107992316D5D618C5746BFAA32FB852"
         "OwnerKey" = "8:_C19AC6DA6168AC667D4BC1E8060D96B7"
         "MsmSig" = "8:_UNDEFINED"
@@ -1307,6 +1313,26 @@
             {
             "SourcePath" = "8:..\\Output\\Main\\Release\\Data\\Tutorials\\TutorialBasicCreation.rtf"
             "TargetName" = "8:TutorialBasicCreation.rtf"
+            "Tag" = "8:"
+            "Folder" = "8:_EB80496372C94FA892010FAAFE7C79F0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4DED7CAE5DB442B29E4D7A442CB6A52E"
+            {
+            "SourcePath" = "8:..\\Synovian Character Maker\\Misc\\Tutorials\\UsingGoogleDrive.rtf"
+            "TargetName" = "8:UsingGoogleDrive.rtf"
             "Tag" = "8:"
             "Folder" = "8:_EB80496372C94FA892010FAAFE7C79F0"
             "Condition" = "8:"
@@ -2636,7 +2662,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Synovian Character Maker"
         "ProductCode" = "8:{2E04A0D8-E33B-4822-B85C-C04EE124C169}"
-        "PackageCode" = "8:{78D8CCBF-00CE-42F1-840E-28B8AD718F46}"
+        "PackageCode" = "8:{307B37CD-E39F-4E15-BB58-1D581A14A291}"
         "UpgradeCode" = "8:{EA7EC333-E180-4824-A5A8-C68F861005D2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -2756,6 +2782,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_98E60ACEA2C94E02923D8284FF6AD0AB"
+            {
+            "Name" = "8:Synovian Character Maker"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_17D16A03FB304C9E99E3F8399FD52386"
+            "Folder" = "8:_75B11024D1E04F7781212985A68E291A"
+            "WorkingFolder" = "8:_1016739D16484A7CB5150FB7E386B17B"
+            "Icon" = "8:_88E62B12A83441509F353B22FA5076B9"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
@@ -3157,7 +3197,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_17D16A03FB304C9E99E3F8399FD52386"
             {
-            "SourcePath" = "8:..\\Synovian Character Maker\\obj\\Debug\\Synovian Character Maker.exe"
+            "SourcePath" = "8:..\\Synovian Character Maker\\obj\\Release\\Synovian Character Maker.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_1016739D16484A7CB5150FB7E386B17B"

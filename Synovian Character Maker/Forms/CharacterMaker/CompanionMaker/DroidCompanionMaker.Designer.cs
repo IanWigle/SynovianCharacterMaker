@@ -175,7 +175,6 @@
             this.nameBox.ReadOnly = true;
             this.nameBox.Size = new System.Drawing.Size(100, 20);
             this.nameBox.TabIndex = 0;
-            this.nameBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyUp);
             // 
             // splitContainer2
             // 

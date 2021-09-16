@@ -451,5 +451,7 @@
   "449": "None",
   "450": "Equips the droid with an on board translation unit.",
   "451": "Equips the droid with torture protocols.",
-  "452": "An ability that allows users to create visions of deceased friends/family who would say various messages that may bother a target."
+  "452": "An ability that allows users to create visions of deceased friends/family who would say various messages that may bother a target.",
+  "453": "A technique that allows the user to extract knowledge from an unwilling target through force.",
+  "454": "A technique that allows the user to create extremely complex and advanced poisons through the use of Sith Alchemy."
 }

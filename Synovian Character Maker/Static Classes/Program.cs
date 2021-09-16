@@ -11,6 +11,7 @@ namespace Synovian_Character_Maker
     static class Program
     {
         static bool openAbilityMaker = false;
+        static bool deleteGoogleFolderOnClose = true;
 
         /// <summary>
         /// A flag that signifies whether the program is closing. Returns true if closing.
@@ -101,6 +102,8 @@ namespace Synovian_Character_Maker
 
                 _isClosing = true;
                 _characterLibrary.ExportSheets();
+                if(deleteGoogleFolderOnClose)
+                    Static_Classes.Networking.GoogleDrive.GoogleDriveManager.WipeGoogleFolderOnDisk();
             }
             catch(Exception e) { Helpers.ExceptionHandle(e); }
         }

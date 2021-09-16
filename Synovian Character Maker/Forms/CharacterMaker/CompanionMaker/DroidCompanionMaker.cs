@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
@@ -20,16 +16,10 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
             companionSheet = Static_Classes.Helpers.GetForm<CharacterMaker>().current_characterSheet.companionSheet;
             RefreshList();
 
-
             if(companionSheet._image != null)
             {
                 droidCompanionPicture.Image = companionSheet._image;
             }
-        }
-
-        private void textBox1_KeyUp(object sender, KeyEventArgs e)
-        {
-
         }
 
         private void RefreshList()

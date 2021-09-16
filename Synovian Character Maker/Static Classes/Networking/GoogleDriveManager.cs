@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Win32;
 using System.Windows.Forms;
 
 // Google API V3
@@ -29,10 +25,25 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
                 Name = name;
                 Id = id;
             }
-        }
+        }        
 
         static private string[] Scopes = { DriveService.Scope.DriveFile };
         static private string ApplicationName = "Synovian Character Maker";
+
+        static DriveService googleDriveService
+        {
+            get
+            {
+                if (_googleDriveService == null)
+                {
+                    _googleDriveService = GetActiveService();
+                    return _googleDriveService;
+                }
+                else
+                    return _googleDriveService;
+            }
+        }
+        static DriveService _googleDriveService = null;
 
         /// <summary>
         /// Attempts to send the character file provided to the user's google drive. Returns a boolian representing the success.
@@ -41,15 +52,14 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
         /// <returns>Returns true if file was successfuly uploaded to google drive.</returns>
         static public bool SubmitSheetToDrive(string file)
         {
-            // Create Drive API service.
-            DriveService service = GetActiveService();
-
+            // Get parentID of folder used to export and import. Create the folder if not found.
             string folderID = GetFolderID(true);
             string fileNameWithoutExt = $"{file.Split('\\')[file.Split('\\').Length - 1].Split('.')[0]}";
 
             // Check if that sheet already exists
             if (IsCharacterInDrive(fileNameWithoutExt))
             {
+                // Ask about the existing file. If they say yes, they overrite existing version. If they say no, create a new copy with a number at the end. Cancel stops the process.
                 DialogResult result = MessageBox.Show("You already have a sheet for this character in your drive and specific folder. Do you wish to overrite?", 
                                                       "Notice!", 
                                                       MessageBoxButtons.YesNoCancel, 
@@ -60,7 +70,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
                 {
                     case DialogResult.Yes:
                         {
-                            service.Files.Delete(GetFileID(fileNameWithoutExt)).Execute();
+                            googleDriveService.Files.Delete(GetFileID(fileNameWithoutExt)).Execute();
                             break;
                         }
                     case DialogResult.No:
@@ -90,15 +100,15 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
 
             try
             {
+                // Create the file.
                 FilesResource.CreateMediaUpload request;
 
                 using (var stream = new System.IO.FileStream(file, FileMode.Open))
                 {
-                    request = service.Files.Create(newFile, stream, "spreadsheet/xlsx");
+                    request = googleDriveService.Files.Create(newFile, stream, "spreadsheet/xlsx");
                     request.Fields = "id";
                     request.Upload();
                 }
-                var fileResponse = request.ResponseBody;
                 Console.WriteLine("Created the text file called TestFile.txt in your google drive");
                 MessageBox.Show("Character sheet successfully sent!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
                 return true;
@@ -117,10 +127,8 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
         /// <returns>Returns true if charactersheet exists.</returns>
         static public bool IsCharacterInDrive(string name)
         {
-            var service = GetActiveService();
-
             string pageToken = "";
-            FilesResource.ListRequest listRequest = service.Files.List();
+            FilesResource.ListRequest listRequest = googleDriveService.Files.List();
             listRequest.Spaces = ("drive");
             listRequest.Fields = "nextPageToken, files(id, name)";
             listRequest.PageToken = pageToken;
@@ -157,9 +165,8 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
         /// <returns>Returns a string of the id. Will return "" if no file found.</returns>
         static private string GetFileID(string name)
         {
-            var service = GetActiveService();
             string pageToken = "";
-            FilesResource.ListRequest listRequest = service.Files.List();
+            FilesResource.ListRequest listRequest = googleDriveService.Files.List();
             listRequest.Spaces = ("drive");
             listRequest.Fields = "nextPageToken, files(id, name)";
             listRequest.PageToken = pageToken;
@@ -228,10 +235,8 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
         /// <returns>Returns a string containing id. Will return "" if not found.</returns>
         static private string GetFolderID(bool makeIfNotFound = false)
         {
-            DriveService service = GetActiveService();
-
             string pageToken = "";
-            FilesResource.ListRequest listRequest = service.Files.List();
+            FilesResource.ListRequest listRequest = googleDriveService.Files.List();
             listRequest.Spaces = ("drive");
             listRequest.Fields = "nextPageToken, files(id, name)";
             listRequest.PageToken = pageToken;
@@ -267,7 +272,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
 
                 try
                 {
-                    createdFolder = service.Files.Create(folderFileMeta).Execute();
+                    createdFolder = googleDriveService.Files.Create(folderFileMeta).Execute();
 
                     return createdFolder.Id;
                 }
@@ -325,12 +330,10 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
         /// <returns>An array of struct FileSearch containing names and ids.</returns>
         static public List<FileSearch> SearchFiles(int searchSize = 10)
         {
-            var service = GetActiveService();
-
-            FilesResource.ListRequest listRequest = service.Files.List();
+            FilesResource.ListRequest listRequest = googleDriveService.Files.List();
             listRequest.PageSize = searchSize;
             listRequest.Fields = "nextPageToken, files(id, name)";
-            listRequest.Q = $"'{GetFolderID()}' in parents";
+            listRequest.Q = $"'{GetFolderID()}' in parents and trashed = false";
             IList<Google.Apis.Drive.v3.Data.File> files = null;
 
             try
@@ -363,7 +366,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
             if (!Directory.Exists(Globals.GoogleDownloads))
                 Directory.CreateDirectory(Globals.GoogleDownloads);
 
-            if(File.Exists($"{Globals.GoogleDownloads}\\{filename}.xlsx"))
+            if(File.Exists($"{Globals.GoogleDownloads}\\{filename}"))
             {
                 DialogResult result = MessageBox.Show("You have already downloaded this character! Download again?", "Notice!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 switch(result)
@@ -377,8 +380,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
                 }
             }
 
-            var service = GetActiveService();
-            FilesResource.ExportRequest request = new FilesResource.ExportRequest(service, id, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            FilesResource.ExportRequest request = new FilesResource.ExportRequest(googleDriveService, id, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             MemoryStream memoryStream = new MemoryStream();
             bool successful = true;
             request.MediaDownloader.ProgressChanged += (Google.Apis.Download.IDownloadProgress progress) =>
@@ -387,7 +389,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
                 {
                     case DownloadStatus.Completed:
                         {
-                            using (FileStream filestream = new FileStream($"{Globals.GoogleDownloads}\\{filename}.xlsx", FileMode.Create, FileAccess.Write))
+                            using (FileStream filestream = new FileStream($"{Globals.GoogleDownloads}\\{filename}", FileMode.Create, FileAccess.Write))
                             {
                                 memoryStream.WriteTo(filestream);
                             }
@@ -415,7 +417,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
         {
             try
             {
-                GetActiveService().Files.Delete(id).Execute();
+                googleDriveService.Files.Delete(id).Execute();
                 return true;
             }
             catch(Exception e)
@@ -423,6 +425,24 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
                 Helpers.ExceptionHandle(e);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Wipes all downloaded files on the disk, then deleting the folder itself.
+        /// </summary>
+        static public void WipeGoogleFolderOnDisk()
+        {
+            if (!Directory.Exists(Globals.GoogleDownloads))
+                return;
+
+            string[] files = Directory.GetFiles(Globals.GoogleDownloads);
+
+            foreach(string file in files)
+            {
+                File.Delete(file);
+            }
+
+            Directory.Delete(Globals.GoogleDownloads);
         }
     }
 }

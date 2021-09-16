@@ -237,6 +237,20 @@ namespace Synovian_Character_Maker.Static_Classes
                 }
             }
 
+            void WriteComment(string cell,string comment)
+            {
+                SLComment sLComment = sLDocument.CreateComment();
+                sLComment.SetText(comment);
+                sLDocument.InsertComment(cell, sLComment);
+            }
+
+            void WriteCommentRaw(int row, int col, string comment)
+            {
+                SLComment sLComment = sLDocument.CreateComment();
+                sLComment.SetText(comment);
+                sLDocument.InsertComment(row, col, sLComment);
+            }
+
             // Setup Top header of character sheet
             {
                 SetCellBackgroundColor("A1", BLACK);
@@ -296,6 +310,9 @@ namespace Synovian_Character_Maker.Static_Classes
             string[] schools = characterSheet.GetAllSchools();
             foreach(string school in schools)
             {
+                if (school == "School Of Forms")
+                    continue;
+
                 WriteCell($"F{startingSchoolIndex}", school);
                 BoldCell($"F{startingSchoolIndex}");
                 CenterText($"F{startingSchoolIndex}");
@@ -308,8 +325,8 @@ namespace Synovian_Character_Maker.Static_Classes
             int startingFormIndex = 4;
             string[] forms = characterSheet.GetAbilitiesOfSchool(Ability_Schools.Ability_Forms);
             string[] validFormNames = { "Niman", "Shii Cho", "Makashi", "Soresu", "Ataru", "Shien/Djem-so", "Juyo",
-                                        "Trakata","Saber Staff","Jar'kai","Saber Pike","Channel", "Affinitiy", "Mastery",
-                                        "Potency", "Mentalism"};
+                                        "Trakata","Saber Staff","Jar'kai","Saber Pike","Force Channel", "Force Affinity", "Force Mastery",
+                                        "Force Potency", "Force Mentalism"};
             string[] formLevels = { "Basic", "Intermediate", "Advanced", "Master" };
             List<string> FurthestForms = new List<string>();
 
@@ -323,13 +340,38 @@ namespace Synovian_Character_Maker.Static_Classes
                         highestLevel = $"{level} {form}";
                 }
 
+                string highestlevelAlt = CheckForMasterVersionOfForm(form);
+
+                highestLevel = (highestlevelAlt == "") ? highestLevel : highestlevelAlt;
+
                 return highestLevel;
+            }
+
+            string CheckForMasterVersionOfForm(string form)
+            {
+                if(form != "Force Mastery")
+                {
+                    if (characterSheet.Contains($"{form} Mastery"))
+                        return $"{form} Mastery";
+                }
+                else if (form == "Force Mastery")
+                {
+                    if (characterSheet.Contains("Force Mastery"))
+                        return "Force Mastery";
+                }
+
+                return "";
             }
 
             foreach(string form in validFormNames)
             {
                 string highestFormName = GetFurthestVersionOfTree(form);
-                if (highestFormName == "") continue;
+                if (highestFormName == "")
+                {
+                    highestFormName = CheckForMasterVersionOfForm(form);
+                    if (highestFormName == "")
+                        continue;
+                }
                 else FurthestForms.Add(highestFormName);
             }
 
@@ -399,7 +441,7 @@ namespace Synovian_Character_Maker.Static_Classes
                 }
             }
 
-            void SetupLeftColumn(Ability_Schools ability_Schools, ref string[] abilities)
+            void SetupLeftColumn(Ability_Schools ability_Schools, ref string[] abilities, ref string[] comments)
             {
                 WriteCell($"B{currentLeftColumnIndex}", $"{Enum.GetName(typeof(Ability_Schools), ability_Schools).Replace("Ability_", "")} Abilities");
                 BoldCell($"B{currentLeftColumnIndex}");
@@ -415,19 +457,26 @@ namespace Synovian_Character_Maker.Static_Classes
                 SetCellBackgroundColor($"E{currentLeftColumnIndex}", GREY);
                 currentLeftColumnIndex++;
 
+                int l = 0;
                 foreach(string ability in abilities)
                 {
-                    if (Program.abilityLibrary.IsASchool(ability)) continue;
+                    if (Program.abilityLibrary.IsASchool(ability))
+                    {
+                        l++;
+                        continue;
+                    }
                     WriteCell($"B{currentLeftColumnIndex}", ability);
                     SetCellBackgroundColor($"B{currentLeftColumnIndex}", DetermineAbilityColor(Program.abilityLibrary.GetAbility(ability).alignment));
                     MakeBorder($"B{currentLeftColumnIndex}:D{currentLeftColumnIndex}");
+                    WriteComment($"B{currentLeftColumnIndex}", comments[l]);
                     MergeCells($"B{currentLeftColumnIndex}:D{currentLeftColumnIndex}");
                     currentLeftColumnIndex++;
+                    l++;
                 }
                 if (largestColumnIndex <= currentLeftColumnIndex) largestColumnIndex = currentLeftColumnIndex;
             }
 
-            void SetupCenterColumn(Ability_Schools ability_Schools, ref string[] abilities)
+            void SetupCenterColumn(Ability_Schools ability_Schools, ref string[] abilities, ref string[] comments)
             {
                 WriteCell($"F{currentCenterColumnIndex}", $"{Enum.GetName(typeof(Ability_Schools), ability_Schools).Replace("Ability_", "")} Abilities");
                 BoldCell($"F{currentCenterColumnIndex}");
@@ -443,19 +492,26 @@ namespace Synovian_Character_Maker.Static_Classes
                 SetCellBackgroundColor($"I{currentCenterColumnIndex}", GREY);
                 currentCenterColumnIndex++;
 
+                int c = 0;
                 foreach (string ability in abilities)
                 {
-                    if (Program.abilityLibrary.IsASchool(ability)) continue;
+                    if (Program.abilityLibrary.IsASchool(ability))
+                    {
+                        c++;
+                        continue;
+                    }
                     WriteCell($"F{currentCenterColumnIndex}", ability);
                     SetCellBackgroundColor($"F{currentCenterColumnIndex}", DetermineAbilityColor(Program.abilityLibrary.GetAbility(ability).alignment));
                     MakeBorder($"F{currentCenterColumnIndex}:H{currentCenterColumnIndex}");
+                    WriteComment($"F{currentLeftColumnIndex}",comments[c]);
                     MergeCells($"F{currentCenterColumnIndex}:H{currentCenterColumnIndex}");
                     currentCenterColumnIndex++;
+                    c++; // good pun
                 }
                 if (largestColumnIndex <= currentCenterColumnIndex) largestColumnIndex = currentCenterColumnIndex;
             }
 
-            void SetupRightColumn(Ability_Schools ability_Schools, ref string[] abilities)
+            void SetupRightColumn(Ability_Schools ability_Schools, ref string[] abilities, ref string[] comments)
             {
                 WriteCell($"J{currentRightColumnIndex}", $"{Enum.GetName(typeof(Ability_Schools), ability_Schools).Replace("Ability_", "")} Abilities");
                 BoldCell($"J{currentRightColumnIndex}");
@@ -471,14 +527,21 @@ namespace Synovian_Character_Maker.Static_Classes
                 SetCellBackgroundColor($"M{currentRightColumnIndex}", GREY);
                 currentRightColumnIndex++;
 
+                int r = 0;
                 foreach (string ability in abilities)
                 {
-                    if (Program.abilityLibrary.IsASchool(ability)) continue;
+                    if (Program.abilityLibrary.IsASchool(ability))
+                    {
+                        r++;
+                        continue;
+                    }
                     WriteCell($"J{currentRightColumnIndex}", ability);
                     SetCellBackgroundColor($"J{currentRightColumnIndex}", DetermineAbilityColor(Program.abilityLibrary.GetAbility(ability).alignment));
                     MakeBorder($"J{currentRightColumnIndex}:L{currentRightColumnIndex}");
+                    WriteComment($"J{currentRightColumnIndex}", comments[r]);
                     MergeCells($"J{currentRightColumnIndex}:L{currentRightColumnIndex}");
                     currentRightColumnIndex++;
+                    r++;
                 }
                 if (largestColumnIndex <= currentRightColumnIndex) largestColumnIndex = currentRightColumnIndex;
             }
@@ -488,18 +551,19 @@ namespace Synovian_Character_Maker.Static_Classes
                 if (ability_Schools == 0 || ability_Schools == Ability_Schools.Ability_Max) continue;
                 if (ability_Schools == Ability_Schools.Ability_Forms) continue;
                 string[] abilities = characterSheet.GetAbilitiesOfSchool(ability_Schools);
+                string[] comments = characterSheet.GetAllDescriptionsBySchool(ability_Schools);
                 if (abilities.Count() == 0) continue;
 
                 switch (currentColumn)
                 {
                     case 0:
-                        SetupLeftColumn(ability_Schools, ref abilities);
+                        SetupLeftColumn(ability_Schools, ref abilities, ref comments);
                         break;
                     case 1:
-                        SetupCenterColumn(ability_Schools, ref abilities);
+                        SetupCenterColumn(ability_Schools, ref abilities, ref comments);
                         break;
                     case 2:
-                        SetupRightColumn(ability_Schools, ref abilities);
+                        SetupRightColumn(ability_Schools, ref abilities, ref comments);
                         break;
                 }
                 currentColumn++;
@@ -719,12 +783,18 @@ namespace Synovian_Character_Maker.Static_Classes
                 }
             }
 
+            //Skip value incase the sheet is missing schools or forms
+            int skipVal = 0;
+
             // Get all schools
             int s_s_i = 4;
             do
             {
                 if (sl.GetCellValueAsString($"F{s_s_i}") == "")
+                {
+                    skipVal++;
                     break;
+                }
                 else
                 {
                     string s_school_name = sl.GetCellValueAsString($"F{s_s_i}");
@@ -746,7 +816,10 @@ namespace Synovian_Character_Maker.Static_Classes
             do
             {
                 if (sl.GetCellValueAsString($"J{s_f_i}") == "")
+                {
+                    skipVal++;
                     break;
+                }
                 else
                 {
                     string s_form_name = sl.GetCellValueAsString($"J{s_f_i}");
@@ -763,8 +836,10 @@ namespace Synovian_Character_Maker.Static_Classes
                 }
             } while (true);
 
+            skipVal = (skipVal == 2) ? skipVal + 1 : skipVal;
+
             int s_ability_name = (s_s_i > s_f_i) ? s_s_i : s_f_i;
-            s_ability_name += 2;
+            s_ability_name += (2 + skipVal);
             int starting_name_value = s_ability_name;
 
 
@@ -852,23 +927,26 @@ namespace Synovian_Character_Maker.Static_Classes
                 }
             }
 
+            CompanionSheet companionSheet = null;
             if(sl.SelectWorksheet("Companion") == true)
             {
                 string compName = sl.GetCellValueAsString("A1").Remove(0, 17);
-                string compType = sl.GetCellValueAsString("A2");
+                string compTypeStr = sl.GetCellValueAsString("A2");
                 string compHistory = "";
-                Image compImage;
+                
+                Image compImage = null;
                 List<int> compAbil = new List<int>();
+                List<CompanionSheet.CompanionType> subTypes = new List<CompanionSheet.CompanionType>();
+                CompanionSheet.CompanionType compType = CompanionSheet.CompanionType.None;
 
-                if(compType.Contains("Beast Race : "))
+                if(compTypeStr.Contains("Beast Race : "))
                 {
-                    compType.Remove(0, 13);
+                    compTypeStr = compTypeStr.Split(':')[1].Remove(0, 1);
+                    compType = CompanionSheet.CompanionType.Beast;
                 }
-                else if (compType.Contains("Droid Type : "))
+                else if (compTypeStr.Contains("Droid Type : "))
                 {
-                    compType.Remove(0, 13);
-
-
+                    compTypeStr.Remove(0, 13);
                 }
                 else
                 {
@@ -878,9 +956,21 @@ namespace Synovian_Character_Maker.Static_Classes
                                     MessageBoxIcon.Error);
                 }
 
-                compHistory = sl.GetCellValueAsString("A3");
+                compHistory = sl.GetCellValueAsString("A3").Split(':')[1].Remove(0, 1);
 
-                
+                if (compType != CompanionSheet.CompanionType.Beast)
+                {
+                    for (int i = 0; i < (int)CompanionSheet.CompanionType.Max; i++)
+                    {
+                        if (compTypeStr == Enum.GetName(typeof(CompanionSheet.CompanionType), i))
+                            compType = (CompanionSheet.CompanionType)i;
+                    }
+                }
+
+                companionSheet = new CompanionSheet(compName, compType, subTypes, compAbil);
+                companionSheet.SetCompanionHistory(compHistory);
+                companionSheet.SetCompanionSpecies(compTypeStr);
+                companionSheet._image = compImage;
             }
 
             CharacterSheet characterSheet = new CharacterSheet(name, 
@@ -891,6 +981,7 @@ namespace Synovian_Character_Maker.Static_Classes
                                                                null, 
                                                                characterSpecies, 
                                                                CharacterSheet.SheetFileType.XlSx);
+            characterSheet.companionSheet = companionSheet;
 
             return characterSheet;
         }
