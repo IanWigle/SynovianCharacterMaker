@@ -75,8 +75,6 @@ namespace Synovian_Character_Maker.Forms.Google
                 {
                     case DialogResult.Yes:
                         {
-                            //System.IO.File.Move($"{Static_Classes.Globals.GoogleDownloads}\\{listView1.FocusedItem.Text}.xlsx",
-                            //                    $"{Static_Classes.Globals.CharacterFolder}\\{listView1.FocusedItem.Text}.xlsx");
                             sheet.setFileType(Data_Classes.CharacterSheet.SheetFileType.XlSx);
                             break;
                         }

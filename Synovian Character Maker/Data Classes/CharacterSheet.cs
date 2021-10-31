@@ -18,18 +18,15 @@ namespace Synovian_Character_Maker.Data_Classes
             Xlsx_Google
         }
 
-        public string Name { get => _name; }
-        string _name = "";
+        public string Name { get; private set; }
 
-        public Rank Rank { get => _rank; }
+        public Rank Rank { get; private set; }
         [JsonIgnore]
-        public string s_rank { get => Enum.GetName(typeof(Rank), _rank); }
-        Rank _rank = Rank.Invalid;
+        public string s_rank { get => Enum.GetName(typeof(Rank), Rank); }
 
         [JsonIgnore]
-        public string s_alignment { get => Enum.GetName(typeof(Ability_Alignment), _alignment).Replace("Ability_", ""); }
-        public Ability_Alignment alignment { get => _alignment; }
-        Ability_Alignment _alignment = Ability_Alignment.Ability_Invalid;
+        public string s_alignment { get => Enum.GetName(typeof(Ability_Alignment), alignment).Replace("Ability_", ""); }
+        public Ability_Alignment alignment { get; private set; }
 
         public string characterDescription { get; set; }
 
@@ -37,13 +34,11 @@ namespace Synovian_Character_Maker.Data_Classes
         List<int> _abilities;
 
         [JsonIgnore]
-        public string lastModified { get => _lastMod; }
-        string _lastMod = "";
+        public string lastModified { get; private set; }
 
         [JsonIgnore]
-        public SheetFileType sheetFileType { get => _sheetFileType; }
-        SheetFileType _sheetFileType;
-        public void setFileType(SheetFileType fileType) => _sheetFileType = fileType;
+        public SheetFileType sheetFileType { get; private set; }
+        public void setFileType(SheetFileType fileType) => sheetFileType = fileType;
 
         public string characterSpecies { get; set; }
 
@@ -58,79 +53,79 @@ namespace Synovian_Character_Maker.Data_Classes
 
         public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment)
         {
-            _name = name;
-            _rank = rank;
-            _alignment = ability_Alignment;
+            Name = name;
+            Rank = rank;
+            alignment = ability_Alignment;
             _abilities = new List<int>();
             characterSpecies = "Unknown";
-            _sheetFileType = SheetFileType.JustCreated;
+            sheetFileType = SheetFileType.JustCreated;
         }
 
         public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment, List<int> abilities)
         {
-            _name = name;
-            _rank = rank;
-            _alignment = ability_Alignment;
+            Name = name;
+            Rank = rank;
+            alignment = ability_Alignment;
             _abilities = new List<int>(abilities);
             characterSpecies = "Unknown";
-            _sheetFileType = SheetFileType.JustCreated;
+            sheetFileType = SheetFileType.JustCreated;
         }
 
         public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment, List<int> abilities, Image image)
         {
-            _name = name;
-            _rank = rank;
-            _alignment = ability_Alignment;
+            Name = name;
+            Rank = rank;
+            alignment = ability_Alignment;
             _abilities = new List<int>(abilities);
             _image = image;
             characterSpecies = "Unknown";
-            _sheetFileType = SheetFileType.JustCreated;
+            sheetFileType = SheetFileType.JustCreated;
         }
 
         public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment, List<int> abilities, Image image, string species)
         {
-            _name = name;
-            _rank = rank;
-            _alignment = ability_Alignment;
+            Name = name;
+            Rank = rank;
+            alignment = ability_Alignment;
             _abilities = new List<int>(abilities);
             _image = image;
             characterSpecies = species;
-            _sheetFileType = SheetFileType.JustCreated;
+            sheetFileType = SheetFileType.JustCreated;
         }
 
-        public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment, List<int> abilities, string lastMod)
+        public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment, List<int> abilities, string _lastMod)
         {
-            _name = name;
-            _rank = rank;
-            _alignment = ability_Alignment;
+            Name = name;
+            Rank = rank;
+            alignment = ability_Alignment;
             _abilities = new List<int>(abilities);
-            _lastMod = lastMod;
+            lastModified = _lastMod;
             characterSpecies = "Unknown";
-            _sheetFileType = SheetFileType.JustCreated;
+            sheetFileType = SheetFileType.JustCreated;
         }
 
-        public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment, List<int> abilities, string lastMod, Image image, string species)
+        public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment, List<int> abilities, string _lastMod, Image image, string species)
         {
-            _name = name;
-            _rank = rank;
-            _alignment = ability_Alignment;
+            Name = name;
+            Rank = rank;
+            alignment = ability_Alignment;
             _abilities = new List<int>(abilities);
-            _lastMod = lastMod;
+            lastModified = _lastMod;
             _image = image;
             characterSpecies = species;
-            _sheetFileType = SheetFileType.JustCreated;
+            sheetFileType = SheetFileType.JustCreated;
         }
 
         public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment, List<int> abilities, string lastMod, Image image, string species, SheetFileType sfT)
         {
-            _name = name;
-            _rank = rank;
-            _alignment = ability_Alignment;
+            Name = name;
+            Rank = rank;
+            alignment = ability_Alignment;
             _abilities = new List<int>(abilities);
-            _lastMod = lastMod;
+            lastModified = lastMod;
             _image = image;
             characterSpecies = species;
-            _sheetFileType = sfT;
+            sheetFileType = sfT;
         }
 
         public void AddAbility(Ability ability)

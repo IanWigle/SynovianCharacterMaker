@@ -82,71 +82,64 @@ namespace Synovian_Character_Maker.Data_Classes
         /// <summary>
         /// The unique ID of an ability.
         /// </summary>
-        public int ID { get => _id; }
-        int _id = 0;
+        public int ID { get; private set; }
 
         /// <summary>
         /// Unique ability name.
         /// </summary>
         [JsonIgnore]
-        public string Name { get => _name; }
-        string _name = "";
+        public string Name { get; private set; }
 
         /// <summary>
         /// Enum value for an abilities name.
         /// </summary>
-        public Ability_Alignment alignment { get => _alignment; }
+        public Ability_Alignment alignment { get; private set; }
 
         /// <summary>
         /// Returns a string of the enum value name. Removes the "Ability_" prefix.
         /// </summary>
         [JsonIgnore]
-        public string s_alignment { get => Enum.GetName(typeof(Ability_Alignment), _alignment).Replace("Ability_", ""); }
-        Ability_Alignment _alignment = Ability_Alignment.Ability_Invalid;
+        public string s_alignment { get => Enum.GetName(typeof(Ability_Alignment), alignment).Replace("Ability_", ""); }
 
         /// <summary>
         /// Enum value for ability rank.
         /// </summary>
-        public Rank Rank { get => _rank; }
+        public Rank Rank { get; private set; }
 
         /// <summary>
         /// Returns a string of the enum value name.
         /// </summary>
         [JsonIgnore]
-        public string s_rank { get => Enum.GetName(typeof(Rank), _rank); }
-        Rank _rank = Rank.Invalid;
+        public string s_rank { get => Enum.GetName(typeof(Rank), Rank); }
 
         /// <summary>
         /// Enum value for the school category of the ability.
         /// </summary>
-        public Ability_Schools ability_School { get => _ability_School; }
+        public Ability_Schools ability_School { get; private set; }
 
         /// <summary>
         /// Returns a string of the enum value name. Removes the "Ability_" prefix and replaces '_' with spaces.
         /// </summary>
         [JsonIgnore]
-        public string s_ability_School { get => Enum.GetName(typeof(Ability_Schools), _ability_School).Replace("Ability_", "").Replace('_', ' '); }
-        Ability_Schools _ability_School = Ability_Schools.Ability_Invalid;
+        public string s_ability_School { get => Enum.GetName(typeof(Ability_Schools), ability_School).Replace("Ability_", "").Replace('_', ' '); }
 
         /// <summary>
         /// The skill cost of an ability. By default the cost of an ability equals 1.
         /// </summary>
-        public int skillCostOverride { get => _skillCostOverride; }
+        public int skillCostOverride { get; private set; }
 
         /// <summary>
         /// Returns the skill cost as a string.
         /// </summary>
         [JsonIgnore]
-        public string s_skillCostOverride { get => _skillCostOverride.ToString(); }
-        int _skillCostOverride = 1;
+        public string s_skillCostOverride { get => skillCostOverride.ToString(); }
 
         /// <summary>
         /// Unique ability description.
         /// </summary>
         [JsonIgnore]
-        public string description { get => _desc; }
-        string _desc = "";
-       
+        public string description { get; private set; }
+
         /// <summary>
         /// Returns a string list of all the prerequisite abilitys for the ability. Returns the names, not IDs.
         /// </summary>
@@ -173,28 +166,26 @@ namespace Synovian_Character_Maker.Data_Classes
         /// <summary>
         /// Integer list of the ability IDs required for this ability.
         /// </summary>
-        public List<int> prereqs { get => _prereqs; }
-        List<int> _prereqs = new List<int>();
+        public List<int> prereqs { get; private set; }
 
         /// <summary>
         /// Boolian flag to determine if the ability is a Feat or not.
         /// </summary>
-        public bool isFeat { get => _isFeat; }
-        bool _isFeat = false;
+        public bool isFeat { get; private set; }
 
         /// <summary>
         /// Default constructor.
         /// </summary>
         public Ability()
         {
-            _name = "";
-            _desc = "";
-            _id = 0;
-            _alignment = Ability_Alignment.Ability_Invalid;
-            _rank = Rank.Invalid;
-            _ability_School = Ability_Schools.Ability_Invalid;
-            _prereqs = new List<int>();
-            _isFeat = false;
+            Name = "";
+            description = "";
+            ID = 0;
+            alignment = Ability_Alignment.Ability_Invalid;
+            Rank = Rank.Invalid;
+            ability_School = Ability_Schools.Ability_Invalid;
+            prereqs = new List<int>();
+            isFeat = false;
         }
 
         /// <summary>
@@ -208,17 +199,17 @@ namespace Synovian_Character_Maker.Data_Classes
         /// <param name="prereqs">Prereq list of abilities.</param>
         /// <param name="skillCost">Skill override cost of ability. Default cost is 1.</param>
         /// <param name="isF">Flag is ability is feat. Default is false.</param>
-        public Ability(string name, string desc, int id, Ability_Alignment alignment, Rank rank, Ability_Schools school, List<int> prereqs, int skillCost = 1, bool isF = false)
+        public Ability(string name, string desc, int id, Ability_Alignment _alignment, Rank _rank, Ability_Schools school, List<int> _prereqs, int skillCost = 1, bool isF = false)
         {
-            _name = name;
-            _desc = desc;
-            _id = id;
-            _alignment = alignment;
-            _rank = rank;
-            _ability_School = school;
-            _prereqs = prereqs;
-            _isFeat = isF;
-            _skillCostOverride = skillCost;
+            Name = name;
+            description = desc;
+            ID = id;
+            alignment = _alignment;
+            Rank = _rank;
+            ability_School = school;
+            prereqs = _prereqs;
+            isFeat = isF;
+            skillCostOverride = skillCost;
         }
 
         /// <summary>
@@ -229,7 +220,7 @@ namespace Synovian_Character_Maker.Data_Classes
         public bool Contains(List<int> ids)
         {
             foreach(int i in ids)
-                if (!_prereqs.Contains(i))
+                if (!prereqs.Contains(i))
                     return false;
             return true;
         }

@@ -56,7 +56,10 @@ namespace Synovian_Character_Maker.Static_Classes
                     outputDevice.Play();
                     onLoop = true;
                 }
-                catch(Exception e) { Helpers.ExceptionHandle(e); }
+                catch(Exception e)
+                { 
+                    Helpers.ExceptionHandle(e); 
+                }
             }
         }
 

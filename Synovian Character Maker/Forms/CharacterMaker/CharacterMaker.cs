@@ -619,8 +619,8 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                 else if(companionType == CompanionSheet.CompanionType.Medical_Droid ||
                         companionType == CompanionSheet.CompanionType.Research_Droid)
                 {
-                    if(!current_characterSheet.Contains("Basic Creation")    ||
-                       !current_characterSheet.Contains("Basic Engineering") ||
+                    if(!current_characterSheet.Contains("Creation Training")    ||
+                       !current_characterSheet.Contains("Basic Engineering Training") ||
                        !current_characterSheet.Contains("Class I Droids"))
                     {
                         valid = false;

@@ -255,7 +255,7 @@ namespace Synovian_Character_Maker.Static_Classes
             {
                 foreach (string fullFile in files)
                 {
-                    string extension = fullFile.Split('.')[1];
+                    string extension = fullFile.Split('.').Last<string>();
 
                     if (extension == "txt" && Program.programSettings.FocusOnZipsOverTxts && File.Exists(fullFile.Replace(".txt", ".zip")))
                         continue;

@@ -839,7 +839,8 @@ namespace Synovian_Character_Maker.Static_Classes
             skipVal = (skipVal == 2) ? skipVal + 1 : skipVal;
 
             int s_ability_name = (s_s_i > s_f_i) ? s_s_i : s_f_i;
-            s_ability_name += (2 + skipVal);
+            s_ability_name += skipVal;
+            if (sl.GetCellValueAsString($"B{s_ability_name}") == "") s_ability_name += 3;
             int starting_name_value = s_ability_name;
 
 
@@ -930,8 +931,10 @@ namespace Synovian_Character_Maker.Static_Classes
             CompanionSheet companionSheet = null;
             if(sl.SelectWorksheet("Companion") == true)
             {
-                string compName = sl.GetCellValueAsString("A1").Remove(0, 17);
-                string compTypeStr = sl.GetCellValueAsString("A2");
+                string compName = sl.GetCellValueAsString("A1");
+                if (compName.Contains("Companion Name : ")) compName = compName.Remove(0, 17);
+
+                string compTypeStr = sl.GetCellValueAsString("A2"); 
                 string compHistory = "";
                 
                 Image compImage = null;
@@ -946,7 +949,7 @@ namespace Synovian_Character_Maker.Static_Classes
                 }
                 else if (compTypeStr.Contains("Droid Type : "))
                 {
-                    compTypeStr.Remove(0, 13);
+                    compTypeStr = compTypeStr.Remove(0, 13);
                 }
                 else
                 {

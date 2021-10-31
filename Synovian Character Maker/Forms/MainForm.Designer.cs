@@ -79,11 +79,11 @@
             this.abilitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miscToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.musicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.googleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.licenseBox = new System.Windows.Forms.RichTextBox();
             this.openSongFile = new System.Windows.Forms.OpenFileDialog();
             this.openCharacter = new System.Windows.Forms.OpenFileDialog();
-            this.googleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -419,9 +419,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 13);
+            this.label1.Size = new System.Drawing.Size(48, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Volumne :";
+            this.label1.Text = "Volume :";
             // 
             // numericVolume
             // 
@@ -617,6 +617,13 @@
             this.musicToolStripMenuItem.Text = "Music";
             this.musicToolStripMenuItem.Click += new System.EventHandler(this.musicToolStripMenuItem_Click);
             // 
+            // googleToolStripMenuItem
+            // 
+            this.googleToolStripMenuItem.Name = "googleToolStripMenuItem";
+            this.googleToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.googleToolStripMenuItem.Text = "Google";
+            this.googleToolStripMenuItem.Click += new System.EventHandler(this.googleToolStripMenuItem_Click);
+            // 
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.licenseBox);
@@ -645,13 +652,6 @@
             // openCharacter
             // 
             this.openCharacter.FileOk += new System.ComponentModel.CancelEventHandler(this.openCharacter_FileOk);
-            // 
-            // googleToolStripMenuItem
-            // 
-            this.googleToolStripMenuItem.Name = "googleToolStripMenuItem";
-            this.googleToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-            this.googleToolStripMenuItem.Text = "Google";
-            this.googleToolStripMenuItem.Click += new System.EventHandler(this.googleToolStripMenuItem_Click);
             // 
             // MainForm
             // 

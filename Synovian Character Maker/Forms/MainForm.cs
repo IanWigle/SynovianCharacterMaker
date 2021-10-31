@@ -38,12 +38,16 @@ namespace Synovian_Character_Maker.Forms
                 characterView.Items.Add(listViewItem);
             }
 
-            numericVolume.Maximum = 1;
-            numericVolume.Value = Program.audioPlayer.volume;
-            audioOnLoopCheckBox.Checked = Program.audioPlayer.onLoop;
-            keepMenuOpenBox.Checked = Program.programSettings.HideMainMenu;
-            zipsOverTxtBox.Checked = Program.programSettings.FocusOnZipsOverTxts;
-            songNameLabel.Text = $"Song : {Program.audioPlayer.SongName()}";
+            if(Program.audioPlayer.IsValid())
+            {
+                numericVolume.Maximum = 1;
+                numericVolume.Value = Program.audioPlayer.volume;
+                audioOnLoopCheckBox.Checked = Program.audioPlayer.onLoop;
+                keepMenuOpenBox.Checked = Program.programSettings.HideMainMenu;
+                zipsOverTxtBox.Checked = Program.programSettings.FocusOnZipsOverTxts;
+                songNameLabel.Text = $"Song : {Program.audioPlayer.SongName()}";
+            }
+
 
             try
             {
@@ -182,7 +186,7 @@ namespace Synovian_Character_Maker.Forms
 
         private void openCharacter_FileOk(object sender, CancelEventArgs e)
         {
-            string extension = openCharacter.FileName.Split('.')[1];
+            string extension = openCharacter.FileName.Split('.').Last<string>();
 
             DataReader.DataReadTypes dataReadTypes = DataReader.DataReadTypes.max;
 
@@ -191,6 +195,7 @@ namespace Synovian_Character_Maker.Forms
                 if(Enum.GetName(typeof(DataReader.DataReadTypes),dataRead) == extension)
                 {
                     dataReadTypes = dataRead;
+                    break;
                 }
             }
 
