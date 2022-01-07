@@ -27,6 +27,14 @@ namespace Synovian_Character_Maker.Data_Classes
         Ability_Max
     }
 
+    public enum Ability_Proficency
+    {
+        Ability_NotLearned,
+        Ability_Learned,
+        Ability_Mastered,
+        Ability_Max
+    }
+
     /// <summary>
     /// The rank of characters and abilities/feats that can determine or aid in filtering, and unlocking options.
     /// </summary>

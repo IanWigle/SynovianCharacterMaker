@@ -859,17 +859,6 @@
     "isFeat": false
   },
   {
-    "ID": 82,
-    "alignment": 3,
-    "Rank": 3,
-    "ability_School": 2,
-    "skillCostOverride": 1,
-    "prereqs": [
-      6
-    ],
-    "isFeat": false
-  },
-  {
     "ID": 83,
     "alignment": 3,
     "Rank": 3,
@@ -898,7 +887,7 @@
     "ability_School": 2,
     "skillCostOverride": 1,
     "prereqs": [
-      82
+      6
     ],
     "isFeat": false
   },
@@ -3128,7 +3117,7 @@
     "alignment": 4,
     "Rank": 2,
     "ability_School": 7,
-    "skillCostOverride": 1,
+    "skillCostOverride": 0,
     "prereqs": [
       270
     ],
@@ -3153,17 +3142,6 @@
     "skillCostOverride": 0,
     "prereqs": [
       270
-    ],
-    "isFeat": false
-  },
-  {
-    "ID": 291,
-    "alignment": 4,
-    "Rank": 3,
-    "ability_School": 7,
-    "skillCostOverride": 1,
-    "prereqs": [
-      288
     ],
     "isFeat": false
   },
@@ -4936,6 +4914,580 @@
     "prereqs": [
       204
     ],
+    "isFeat": false
+  },
+  {
+    "ID": 455,
+    "alignment": 1,
+    "Rank": 4,
+    "ability_School": 1,
+    "skillCostOverride": 1,
+    "prereqs": [
+      2
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 456,
+    "alignment": 1,
+    "Rank": 5,
+    "ability_School": 1,
+    "skillCostOverride": 1,
+    "prereqs": [
+      455
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 457,
+    "alignment": 1,
+    "Rank": 6,
+    "ability_School": 1,
+    "skillCostOverride": 1,
+    "prereqs": [
+      456
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 458,
+    "alignment": 1,
+    "Rank": 6,
+    "ability_School": 1,
+    "skillCostOverride": 1,
+    "prereqs": [],
+    "isFeat": false
+  },
+  {
+    "ID": 459,
+    "alignment": 2,
+    "Rank": 6,
+    "ability_School": 5,
+    "skillCostOverride": 1,
+    "prereqs": [
+        186
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 460,
+    "alignment": 2,
+    "Rank": 7,
+    "ability_School": 5,
+    "skillCostOverride": 1,
+    "prereqs": [
+        190
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 461,
+    "alignment": 2,
+    "Rank": 7,
+    "ability_School": 5,
+    "skillCostOverride": 4,
+    "prereqs": [
+        193
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 462,
+    "alignment": 2,
+    "Rank": 7,
+    "ability_School": 5,
+    "skillCostOverride": 1,
+    "prereqs": [
+        459
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 463,
+    "alignment": 2,
+    "Rank": 7,
+    "ability_School": 5,
+    "skillCostOverride": 1,
+    "prereqs": [
+        462
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 464,
+    "alignment": 3,
+    "Rank": 4,
+    "ability_School": 5,
+    "skillCostOverride": 1,
+    "prereqs": [
+        196
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 465,
+    "alignment": 3,
+    "Rank": 5,
+    "ability_School": 5,
+    "skillCostOverride": 1,
+    "prereqs": [
+        464
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 466,
+    "alignment": 3,
+    "Rank": 5,
+    "ability_School": 5,
+    "skillCostOverride": 1,
+    "prereqs": [
+        465
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 467,
+    "alignment": 3,
+    "Rank": 7,
+    "ability_School": 5,
+    "skillCostOverride": 1,
+    "prereqs": [
+        208,
+        209,
+        454
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 468,
+    "alignment": 3,
+    "Rank": 7,
+    "ability_School": 5,
+    "skillCostOverride": 1,
+    "prereqs": [
+        466
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 469,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 7,
+    "skillCostOverride": 1,
+    "prereqs": [],
+    "isFeat": true
+  },
+  {
+    "ID": 470,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School":7,
+    "skillCostOverride": 0,
+    "prereqs": [
+        469
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 471,
+    "alignment": 4,
+    "Rank": 3,
+    "ability_School":7,
+    "skillCostOverride": 1,
+    "prereqs": [
+        470
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 472,
+    "alignment": 4,
+    "Rank": 4,
+    "ability_School":7,
+    "skillCostOverride": 1,
+    "prereqs": [
+        470
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 473,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School":7,
+    "skillCostOverride": 0,
+    "prereqs": [
+        469
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 474,
+    "alignment": 4,
+    "Rank": 3,
+    "ability_School":7,
+    "skillCostOverride": 1,
+    "prereqs": [
+        473
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 475,
+    "alignment": 4,
+    "Rank": 4,
+    "ability_School":7,
+    "skillCostOverride": 1,
+    "prereqs": [
+        474
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 476,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 7,
+    "skillCostOverride": 0,
+    "prereqs": [
+        469
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 477,
+    "alignment": 4,
+    "Rank": 3,
+    "ability_School":7,
+    "skillCostOverride": 1,
+    "prereqs": [
+        476
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 478,
+    "alignment": 4,
+    "Rank": 4,
+    "ability_School": 7,
+    "skillCostOverride": 1,
+    "prereqs": [
+        477
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 479,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 7,
+    "skillCostOverride": 1,
+    "prereqs": [
+        469
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 480,
+    "alignment": 4,
+    "Rank": 3,
+    "ability_School":7,
+    "skillCostOverride": 0,
+    "prereqs": [
+        288
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 481,
+    "alignment": 4,
+    "Rank": 4,
+    "ability_School": 7,
+    "skillCostOverride": 1,
+    "prereqs": [
+        480
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 482,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 7,
+    "skillCostOverride": 0,
+    "prereqs": [
+        270
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 483,
+    "alignment": 4,
+    "Rank": 3,
+    "ability_School":7,
+    "skillCostOverride": 1,
+    "prereqs": [
+        482
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 484,
+    "alignment": 4,
+    "Rank": 4,
+    "ability_School": 7,
+    "skillCostOverride": 1,
+    "prereqs": [
+        483
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 485,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 7,
+    "skillCostOverride": 0,
+    "prereqs": [
+        270
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 486,
+    "alignment": 4,
+    "Rank": 3,
+    "ability_School": 7,
+    "skillCostOverride": 1,
+    "prereqs": [
+        485
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 487,
+    "alignment": 4,
+    "Rank": 4,
+    "ability_School": 7,
+    "skillCostOverride": 1,
+    "prereqs": [
+        486
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 488,
+    "alignment": 4,
+    "Rank": 5,
+    "ability_School": 7,
+    "skillCostOverride": 2,
+    "prereqs": [
+        270
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 489,
+    "alignment": 4,
+    "Rank": 4,
+    "ability_School": 7,
+    "skillCostOverride": 1,
+    "prereqs": [
+        269
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 490,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 7,
+    "skillCostOverride": 0,
+    "prereqs": [],
+    "isFeat": false
+  },
+  {
+    "ID": 491,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 7,
+    "skillCostOverride": 0,
+    "prereqs": [],
+    "isFeat": false
+  },
+  {
+    "ID": 492,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 12,
+    "skillCostOverride": 1,
+    "prereqs": [],
+    "isFeat": false
+  },
+  {
+    "ID": 493,
+    "alignment": 4,
+    "Rank": 3,
+    "ability_School": 12,
+    "skillCostOverride": 1,
+    "prereqs": [
+        492
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 494,
+    "alignment": 4,
+    "Rank": 4,
+    "ability_School": 12,
+    "skillCostOverride": 1,
+    "prereqs": [
+        493
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 495,
+    "alignment": 4,
+    "Rank": 6,
+    "ability_School": 10,
+    "skillCostOverride": 1,
+    "prereqs": [
+        279    
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 496,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 14,
+    "skillCostOverride": 1,
+    "prereqs": [],
+    "isFeat": false
+  },
+  {
+    "ID": 497,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 14,
+    "skillCostOverride": 1,
+    "prereqs": [],
+    "isFeat": false
+  },
+  {
+    "ID": 498,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 14,
+    "skillCostOverride": 1,
+    "prereqs": [],
+    "isFeat": false
+  },
+  {
+    "ID": 499,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 14,
+    "skillCostOverride": 1,
+    "prereqs": [],
+    "isFeat": false
+  },
+  {
+    "ID": 500,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 14,
+    "skillCostOverride": 1,
+    "prereqs": [
+        499
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 501,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 14,
+    "skillCostOverride": 1,
+    "prereqs": [
+        499
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 502,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 14,
+    "skillCostOverride": 1,
+    "prereqs": [
+        432
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 503,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 14,
+    "skillCostOverride": 1,
+    "prereqs": [
+        432
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 504,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 14,
+    "skillCostOverride": 1,
+    "prereqs": [
+        432
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 505,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 14,
+    "skillCostOverride": 1,
+    "prereqs": [],
+    "isFeat": false
+  },
+  {
+    "ID": 506,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 14,
+    "skillCostOverride": 1,
+    "prereqs": [
+        505
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 507,
+    "alignment": 4,
+    "Rank": 2,
+    "ability_School": 14,
+    "skillCostOverride": 1,
+    "prereqs": [
+        505
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 508,
+    "alignment": 3,
+    "Rank": 6,
+    "ability_School": 2,
+    "skillCostOverride": 1,
+    "prereqs": [],
     "isFeat": false
   }
 ]
