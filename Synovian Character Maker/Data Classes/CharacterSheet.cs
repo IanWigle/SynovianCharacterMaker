@@ -47,7 +47,7 @@ namespace Synovian_Character_Maker.Data_Classes
         [JsonIgnore]
         public string imageExtension { get; set; }
 
-        public CompanionSheet companionSheet { get; set; }
+        public List<CompanionSheet> companionSheets = new List<CompanionSheet>();
 
         public CharacterSheet() { }
 
@@ -320,6 +320,38 @@ namespace Synovian_Character_Maker.Data_Classes
                 }
             }
             return descriptions.ToArray();
+        }
+
+        public bool HasCompanion(CompanionSheet companionSheet)
+        {
+            foreach(CompanionSheet sheet in companionSheets)
+            {
+                if (sheet == companionSheet)
+                    return true;
+            }
+            return false;
+        }
+
+        public bool HasCompanion(string name)
+        {
+            foreach (CompanionSheet sheet in companionSheets)
+            {
+                if (sheet.companionName == name)
+                    return true;
+            }
+            return false;
+        }
+
+        public void RemoveCompanion(string name)
+        {
+            foreach(CompanionSheet s in companionSheets)
+            {
+                if (s.companionName == name)
+                {
+                    companionSheets.Remove(s);
+                    return;
+                }
+            }
         }
     }
 }

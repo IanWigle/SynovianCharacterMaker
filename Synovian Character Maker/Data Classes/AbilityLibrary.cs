@@ -249,6 +249,17 @@ namespace Synovian_Character_Maker.Data_Classes
             return abilities;
         }
 
+        public List<Ability> GetAbilitiesContainingStrings(string[] strs)
+        {
+            List<Ability> abilities = new List<Ability> ();
+            foreach (string str in strs)
+            {
+                abilities.AddRange(GetAbilitiesContainingString(str));
+            }
+
+            return abilities;
+        }
+
         private List<Ability> _abilities = new List<Ability>();
     }
 }

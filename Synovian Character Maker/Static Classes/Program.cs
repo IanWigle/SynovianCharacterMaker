@@ -108,6 +108,7 @@ namespace Synovian_Character_Maker
             catch(Exception e) { Helpers.ExceptionHandle(e); }
         }
 
+        // Grabs the currently opened character sheet from the maker.
         public static CharacterSheet GetOpenedSheet()
         {
             return Static_Classes.Helpers.GetForm<Forms.CharacterMaker.CharacterMaker>().current_characterSheet;

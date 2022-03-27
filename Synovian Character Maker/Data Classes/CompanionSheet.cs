@@ -35,27 +35,27 @@ namespace Synovian_Character_Maker.Data_Classes
         public CompanionType primaryCompanionType { get => _primaryCompanionType; }
         CompanionType _primaryCompanionType;
 
-        public List<CompanionType> additionalCompanionTypes { get => _additionalCompanionTypes; }
-        List<CompanionType> _additionalCompanionTypes = new List<CompanionType>();
+        //public List<CompanionType> additionalCompanionTypes { get => _additionalCompanionTypes; }
+        //List<CompanionType> _additionalCompanionTypes = new List<CompanionType>();
 
         public Image _image = null;
 
         [JsonIgnore]
         public string s_primaryCompanionType { get => Enum.GetName(typeof(CompanionType), _primaryCompanionType).Replace("_", " "); }
 
-        [JsonIgnore]
-        public List<string> s_additionalCompanionTypes
-        {
-            get
-            {
-                List<string> strings = new List<string>();
-
-                foreach (CompanionType companionType in _additionalCompanionTypes)
-                    strings.Add(Enum.GetName(typeof(CompanionType), companionType).Replace("_", " "));
-
-                return strings;
-            }
-        }
+        //[JsonIgnore]
+        //public List<string> s_additionalCompanionTypes
+        //{
+        //    get
+        //    {
+        //        List<string> strings = new List<string>();
+        //
+        //        foreach (CompanionType companionType in _additionalCompanionTypes)
+        //            strings.Add(Enum.GetName(typeof(CompanionType), companionType).Replace("_", " "));
+        //
+        //        return strings;
+        //    }
+        //}
 
         public List<int> abilities { get; set; }
 
@@ -66,66 +66,48 @@ namespace Synovian_Character_Maker.Data_Classes
         {
             _companionName = name;
             _primaryCompanionType = primeType;
-            _additionalCompanionTypes = new List<CompanionType>();
+            //_additionalCompanionTypes = new List<CompanionType>();
             abilities = new List<int>();
 
-            switch (primaryCompanionType)
-            {
-                case CompanionType.Research_Droid:
-                    _additionalCompanionTypes.Add(CompanionType.Medical_Droid);
-                    _additionalCompanionTypes.Add(CompanionType.Engineering_Droid);
-                    _additionalCompanionTypes.Add(CompanionType.Astromech_Droid);
-                    break;
-                case CompanionType.Security_Droid:
-                    _additionalCompanionTypes.Add(CompanionType.Battle_Droid);
-                    break;
-                case CompanionType.Assassin_Droid:
-                    _additionalCompanionTypes.Add(CompanionType.Battle_Droid);
-                    break;
-                default:
-                    break;
-            }
+            //switch (primaryCompanionType)
+            //{
+            //    case CompanionType.Research_Droid:
+            //        _additionalCompanionTypes.Add(CompanionType.Medical_Droid);
+            //        _additionalCompanionTypes.Add(CompanionType.Engineering_Droid);
+            //        _additionalCompanionTypes.Add(CompanionType.Astromech_Droid);
+            //        break;
+            //    case CompanionType.Security_Droid:
+            //        _additionalCompanionTypes.Add(CompanionType.Battle_Droid);
+            //        break;
+            //    case CompanionType.Assassin_Droid:
+            //        _additionalCompanionTypes.Add(CompanionType.Battle_Droid);
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
 
-        public CompanionSheet(string name, CompanionType primeType, List<CompanionType> secondaryTypes)
-        {
-            _companionName = name;
-            _primaryCompanionType = primeType;
-            _additionalCompanionTypes = secondaryTypes;
-            abilities = new List<int>();
-        }
+        //public CompanionSheet(string name, CompanionType primeType, List<CompanionType> secondaryTypes)
+        //{
+        //    _companionName = name;
+        //    _primaryCompanionType = primeType;
+        //    _additionalCompanionTypes = secondaryTypes;
+        //    abilities = new List<int>();
+        //}
 
-        public CompanionSheet(string name, CompanionType primeType, List<CompanionType> secondaryTypes, List<int> abs)
-        {
-            _companionName = name;
-            _primaryCompanionType = primeType;
-            _additionalCompanionTypes = secondaryTypes;
-            abilities = abs;
-        }
+        //public CompanionSheet(string name, CompanionType primeType, List<CompanionType> secondaryTypes, List<int> abs)
+        //{
+        //    _companionName = name;
+        //    _primaryCompanionType = primeType;
+        //    _additionalCompanionTypes = secondaryTypes;
+        //    abilities = abs;
+        //}
 
         public CompanionSheet(string name, CompanionType primaryType, List<int> abs)
         {
             _companionName = name;
             _primaryCompanionType = primaryType;
-            _additionalCompanionTypes = new List<CompanionType>();
             abilities = abs;
-
-            switch (primaryCompanionType)
-            {
-                case CompanionType.Research_Droid:
-                    _additionalCompanionTypes.Add(CompanionType.Medical_Droid);
-                    _additionalCompanionTypes.Add(CompanionType.Engineering_Droid);
-                    _additionalCompanionTypes.Add(CompanionType.Astromech_Droid);
-                    break;
-                case CompanionType.Security_Droid:
-                    _additionalCompanionTypes.Add(CompanionType.Battle_Droid);
-                    break;
-                case CompanionType.Assassin_Droid:
-                    _additionalCompanionTypes.Add(CompanionType.Battle_Droid);
-                    break;
-                default:
-                    break;
-            }
         }
 
         // Used for beast companions
@@ -139,6 +121,14 @@ namespace Synovian_Character_Maker.Data_Classes
             abilities = new List<int>();
         }
 
+        public CompanionSheet(string name, string history, CompanionType primaryType, List<int> abs)
+        {
+            _companionName = name;
+            SetCompanionHistory(history);
+            _primaryCompanionType = primaryType;
+            abilities = new List<int>(abs);
+        }
+
         static public int DetermineSkillPointsByType(CompanionType companionType)
         {
             switch(companionType)
@@ -147,25 +137,48 @@ namespace Synovian_Character_Maker.Data_Classes
                 case CompanionType.Beast:
                     return 0;
                 case CompanionType.Research_Droid:
-                    return 50;
-                // Since this is a sub type that isn't a choice, there is no points dedicated
+                    return 10;
                 case CompanionType.Medical_Droid:
-                    return 0;
+                    return 10;
                 case CompanionType.Engineering_Droid:
-                    return 30;
+                    return 8;
                 case CompanionType.Astromech_Droid:
-                    return 30;
+                    return 8;
                 case CompanionType.Protocol_Droid:
-                    return 20;
+                    return 10;
                 case CompanionType.Battle_Droid:
-                    return 40;
+                    return 15;
                 case CompanionType.Security_Droid:
-                    return 35;
+                    return 10;
                 case CompanionType.Assassin_Droid:
-                    return 35;
+                    return 10;
                 default:
                     return 0;
             }
+        }
+
+        static public CompanionType DetermineEnumTypeByString(string type)
+        {
+            if (type == "Beast")
+                return CompanionType.Beast;
+            else if (type == "Research Droid")
+                return CompanionType.Research_Droid;
+            else if (type == "Medical Droid")
+                return CompanionType.Medical_Droid;
+            else if (type == "Engineering Droid")
+                return CompanionType.Engineering_Droid;
+            else if (type == "Astromech Droid")
+                return CompanionType.Astromech_Droid;
+            else if (type == "Protocol Droid")
+                return CompanionType.Protocol_Droid;
+            else if (type == "Battle Droid")
+                return CompanionType.Battle_Droid;
+            else if (type == "Security Droid")
+                return CompanionType.Security_Droid;
+            else if (type == "Assassin Droid")
+                return CompanionType.Assassin_Droid;
+
+            return CompanionType.None;
         }
 
         public bool ContainsAbility(int ability) => abilities.Contains(ability);

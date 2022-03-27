@@ -4449,7 +4449,7 @@
     "alignment": 4,
     "Rank": 3,
     "ability_School": 12,
-    "skillCostOverride": 1,
+    "skillCostOverride": 2,
     "prereqs": [
       408
     ],
@@ -4460,7 +4460,7 @@
     "alignment": 4,
     "Rank": 4,
     "ability_School": 12,
-    "skillCostOverride": 1,
+    "skillCostOverride": 3,
     "prereqs": [
       409
     ],
@@ -4471,7 +4471,7 @@
     "alignment": 4,
     "Rank": 5,
     "ability_School": 12,
-    "skillCostOverride": 2,
+    "skillCostOverride": 4,
     "prereqs": [
       410
     ],

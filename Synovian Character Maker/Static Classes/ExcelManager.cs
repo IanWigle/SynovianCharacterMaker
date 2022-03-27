@@ -240,6 +240,7 @@ namespace Synovian_Character_Maker.Static_Classes
             void WriteComment(string cell,string comment)
             {
                 SLComment sLComment = sLDocument.CreateComment();
+                sLComment.AutoSize = true;
                 sLComment.SetText(comment);
                 sLDocument.InsertComment(cell, sLComment);
             }
@@ -327,7 +328,7 @@ namespace Synovian_Character_Maker.Static_Classes
             string[] validFormNames = { "Niman", "Shii Cho", "Makashi", "Soresu", "Ataru", "Shien/Djem-so", "Juyo",
                                         "Trakata","Saber Staff","Jar'kai","Saber Pike","Force Channel", "Force Affinity", "Force Mastery",
                                         "Force Potency", "Force Mentalism"};
-            string[] formLevels = { "Basic", "Intermediate", "Advanced", "Master" };
+            string[] formLevels = { "Basic", "Intermediate", "Advanced", "Expert" };
             List<string> FurthestForms = new List<string>();
 
             string GetFurthestVersionOfTree(string form)
@@ -608,97 +609,82 @@ namespace Synovian_Character_Maker.Static_Classes
             MergeCells($"N{currentLowestIndex}:N{largestColumnIndex - 1}");
 
             // If character has a companion, make a new sheet for it.
-            if(characterSheet.companionSheet != null)
+            if(characterSheet.companionSheets != null)
             {
                 sLDocument.AddWorksheet("Companion");
-                if(characterSheet.companionSheet.primaryCompanionType == CompanionSheet.CompanionType.Beast)
+
+                int indexOffsetter = 1;
+                foreach(CompanionSheet sheet in characterSheet.companionSheets)
                 {
-                    WriteCell("A1", $"Companion Name : {characterSheet.companionSheet.companionName}");
-                    MergeCells("A1:D1");
+                    // Setup companion name.
+                    WriteCell($"A{indexOffsetter}", $"Companion Name : {sheet.companionName}");
+                    MergeCells($"A{indexOffsetter}:I{indexOffsetter}");
 
-                    WriteCell("A2", $"Beast Race : {characterSheet.companionSheet.companionSpecies}");
-                    MergeCells("A2:D2");
+                    indexOffsetter++;
 
-                    WriteCell("A3", $"Companion History : {characterSheet.companionSheet.companionHistory}");
+                    // Setup Companion Type
+                    WriteCell($"A{indexOffsetter}", $"Companion Type : {sheet.s_primaryCompanionType}");
+                    MergeCells($"A{indexOffsetter}:I{indexOffsetter}");
 
-                    SLStyle sLStyle = new SLStyle();
-                    sLStyle.SetWrapText(true);
-                    sLStyle.SetVerticalAlignment(VerticalAlignmentValues.Top);
+                    indexOffsetter++;
 
-                    sLDocument.SetCellStyle("A3", sLStyle);
-                    MergeCells("A3:G6");
-
-                    if(characterSheet.companionSheet._image != null)
+                    // If the companion is a beast, explain the species
+                    if (sheet.primaryCompanionType == CompanionSheet.CompanionType.Beast)
                     {
-                        var ms = new MemoryStream();
-                        characterSheet.companionSheet._image.Save(ms, characterSheet.companionSheet._image.RawFormat);
-                    
-                        SpreadsheetLight.Drawing.SLPicture picture = new SpreadsheetLight.Drawing.SLPicture(ms.ToArray(), DocumentFormat.OpenXml.Packaging.ImagePartType.Jpeg);
-                        picture.SetPosition(8, 1);
-                        picture.ResizeInPercentage(10, 10);
-                    
-                        sLDocument.InsertPicture(picture);
+                        WriteCell($"A{indexOffsetter}", $"Companion Species : {sheet.companionSpecies}");
+                        MergeCells($"A{indexOffsetter}:I{indexOffsetter}");
+
+                        indexOffsetter++;
                     }
-                }
-                else if (characterSheet.companionSheet.primaryCompanionType >= CompanionSheet.CompanionType.Research_Droid)
-                {
-                    WriteCell("A1", $"Compaion Name : {characterSheet.companionSheet.companionName}");
-                    MergeCells("A1:D1");
 
-                    WriteCell("A2", $"Droid Type : {characterSheet.companionSheet.primaryCompanionType}");
-                    MergeCells("A2:D2");
+                    // Setup Companion History
+                    WriteCell($"A{indexOffsetter}", $"Companion History : {sheet.companionHistory}");
 
-                    WriteCell("A3", $"Companion History : {characterSheet.companionSheet.companionHistory}");
+                    SLStyle compsLStyle = new SLStyle();
+                    compsLStyle.SetWrapText(true);
+                    compsLStyle.SetVerticalAlignment(VerticalAlignmentValues.Top);
+                    sLDocument.SetCellStyle($"A{indexOffsetter}", compsLStyle);
 
-                    SLStyle sLStyle = new SLStyle();
-                    sLStyle.SetWrapText(true);
-                    sLStyle.SetVerticalAlignment(VerticalAlignmentValues.Top);
+                    MergeCells($"A{indexOffsetter}:I{(indexOffsetter + 3)}");
 
-                    sLDocument.SetCellStyle("A3",sLStyle);
-                    MergeCells("A3:L6");
+                    // Space between history OR new companion
+                    indexOffsetter += 5;
 
-                    WriteCell("A8", "Abilities");
-                    MergeCells("A8:D8");
-
-                    WriteCell("A9", "Name");
-                    MergeCells("A9:D9");
-
-                    WriteCell("E9", "Description");
-                    MergeCells("E9:H9");
-
-                    WriteCell("I9","Droid Type");
-                    MergeCells("I9:L9");
-
-                    int currentRow = 10;
-
-                    foreach(int ability in characterSheet.companionSheet.abilities)
+                    // If the companion is a droid.
+                    if(sheet.primaryCompanionType < CompanionSheet.CompanionType.Beast)
                     {
-                        if(Program.abilityLibrary.TryGetAbility(ability, out Ability ability1))
+                        // Setup Abilities title header
+                        WriteCell($"A{indexOffsetter}", "Abilities");
+                        MergeCells($"A{indexOffsetter}:I{indexOffsetter}");
+
+                        indexOffsetter++;
+
+                        // Setup abilities filter headers
+                        // Name
+                        WriteCell($"A{indexOffsetter}", "Name");
+                        MergeCells($"A{indexOffsetter}:D{indexOffsetter}");
+                        // Description if valid
+                        WriteCell($"E{indexOffsetter}", "Description");
+                        MergeCells($"E{indexOffsetter}:H{indexOffsetter}");
+
+                        indexOffsetter++;
+                        
+                        foreach(int abilityID in sheet.abilities)
                         {
-                            WriteCell($"A{currentRow}", ability1.Name);
-                            MergeCells($"A{currentRow}:D{currentRow}");
+                            Ability ability = Program.abilityLibrary.GetAbility(abilityID);
+                            if (ability == null) continue;
 
-                            WriteCell($"E{currentRow}", ability1.description);
-                            MergeCells($"E{currentRow}:H{currentRow}");
+                            WriteCell($"A{indexOffsetter}", ability.Name);
+                            MergeCells($"A{indexOffsetter}:D{indexOffsetter}");
 
-                            WriteCell($"I{currentRow}", ability1.s_prereqs[0]);
-                            MergeCells($"I{currentRow}:L{currentRow}");
+                            WriteCell($"E{indexOffsetter}", ability.description);
+                            MergeCells($"E{indexOffsetter}:I{indexOffsetter}");
 
-                            currentRow++;
+                            indexOffsetter++;
                         }
                     }
 
-                    if (characterSheet.companionSheet._image != null)
-                    {
-                        var ms = new MemoryStream();
-                        characterSheet.companionSheet._image.Save(ms, characterSheet.companionSheet._image.RawFormat);
-
-                        SpreadsheetLight.Drawing.SLPicture picture = new SpreadsheetLight.Drawing.SLPicture(ms.ToArray(), DocumentFormat.OpenXml.Packaging.ImagePartType.Jpeg);
-                        picture.SetPosition((currentRow + 2), 1);
-                        picture.ResizeInPercentage(10, 10);
-
-                        sLDocument.InsertPicture(picture);
-                    }
+                    indexOffsetter++;
                 }
             }
 
@@ -755,6 +741,10 @@ namespace Synovian_Character_Maker.Static_Classes
                 return null;
 
             SLDocument sl = new SLDocument(url);
+            // Excel files save which worksheet was the last viewed. Move to the main worksheet containing the character's main data.
+            // If this is not done, read commands may get inacurrate info.
+            string mainWorksheet = (url.Split('\\')[url.Split('\\').Length - 1]).Split('.')[0];
+            sl.SelectWorksheet(mainWorksheet);
 
             string name = sl.GetCellValueAsString("B2");
             string characterDescription = "";
@@ -928,64 +918,96 @@ namespace Synovian_Character_Maker.Static_Classes
                 }
             }
 
-            CompanionSheet companionSheet = null;
+            List<CompanionSheet> companionSheets = new List<CompanionSheet>();
             if(sl.SelectWorksheet("Companion") == true)
             {
-                string compName = sl.GetCellValueAsString("A1");
-                if (compName.Contains("Companion Name : ")) compName = compName.Remove(0, 17);
+                int indexoffset = 1;
 
-                string compTypeStr = sl.GetCellValueAsString("A2"); 
-                string compHistory = "";
-                
-                Image compImage = null;
-                List<int> compAbil = new List<int>();
-                List<CompanionSheet.CompanionType> subTypes = new List<CompanionSheet.CompanionType>();
-                CompanionSheet.CompanionType compType = CompanionSheet.CompanionType.None;
+                // Read entire worksheet until the cells being read are empty.
+                do
+                {
+                    string compName = "";
+                    string compType = "";
+                    string compHistory = "";
+                    string compSpecies = "";
+                    List<int> compAbil = new List<int>();
 
-                if(compTypeStr.Contains("Beast Race : "))
-                {
-                    compTypeStr = compTypeStr.Split(':')[1].Remove(0, 1);
-                    compType = CompanionSheet.CompanionType.Beast;
-                }
-                else if (compTypeStr.Contains("Droid Type : "))
-                {
-                    compTypeStr = compTypeStr.Remove(0, 13);
-                }
-                else
-                {
-                    MessageBox.Show($"There was a problem reading the companion worksheet for the character {name}. The companion is not loaded", 
-                                    "Error!", 
-                                    MessageBoxButtons.OK, 
-                                    MessageBoxIcon.Error);
-                }
-
-                compHistory = sl.GetCellValueAsString("A3").Split(':')[1].Remove(0, 1);
-
-                if (compType != CompanionSheet.CompanionType.Beast)
-                {
-                    for (int i = 0; i < (int)CompanionSheet.CompanionType.Max; i++)
+                    // Read through all data of a companion until read cell is empty, move on to the next sheet.
+                    do
                     {
-                        if (compTypeStr == Enum.GetName(typeof(CompanionSheet.CompanionType), i))
-                            compType = (CompanionSheet.CompanionType)i;
-                    }
-                }
+                        // Read cell data
+                        string companionDataString = sl.GetCellValueAsString($"A{indexoffset}");
 
-                companionSheet = new CompanionSheet(compName, compType, subTypes, compAbil);
-                companionSheet.SetCompanionHistory(compHistory);
-                companionSheet.SetCompanionSpecies(compTypeStr);
-                companionSheet._image = compImage;
+                        // Figuring out what the cell data is.
+                        if (companionDataString.Contains("Name"))
+                        {
+                            compName = companionDataString.Replace("Companion Name : ", "");
+                        }
+                        else if (companionDataString.Contains("Type"))
+                        {
+                            compType = companionDataString.Replace("Companion Type : ", "");
+                        }
+                        else if (companionDataString.Contains("History"))
+                        {
+                            compHistory = companionDataString.Replace("Companion History : ", "");
+                            // We must make a large offset increase as the cell reader from document will not recognize when
+                            // two row cells are merged. In the exporter we merge 4 rows to make the history box.
+                            indexoffset += 4;
+                        }
+                        else if (companionDataString.Contains("Species"))
+                        {
+                            compSpecies = companionDataString.Replace("Companion Species : ", "");
+                        }
+                        else if (companionDataString.Contains("Abilities"))
+                        {
+                            indexoffset += 2;
+                            do
+                            {
+                                string ability = sl.GetCellValueAsString($"A{indexoffset}");
+
+                                if (Program.abilityLibrary.TryGetAbility(ability, out Ability ability1))
+                                {
+                                    compAbil.Add(ability1.ID);
+                                    indexoffset++;
+                                }
+                                else if (ability == "")
+                                {
+                                    indexoffset -= 1;
+                                    break;
+                                }
+                            } while (true);
+                        }
+                        else
+                            break;
+                            
+                        indexoffset++;
+                    } while (true);
+
+                    if (compName != "" && compType != "")
+                    {
+                        CompanionSheet sheet = new CompanionSheet(compName, compHistory, CompanionSheet.DetermineEnumTypeByString(compType), compAbil);
+                        if(sheet.primaryCompanionType == CompanionSheet.CompanionType.Beast) sheet.SetCompanionSpecies(compSpecies);
+                        companionSheets.Add(sheet);
+                        indexoffset++;
+                    }
+                    else
+                        break;
+                } while (true);
             }
 
-            CharacterSheet characterSheet = new CharacterSheet(name, 
-                                                               rank, 
-                                                               ability_Alignment, 
-                                                               abilities, 
-                                                               "", 
-                                                               null, 
-                                                               characterSpecies, 
+            CharacterSheet characterSheet = new CharacterSheet(name,
+                                                               rank,
+                                                               ability_Alignment,
+                                                               abilities,
+                                                               "",
+                                                               null,
+                                                               characterSpecies,
                                                                CharacterSheet.SheetFileType.XlSx);
-            characterSheet.companionSheet = companionSheet;
 
+            if (companionSheets.Count > 0)
+                characterSheet.companionSheets = new List<CompanionSheet>(companionSheets);
+
+            
             return characterSheet;
         }
     }

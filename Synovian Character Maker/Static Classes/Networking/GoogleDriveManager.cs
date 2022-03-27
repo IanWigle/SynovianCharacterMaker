@@ -326,7 +326,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
         /// <summary>
         /// Provides a list of found files within the Character Maker folder on drive.
         /// </summary>
-        /// <param name="searchSize">The max size of the file search.</param>
+        /// <param name="searchSize">The max size of the file search. Default search size is 10.</param>
         /// <returns>An array of struct FileSearch containing names and ids.</returns>
         static public List<FileSearch> SearchFiles(int searchSize = 10)
         {

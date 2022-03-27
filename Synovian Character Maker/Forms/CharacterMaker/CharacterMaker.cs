@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using Synovian_Character_Maker.Data_Classes;
 using Synovian_Character_Maker.Static_Classes;
+using Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker;
 
 namespace Synovian_Character_Maker.Forms.CharacterMaker
 {
@@ -240,29 +241,8 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
         private void companionButton_Click(object sender, EventArgs e)
         {
-            if (current_characterSheet.companionSheet == null)
-            {
-                CompanionMaker.CompanionSetup companionSetup = new CompanionMaker.CompanionSetup();
-                companionSetup.ShowDialog();
-            }
-            else
-            {
-                switch (current_characterSheet.companionSheet.primaryCompanionType)
-                {
-                    case CompanionSheet.CompanionType.Beast:
-                        {
-                            CompanionMaker.Beast_Companion_Maker beast_Companion_Maker = new CompanionMaker.Beast_Companion_Maker();
-                            beast_Companion_Maker.ShowDialog();
-                            break;
-                        }
-                    default:
-                        {
-                            CompanionMaker.DroidCompanionMaker companionMaker = new CompanionMaker.DroidCompanionMaker();
-                            companionMaker.ShowDialog();
-                            break;
-                        }
-                }                
-            }
+            CompanionMenu companionMenu = new CompanionMenu();
+            companionMenu.ShowDialog();
         }
 
         private void characterAbilitiesView_Click(object sender, EventArgs e)
@@ -677,119 +657,219 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                     }
                 }
             }
-            // If the character has a companion, check if the sheet has the needed abilities
+            // Calculate companions
             {
-                if (current_characterSheet.companionSheet == null)
-                    goto SkipCompaionChecks;
-
-                CompanionSheet.CompanionType companionType = current_characterSheet.companionSheet.primaryCompanionType;
-
-                if(companionType == CompanionSheet.CompanionType.Beast)
+                foreach(CompanionSheet companion in current_characterSheet.companionSheets)
                 {
-                    if(!current_characterSheet.Contains("Dominate Mind") &&
-                       !current_characterSheet.Contains("Basic Animal Friendship"))
+                    if(companion.primaryCompanionType == CompanionSheet.CompanionType.Beast)
                     {
-                        valid = false;
-                        numErrors++;
 
-                        calculatorLog.AddToLog("Having a beast companion requires you to have either Dominate Mind or at least Basic Animal Friendship");
                     }
-                }
-                else if(companionType == CompanionSheet.CompanionType.Medical_Droid ||
-                        companionType == CompanionSheet.CompanionType.Research_Droid)
-                {
-                    if(!current_characterSheet.Contains("Creation Training")    ||
-                       !current_characterSheet.Contains("Basic Engineering Training") ||
-                       !current_characterSheet.Contains("Class I Droids"))
+                    else
                     {
-                        valid = false;
-                        numErrors++;
-
-                        string errorMessage = "You are missing: ";
-
-                        if (!current_characterSheet.Contains("Basic Creation"))
-                            errorMessage += "Basic Creation ";
-                        if (!current_characterSheet.Contains("Basic Engineering"))
-                            errorMessage += "Basic Engineering ";
-                        if (!current_characterSheet.Contains("Class I Droids"))
-                            errorMessage += "Class I Droids";
-
-                        errorMessage += " for your droid companion.";
-                        calculatorLog.AddToLog(errorMessage);
-                    }
-                }
-                else if (companionType == CompanionSheet.CompanionType.Engineering_Droid ||
-                         companionType == CompanionSheet.CompanionType.Astromech_Droid)
-                {
-                    if (!current_characterSheet.Contains("Basic Creation")    ||
-                        !current_characterSheet.Contains("Basic Engineering") ||
-                        !current_characterSheet.Contains("Class II Droids"))
-                    {
-                        valid = false;
-                        numErrors++;
-
-                        string errorMessage = "You are missing: ";
-
-                        if (!current_characterSheet.Contains("Basic Creation"))
-                            errorMessage += "Basic Creation ";
-                        if (!current_characterSheet.Contains("Basic Engineering"))
-                            errorMessage += "Basic Engineering ";
-                        if (!current_characterSheet.Contains("Class II Droids"))
-                            errorMessage += "Class II Droids";
-
-                        errorMessage += " for your droid companion.";
-                        calculatorLog.AddToLog(errorMessage);
-                    }
-                }
-                else if (companionType == CompanionSheet.CompanionType.Protocol_Droid)
-                {
-                    if (!current_characterSheet.Contains("Intermediate Creation") ||
-                        !current_characterSheet.Contains("Basic Engineering")     ||
-                        !current_characterSheet.Contains("Class III Droids"))
-                    {
-                        valid = false;
-                        numErrors++;
-
-                        string errorMessage = "You are missing: ";
-
-                        if (!current_characterSheet.Contains("Intermediate Creation"))
-                            errorMessage += "Intermediate Creation ";
-                        if (!current_characterSheet.Contains("Basic Engineering"))
-                            errorMessage += "Basic Engineering ";
-                        if (!current_characterSheet.Contains("Class III Droids"))
-                            errorMessage += "Class III Droids";
-
-                        errorMessage += " for your droid companion.";
-                        calculatorLog.AddToLog(errorMessage);
-                    }
-                }
-                else if (companionType == CompanionSheet.CompanionType.Battle_Droid   ||
-                         companionType == CompanionSheet.CompanionType.Security_Droid ||
-                         companionType == CompanionSheet.CompanionType.Astromech_Droid)
-                {
-                    if (!current_characterSheet.Contains("Advanced Creation")  ||
-                        !current_characterSheet.Contains("Basic Engineering")  ||
-                        !current_characterSheet.Contains("Class IV Droids"))
-                    {
-                        valid = false;
-                        numErrors++;
-
-                        string errorMessage = "You are missing: ";
-
-                        if (!current_characterSheet.Contains("Advanced Creation"))
-                            errorMessage += "Advanced Creation ";
-                        if (!current_characterSheet.Contains("Basic Engineering"))
-                            errorMessage += "Basic Engineering ";
-                        if (!current_characterSheet.Contains("Class IV Droids"))
-                            errorMessage += "Class IV Droids";
-
-                        errorMessage += " for your droid companion.";
-                        calculatorLog.AddToLog(errorMessage);
+                        switch(companion.primaryCompanionType)
+                        {
+                            case CompanionSheet.CompanionType.Research_Droid:
+                                {
+                                    if(!current_characterSheet.Contains("Class I Droids"))
+                                    {
+                                        numErrors++;
+                                        valid = false;
+                                        calculatorLog.AddToLog($"To use the droid companion {companion.companionName}, you need Class I Droids for missions");
+                                    }
+                                    break;
+                                }
+                            case CompanionSheet.CompanionType.Medical_Droid:
+                                {
+                                    if (!current_characterSheet.Contains("Class I Droids"))
+                                    {
+                                        numErrors++;
+                                        valid = false;
+                                        calculatorLog.AddToLog($"To use the droid companion {companion.companionName}, you need Class I Droids for missions");
+                                    }
+                                    break;
+                                }
+                            case CompanionSheet.CompanionType.Engineering_Droid:
+                                {
+                                    if (!current_characterSheet.Contains("Class II Droids"))
+                                    {
+                                        numErrors++;
+                                        valid = false;
+                                        calculatorLog.AddToLog($"To use the droid companion {companion.companionName}, you need Class II Droids for missions");
+                                    }
+                                    break;
+                                }
+                            case CompanionSheet.CompanionType.Astromech_Droid:
+                                {
+                                    if (!current_characterSheet.Contains("Class II Droids"))
+                                    {
+                                        numErrors++;
+                                        valid = false;
+                                        calculatorLog.AddToLog($"To use the droid companion {companion.companionName}, you need Class II Droids for missions");
+                                    }
+                                    break;
+                                }
+                            case CompanionSheet.CompanionType.Protocol_Droid:
+                                {
+                                    if (!current_characterSheet.Contains("Class III Droids"))
+                                    {
+                                        numErrors++;
+                                        valid = false;
+                                        calculatorLog.AddToLog($"To use the droid companion {companion.companionName}, you need Class III Droids for missions");
+                                    }
+                                    break;
+                                }
+                            case CompanionSheet.CompanionType.Battle_Droid:
+                                {
+                                    if (!current_characterSheet.Contains("Class IV Droids"))
+                                    {
+                                        numErrors++;
+                                        valid = false;
+                                        calculatorLog.AddToLog($"To use the droid companion {companion.companionName}, you need Class IV Droids for missions");
+                                    }
+                                    break;
+                                }
+                            case CompanionSheet.CompanionType.Security_Droid:
+                                {
+                                    if (!current_characterSheet.Contains("Class IV Droids"))
+                                    {
+                                        numErrors++;
+                                        valid = false;
+                                        calculatorLog.AddToLog($"To use the droid companion {companion.companionName}, you need Class IV Droids for missions");
+                                    }
+                                    break;
+                                }
+                            case CompanionSheet.CompanionType.Assassin_Droid:
+                                {
+                                    if (!current_characterSheet.Contains("Class IV Droids"))
+                                    {
+                                        numErrors++;
+                                        valid = false;
+                                        calculatorLog.AddToLog($"To use the droid companion {companion.companionName}, you need Class IV Droids for missions");
+                                    }
+                                    break;
+                                }
+                            default:
+                                break;
+                        }
                     }
                 }
 
-                SkipCompaionChecks:;                
+                
             }
+            // If the character has a companion, check if the sheet has the needed abilities
+            //{
+            //    if (current_characterSheet.companionSheets == null)
+            //        goto SkipCompaionChecks;
+            //
+            //    CompanionSheet.CompanionType companionType = current_characterSheet.companionSheet.primaryCompanionType;
+            //
+            //    if(companionType == CompanionSheet.CompanionType.Beast)
+            //    {
+            //        if(!current_characterSheet.Contains("Dominate Mind") &&
+            //           !current_characterSheet.Contains("Basic Animal Friendship"))
+            //        {
+            //            valid = false;
+            //            numErrors++;
+            //
+            //            calculatorLog.AddToLog("Having a beast companion requires you to have either Dominate Mind or at least Basic Animal Friendship");
+            //        }
+            //    }
+            //    else if(companionType == CompanionSheet.CompanionType.Medical_Droid ||
+            //            companionType == CompanionSheet.CompanionType.Research_Droid)
+            //    {
+            //        if(!current_characterSheet.Contains("Creation Training")    ||
+            //           !current_characterSheet.Contains("Basic Engineering Training") ||
+            //           !current_characterSheet.Contains("Class I Droids"))
+            //        {
+            //            valid = false;
+            //            numErrors++;
+            //
+            //            string errorMessage = "You are missing: ";
+            //
+            //            if (!current_characterSheet.Contains("Basic Creation"))
+            //                errorMessage += "Basic Creation ";
+            //            if (!current_characterSheet.Contains("Basic Engineering"))
+            //                errorMessage += "Basic Engineering ";
+            //            if (!current_characterSheet.Contains("Class I Droids"))
+            //                errorMessage += "Class I Droids";
+            //
+            //            errorMessage += " for your droid companion.";
+            //            calculatorLog.AddToLog(errorMessage);
+            //        }
+            //    }
+            //    else if (companionType == CompanionSheet.CompanionType.Engineering_Droid ||
+            //             companionType == CompanionSheet.CompanionType.Astromech_Droid)
+            //    {
+            //        if (!current_characterSheet.Contains("Basic Creation")    ||
+            //            !current_characterSheet.Contains("Basic Engineering") ||
+            //            !current_characterSheet.Contains("Class II Droids"))
+            //        {
+            //            valid = false;
+            //            numErrors++;
+            //
+            //            string errorMessage = "You are missing: ";
+            //
+            //            if (!current_characterSheet.Contains("Basic Creation"))
+            //                errorMessage += "Basic Creation ";
+            //            if (!current_characterSheet.Contains("Basic Engineering"))
+            //                errorMessage += "Basic Engineering ";
+            //            if (!current_characterSheet.Contains("Class II Droids"))
+            //                errorMessage += "Class II Droids";
+            //
+            //            errorMessage += " for your droid companion.";
+            //            calculatorLog.AddToLog(errorMessage);
+            //        }
+            //    }
+            //    else if (companionType == CompanionSheet.CompanionType.Protocol_Droid)
+            //    {
+            //        if (!current_characterSheet.Contains("Intermediate Creation") ||
+            //            !current_characterSheet.Contains("Basic Engineering")     ||
+            //            !current_characterSheet.Contains("Class III Droids"))
+            //        {
+            //            valid = false;
+            //            numErrors++;
+            //
+            //            string errorMessage = "You are missing: ";
+            //
+            //            if (!current_characterSheet.Contains("Intermediate Creation"))
+            //                errorMessage += "Intermediate Creation ";
+            //            if (!current_characterSheet.Contains("Basic Engineering"))
+            //                errorMessage += "Basic Engineering ";
+            //            if (!current_characterSheet.Contains("Class III Droids"))
+            //                errorMessage += "Class III Droids";
+            //
+            //            errorMessage += " for your droid companion.";
+            //            calculatorLog.AddToLog(errorMessage);
+            //        }
+            //    }
+            //    else if (companionType == CompanionSheet.CompanionType.Battle_Droid   ||
+            //             companionType == CompanionSheet.CompanionType.Security_Droid ||
+            //             companionType == CompanionSheet.CompanionType.Astromech_Droid)
+            //    {
+            //        if (!current_characterSheet.Contains("Advanced Creation")  ||
+            //            !current_characterSheet.Contains("Basic Engineering")  ||
+            //            !current_characterSheet.Contains("Class IV Droids"))
+            //        {
+            //            valid = false;
+            //            numErrors++;
+            //
+            //            string errorMessage = "You are missing: ";
+            //
+            //            if (!current_characterSheet.Contains("Advanced Creation"))
+            //                errorMessage += "Advanced Creation ";
+            //            if (!current_characterSheet.Contains("Basic Engineering"))
+            //                errorMessage += "Basic Engineering ";
+            //            if (!current_characterSheet.Contains("Class IV Droids"))
+            //                errorMessage += "Class IV Droids";
+            //
+            //            errorMessage += " for your droid companion.";
+            //            calculatorLog.AddToLog(errorMessage);
+            //        }
+            //    }
+            //
+            //    SkipCompaionChecks:;                
+            //}
 
             calculatorLog.AddToLog($"Results are in: your sheet is {((valid == true) ? "valid" : "invalid")}.");
             calculatorLog.AddToLog($"Number of errors: {numErrors}");

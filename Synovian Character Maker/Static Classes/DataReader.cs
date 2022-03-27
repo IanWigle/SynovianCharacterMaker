@@ -215,7 +215,7 @@ namespace Synovian_Character_Maker.Static_Classes
 
                         if (compName != "" && primaryType != CompanionSheet.CompanionType.None)
                         {
-                            companionSheet = new CompanionSheet(compName, primaryType, secondaryTypes, abilities);
+                            companionSheet = new CompanionSheet(compName, primaryType, abilities);
                         }
                     }
                 }
@@ -244,7 +244,7 @@ namespace Synovian_Character_Maker.Static_Classes
                                                                        species,
                                                                        CharacterSheet.SheetFileType.Txt);
                     characterSheet.characterDescription = description;
-                    if (companionSheet != null) characterSheet.companionSheet = companionSheet;
+                    if (companionSheet != null) characterSheet.companionSheets.Add(companionSheet);
                     return characterSheet;
                 }
                 else
@@ -525,7 +525,7 @@ namespace Synovian_Character_Maker.Static_Classes
 
                         if (compName != "" && primaryType != CompanionSheet.CompanionType.None)
                         {
-                            companionSheet = new CompanionSheet(compName, primaryType, secondaryTypes, abilities);
+                            companionSheet = new CompanionSheet(compName, primaryType, abilities);
                         }
                     }
                 }
@@ -554,7 +554,7 @@ namespace Synovian_Character_Maker.Static_Classes
                                                                        species,
                                                                        CharacterSheet.SheetFileType.Txt);
                     new_characterSheet.characterDescription = description;
-                    if (companionSheet != null) new_characterSheet.companionSheet = companionSheet;
+                    if (companionSheet != null) new_characterSheet.companionSheets.Add(companionSheet);
                     return new_characterSheet;
                 }
                 else
