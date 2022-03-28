@@ -27,14 +27,6 @@ namespace Synovian_Character_Maker.Data_Classes
         Ability_Max
     }
 
-    public enum Ability_Proficency
-    {
-        Ability_NotLearned,
-        Ability_Learned,
-        Ability_Mastered,
-        Ability_Max
-    }
-
     /// <summary>
     /// The rank of characters and abilities/feats that can determine or aid in filtering, and unlocking options.
     /// </summary>
@@ -84,6 +76,15 @@ namespace Synovian_Character_Maker.Data_Classes
         /// </summary>
         Ability_Max
     }
+
+    public enum Ability_Mastery
+    {
+        Mastery_NotLearned,
+        Mastery_Learned,
+        Mastery_Master,
+        Mastery_HeadMaster
+    }
+
 
     public class Ability
     {
@@ -161,7 +162,7 @@ namespace Synovian_Character_Maker.Data_Classes
                     return list;
                 else
                 {
-                    foreach(int i in prereqs)
+                    foreach (int i in prereqs)
                     {
                         if (Program.abilityLibrary.TryGetAbility(i, out Ability ability))
                             list.Add(ability.Name);
@@ -180,6 +181,7 @@ namespace Synovian_Character_Maker.Data_Classes
         /// Boolian flag to determine if the ability is a Feat or not.
         /// </summary>
         public bool isFeat { get; private set; }
+
 
         /// <summary>
         /// Default constructor.

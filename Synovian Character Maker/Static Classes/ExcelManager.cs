@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 
 using SpreadsheetLight;
+using SpreadsheetLight.Drawing;
 
 using Synovian_Character_Maker.Data_Classes;
 
@@ -442,6 +443,24 @@ namespace Synovian_Character_Maker.Static_Classes
                 }
             }
 
+            string ShortenMasteryEnum(Ability_Mastery _Mastery)
+            {
+                switch (_Mastery)
+                {
+                    case Ability_Mastery.Mastery_NotLearned:
+                        return "NL";
+                    case Ability_Mastery.Mastery_Learned:
+                        return "L";
+                    case Ability_Mastery.Mastery_Master:
+                        return "M";
+                    case Ability_Mastery.Mastery_HeadMaster:
+                        return "HM";
+                    default:
+                        return "";
+                }
+
+            }
+
             void SetupLeftColumn(Ability_Schools ability_Schools, ref string[] abilities, ref string[] comments)
             {
                 WriteCell($"B{currentLeftColumnIndex}", $"{Enum.GetName(typeof(Ability_Schools), ability_Schools).Replace("Ability_", "")} Abilities");
@@ -467,6 +486,11 @@ namespace Synovian_Character_Maker.Static_Classes
                         continue;
                     }
                     WriteCell($"B{currentLeftColumnIndex}", ability);
+                    WriteCell($"E{currentLeftColumnIndex}", ShortenMasteryEnum(characterSheet.abilityMasteryDictionary[Program.abilityLibrary.GetAbility(ability).ID]));
+                    SetCellBackgroundColor($"E{currentLeftColumnIndex}", DetermineAbilityColor(Program.abilityLibrary.GetAbility(ability).alignment));
+                    MakeBorder($"E{currentLeftColumnIndex}");
+                    CenterText($"E{currentLeftColumnIndex}");
+
                     SetCellBackgroundColor($"B{currentLeftColumnIndex}", DetermineAbilityColor(Program.abilityLibrary.GetAbility(ability).alignment));
                     MakeBorder($"B{currentLeftColumnIndex}:D{currentLeftColumnIndex}");
                     WriteComment($"B{currentLeftColumnIndex}", comments[l]);
@@ -502,9 +526,13 @@ namespace Synovian_Character_Maker.Static_Classes
                         continue;
                     }
                     WriteCell($"F{currentCenterColumnIndex}", ability);
+                    WriteCell($"I{currentCenterColumnIndex}", ShortenMasteryEnum(characterSheet.abilityMasteryDictionary[Program.abilityLibrary.GetAbility(ability).ID]));
+                    SetCellBackgroundColor($"I{currentCenterColumnIndex}", DetermineAbilityColor(Program.abilityLibrary.GetAbility(ability).alignment));
+                    MakeBorder($"I{currentCenterColumnIndex}");
+                    CenterText($"I{currentCenterColumnIndex}");
                     SetCellBackgroundColor($"F{currentCenterColumnIndex}", DetermineAbilityColor(Program.abilityLibrary.GetAbility(ability).alignment));
                     MakeBorder($"F{currentCenterColumnIndex}:H{currentCenterColumnIndex}");
-                    WriteComment($"F{currentLeftColumnIndex}",comments[c]);
+                    WriteComment($"F{currentCenterColumnIndex}",comments[c]);
                     MergeCells($"F{currentCenterColumnIndex}:H{currentCenterColumnIndex}");
                     currentCenterColumnIndex++;
                     c++; // good pun
@@ -536,7 +564,11 @@ namespace Synovian_Character_Maker.Static_Classes
                         r++;
                         continue;
                     }
-                    WriteCell($"J{currentRightColumnIndex}", ability);
+                    WriteCell($"J{currentRightColumnIndex}", ability); 
+                    WriteCell($"M{currentRightColumnIndex}", ShortenMasteryEnum(characterSheet.abilityMasteryDictionary[Program.abilityLibrary.GetAbility(ability).ID]));
+                    SetCellBackgroundColor($"M{currentRightColumnIndex}", DetermineAbilityColor(Program.abilityLibrary.GetAbility(ability).alignment));
+                    MakeBorder($"M{currentRightColumnIndex}");
+                    CenterText($"M{currentRightColumnIndex}");
                     SetCellBackgroundColor($"J{currentRightColumnIndex}", DetermineAbilityColor(Program.abilityLibrary.GetAbility(ability).alignment));
                     MakeBorder($"J{currentRightColumnIndex}:L{currentRightColumnIndex}");
                     WriteComment($"J{currentRightColumnIndex}", comments[r]);
@@ -688,6 +720,25 @@ namespace Synovian_Character_Maker.Static_Classes
                 }
             }
 
+            // Create extra worksheet for character details
+            //{
+                //sLDocument.AddWorksheet("Details");
+                //if(characterSheet._image != null)
+                //{
+                //    byte[] ba;
+                //    using (System.IO.MemoryStream ms = new MemoryStream())
+                //    {
+                //        characterSheet._image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                //        ms.Close();
+                //        ba = ms.ToArray();
+                //    }
+                    //SLPicture pic = new SLPicture(ba, DocumentFormat.OpenXml.Packaging.ImagePartType.Png);
+                    //pic.SetPosition(3, 2);
+                    //sLDocument.AddBackgroundPicture(ba, DocumentFormat.OpenXml.Packaging.ImagePartType.Png);
+                    
+                //}
+            //}
+
             // Create metadata sheet
             {
                 sLDocument.AddWorksheet("CharacterMakerData");
@@ -700,6 +751,7 @@ namespace Synovian_Character_Maker.Static_Classes
                 MergeCells("A1:I3");
 
                 string prereqFormsString = "";
+                string prereqmasterString = "";
 
                 string[] allformabilities = characterSheet.GetAbilitiesOfSchool(Ability_Schools.Ability_Forms);
                 foreach (string formAbility in allformabilities)
@@ -711,11 +763,13 @@ namespace Synovian_Character_Maker.Static_Classes
                         if (Program.abilityLibrary.TryGetAbility(formAbility, out Ability ability))
                         {
                             prereqFormsString += $"{ability.ID},";
+                            prereqmasterString += $"{(int)(characterSheet.abilityMasteryDictionary[ability.ID])},";
                         }
                     }
                 }
 
                 WriteCell("A4", prereqFormsString);
+                WriteCell("A5", prereqmasterString);
             }            
 
             sLDocument.SelectWorksheet(characterSheet.Name);
@@ -752,6 +806,7 @@ namespace Synovian_Character_Maker.Static_Classes
             Rank rank = Rank.Invalid;
             Ability_Alignment ability_Alignment = Ability_Alignment.Ability_Invalid;
             List<int> abilities = new List<int>();
+            Dictionary<int,Ability_Mastery> masteries = new Dictionary<int,Ability_Mastery>();
 
             string s_rank = sl.GetCellValueAsString("B4").Replace("Rank: ", "");
             foreach(Rank _rank in Enum.GetValues(typeof(Rank)))
@@ -775,6 +830,35 @@ namespace Synovian_Character_Maker.Static_Classes
 
             //Skip value incase the sheet is missing schools or forms
             int skipVal = 0;
+            
+            void ReadMasteryCell(string cell, int id)
+            {
+                string mastery = sl.GetCellValueAsString(cell);
+                if (mastery == "")
+                {
+                    masteries[id] = Ability_Mastery.Mastery_Learned;
+                }
+                else if (mastery == "NL")
+                {
+                    masteries[id] = Ability_Mastery.Mastery_NotLearned;
+                }
+                else if (mastery == "L")
+                {
+                    masteries[id] = Ability_Mastery.Mastery_Learned;
+                }
+                else if (mastery == "M")
+                {
+                    masteries[id] = Ability_Mastery.Mastery_Master;
+                }
+                else if (mastery == "HM")
+                {
+                    masteries[id] = Ability_Mastery.Mastery_HeadMaster;
+                }
+                else
+                    masteries[id] = Ability_Mastery.Mastery_Learned;
+            }
+
+            
 
             // Get all schools
             int s_s_i = 4;
@@ -792,6 +876,7 @@ namespace Synovian_Character_Maker.Static_Classes
                     if(Program.abilityLibrary.TryGetAbility(s_school_name,out Ability ability))
                     {
                         abilities.Add(ability.ID);
+                        ReadMasteryCell($"F{s_s_i}", ability.ID);
                         s_s_i++;
                     }
                     else
@@ -817,6 +902,7 @@ namespace Synovian_Character_Maker.Static_Classes
                     if(Program.abilityLibrary.TryGetAbility(s_form_name, out Ability ability))
                     {
                         abilities.Add(ability.ID);
+                        ReadMasteryCell($"F{s_f_i}", ability.ID);
                         s_f_i++;
                     }
                     else
@@ -833,6 +919,7 @@ namespace Synovian_Character_Maker.Static_Classes
             if (sl.GetCellValueAsString($"B{s_ability_name}") == "") s_ability_name += 3;
             int starting_name_value = s_ability_name;
 
+            
 
             // Read all abilities
             // Start with left column
@@ -849,6 +936,7 @@ namespace Synovian_Character_Maker.Static_Classes
                     if(Program.abilityLibrary.TryGetAbility(sl.GetCellValueAsString($"B{s_ability_name}"), out Ability ability))
                     {
                         abilities.Add(ability.ID);
+                        ReadMasteryCell($"E{s_ability_name}",ability.ID);
                         s_ability_name++;
                     }
                     else
@@ -871,6 +959,7 @@ namespace Synovian_Character_Maker.Static_Classes
                     if (Program.abilityLibrary.TryGetAbility(sl.GetCellValueAsString($"F{s_ability_name}"), out Ability ability))
                     {
                         abilities.Add(ability.ID);
+                        ReadMasteryCell($"I{s_ability_name}", ability.ID);
                         s_ability_name++;
                     }
                     else
@@ -893,6 +982,7 @@ namespace Synovian_Character_Maker.Static_Classes
                     if (Program.abilityLibrary.TryGetAbility(sl.GetCellValueAsString($"J{s_ability_name}"), out Ability ability))
                     {
                         abilities.Add(ability.ID);
+                        ReadMasteryCell($"M{s_ability_name}", ability.ID);
                         s_ability_name++;
                     }
                     else
@@ -906,7 +996,10 @@ namespace Synovian_Character_Maker.Static_Classes
             {
                 string otherFormIDs = sl.GetCellValueAsString("A4");
                 string[] ids = otherFormIDs.Split(',');
-                foreach(string id in ids)
+                string otherMasteryNumbers = sl.GetCellValueAsString("A5");
+                string[] masters = otherMasteryNumbers.Split(',');
+                int index = 0;
+                foreach (string id in ids)
                 {
                     if (id == "")
                         break;
@@ -914,6 +1007,7 @@ namespace Synovian_Character_Maker.Static_Classes
                     if(Program.abilityLibrary.Contains(int.Parse(id)) && !abilities.Contains(int.Parse(id)))
                     {
                         abilities.Add(int.Parse(id));
+                        masteries[int.Parse(id)] = (Ability_Mastery)(int.Parse(masters[index]));
                     }
                 }
             }
@@ -1003,6 +1097,8 @@ namespace Synovian_Character_Maker.Static_Classes
                                                                null,
                                                                characterSpecies,
                                                                CharacterSheet.SheetFileType.XlSx);
+
+            characterSheet.abilityMasteryDictionary = masteries;
 
             if (companionSheets.Count > 0)
                 characterSheet.companionSheets = new List<CompanionSheet>(companionSheets);

@@ -49,6 +49,9 @@ namespace Synovian_Character_Maker.Data_Classes
 
         public List<CompanionSheet> companionSheets = new List<CompanionSheet>();
 
+        [JsonIgnore]
+        public Dictionary<int, Ability_Mastery> abilityMasteryDictionary = new Dictionary<int, Ability_Mastery>();
+
         public CharacterSheet() { }
 
         public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment)

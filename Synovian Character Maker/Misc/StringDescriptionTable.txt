@@ -506,5 +506,8 @@
   "505": "No description available.",
   "506": "No description available.",
   "507": "No description available.",
-  "508": "A technique that allows the user to create an electrical charge and call down a storm in an area around them."
+  "508": "A technique that allows the user to create an electrical charge and call down a storm in an area around them.",
+  "509": "An ancient technique that allows the user to permanently bind a Sith Spirit and siphon its power for use.",
+  "510": "A technique that allows the user to manipulate their momentum and inertia to run on walls and other surfaces for a short period of time.",
+  "511": "A technique that allows the user to manipulate the momentum and inertia of objects to slow them down for short periods of time."
 }

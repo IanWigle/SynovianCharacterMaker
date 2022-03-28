@@ -67,11 +67,13 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             FilterCharacterAbilities(filterTab.filters);
         }
 
-        private void FilterLibraryAbilities(Filters filters)
+        private void FilterLibraryAbilities(Filters filters, List<Ability> abilities = null)
         {
             libraryView.Items.Clear();
 
-            foreach(Ability ability in Program.abilityLibrary.GetAbilities())
+            if (abilities == null) abilities = Program.abilityLibrary.GetAbilities();
+
+            foreach (Ability ability in abilities)
             {
                 if(filters.acceptedAlignment.Count > 0)
                     if (!filters.ContainsAlignment(ability.alignment)) continue;
@@ -88,11 +90,13 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             WriteLog("Updated library list.");
         }
 
-        private void FilterCharacterAbilities(Filters filters)
+        private void FilterCharacterAbilities(Filters filters, List<int> abilities = null)
         {
             characterAbilitiesView.Items.Clear();
 
-            foreach(int abilityID in current_characterSheet.abilities)
+            if (abilities == null) abilities = current_characterSheet.abilities;
+
+            foreach (int abilityID in abilities)
             {
                 if(Program.abilityLibrary.TryGetAbility(abilityID, out Ability ability))
                 {
@@ -132,6 +136,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             if(Program.abilityLibrary.TryGetAbility(libraryView.FocusedItem.Text, out Ability ability))
             {
                 current_characterSheet.AddAbility(ability.ID);
+                current_characterSheet.abilityMasteryDictionary[ability.ID] = Ability_Mastery.Mastery_Learned;
                 FilterLibraryAbilities(filterTab.filters);
                 FilterCharacterAbilities(filterTab.filters);
             }
@@ -250,6 +255,8 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             if (Program.abilityLibrary.TryGetAbility(characterAbilitiesView.FocusedItem.Text, out Ability ability))
             {
                 abilityDescriptionBox.Text = ability.description;
+
+                masteryComboBox.SelectedIndex = (int)current_characterSheet.abilityMasteryDictionary[ability.ID];
             }
         }
 
@@ -258,6 +265,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             if (Program.abilityLibrary.TryGetAbility(characterAbilitiesView.FocusedItem.Text, out Ability ability))
             {
                 current_characterSheet.RemoveAbility(ability.ID);
+                current_characterSheet.abilityMasteryDictionary.Remove(ability.ID);
                 FilterLibraryAbilities(filterTab.filters);
                 FilterCharacterAbilities(filterTab.filters);
             }
@@ -945,6 +953,184 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             Static_Classes.Networking.GoogleDrive.GoogleDriveManager.SubmitSheetToDrive($"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx");
             File.Delete($"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx");
             WriteLog("Sent sheet to google drive.");
+        }
+
+        private void libraryView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            List<Ability> abilities = new List<Ability>();
+            switch (e.Column)
+            {
+                // Name
+                case 0:
+                    {
+                        var rawAbilities = Program.abilityLibrary.GetAbilities();
+                        List<string> abilityNames = new List<string>();
+
+                        foreach(Ability ability in rawAbilities)
+                        {
+                            abilityNames.Add(ability.Name);
+                        }
+
+                        abilityNames.Sort();
+
+                        foreach(string abilityName in abilityNames)
+                        {
+                            abilities.Add(Program.abilityLibrary.GetAbility(abilityName)); 
+                        }
+
+                        break;
+                    }
+                // Rank
+                case 1:
+                    {
+                        foreach(Rank rank in Enum.GetValues(typeof(Rank)))
+                        {
+                            if (rank == Rank.Invalid || rank >= Rank.Emperor)
+                                continue;
+                            foreach(Ability ability in Program.abilityLibrary.GetAbilities())
+                            {
+                                if (abilities.Contains(ability))
+                                    continue;
+                                if(ability.Rank == rank)
+                                    abilities.Add(ability);
+                            }
+                        }
+                        break;
+                    }
+                // Alignment
+                case 2:
+                    {
+                        foreach (Ability_Alignment alignment in Enum.GetValues(typeof(Ability_Alignment)))
+                        {
+                            if (alignment == Ability_Alignment.Ability_Invalid || alignment == Ability_Alignment.Ability_Max)
+                                continue;
+                            foreach (Ability ability in Program.abilityLibrary.GetAbilities())
+                            {
+                                if (abilities.Contains(ability) || current_characterSheet.abilities.Contains(ability.ID))
+                                    continue;
+                                if (ability.alignment == alignment)
+                                    abilities.Add(ability);
+                            }
+                        }
+                        break;
+                    }
+                // School
+                case 3:
+                    {
+                        foreach (Ability_Schools school in Enum.GetValues(typeof(Ability_Schools)))
+                        {
+                            if (school == Ability_Schools.Ability_Invalid || school == Ability_Schools.Ability_Max)
+                                continue;
+                            foreach (Ability ability in Program.abilityLibrary.GetAbilities())
+                            {
+                                if (abilities.Contains(ability) || current_characterSheet.abilities.Contains(ability.ID))
+                                    continue;
+                                if (ability.ability_School == school)
+                                    abilities.Add(ability);
+                            }
+                        }
+                        break;
+                    }
+                default:
+                    break;
+            }
+            FilterLibraryAbilities(filterTab.filters, abilities);
+        }
+
+        private void characterAbilitiesView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            List<Ability> abilities = new List<Ability>();
+            var rawAbilitiesIDS = current_characterSheet.abilities;
+            var rawAbilities = Program.abilityLibrary.GetAbilitiesContainingIDS(rawAbilitiesIDS.ToArray());
+            List<string> abilityNames = new List<string>();
+            switch (e.Column)
+            {
+                // Name
+                case 0:
+                    {
+                        foreach (Ability ability in rawAbilities)
+                        {
+                            abilityNames.Add(ability.Name);
+                        }
+
+                        abilityNames.Sort();
+
+                        foreach (string abilityName in abilityNames)
+                        {
+                            abilities.Add(Program.abilityLibrary.GetAbility(abilityName));
+                        }
+
+                        break;
+                    }
+                // Rank
+                case 1:
+                    {
+                        foreach (Rank rank in Enum.GetValues(typeof(Rank)))
+                        {
+                            if (rank == Rank.Invalid || rank >= Rank.Emperor)
+                                continue;
+                            foreach (Ability ability in rawAbilities)
+                            {
+                                if (abilities.Contains(ability))
+                                    continue;
+                                if (ability.Rank == rank)
+                                    abilities.Add(ability);
+                            }
+                        }
+                        break;
+                    }
+                // Alignment
+                case 2:
+                    {
+                        foreach (Ability_Alignment alignment in Enum.GetValues(typeof(Ability_Alignment)))
+                        {
+                            if (alignment == Ability_Alignment.Ability_Invalid || alignment == Ability_Alignment.Ability_Max)
+                                continue;
+                            foreach (Ability ability in rawAbilities)
+                            {
+                                if (abilities.Contains(ability))
+                                    continue;
+                                if (ability.alignment == alignment)
+                                    abilities.Add(ability);
+                            }
+                        }
+                        break;
+                    }
+                // School
+                case 3:
+                    {
+                        foreach (Ability_Schools school in Enum.GetValues(typeof(Ability_Schools)))
+                        {
+                            if (school == Ability_Schools.Ability_Invalid || school == Ability_Schools.Ability_Max)
+                                continue;
+                            foreach (Ability ability in rawAbilities)
+                            {
+                                if (abilities.Contains(ability))
+                                    continue;
+                                if (ability.ability_School == school)
+                                    abilities.Add(ability);
+                            }
+                        }
+                        break;
+                    }
+                default:
+                    break;
+            }
+
+            var abilityIDs = new List<int>();
+            foreach(Ability ability in abilities)
+            {
+                abilityIDs.Add(ability.ID);
+            }
+            FilterCharacterAbilities(filterTab.filters, abilityIDs);
+        }
+
+        private void masteryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Program.abilityLibrary.TryGetAbility(characterAbilitiesView.FocusedItem.Text, out Ability ability))
+            {
+                current_characterSheet.abilityMasteryDictionary[ability.ID] = (Ability_Mastery)masteryComboBox.SelectedIndex;
+            }
         }
     }
 }

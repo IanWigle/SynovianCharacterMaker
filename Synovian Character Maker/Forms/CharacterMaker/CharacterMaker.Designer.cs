@@ -59,6 +59,7 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.abilityDescriptionBox = new System.Windows.Forms.RichTextBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.googleDriveButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.companionButton = new System.Windows.Forms.Button();
             this.calculateButton = new System.Windows.Forms.Button();
@@ -73,7 +74,8 @@
             this.openCharacterDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveZip = new System.Windows.Forms.SaveFileDialog();
             this.saveExcel = new System.Windows.Forms.SaveFileDialog();
-            this.googleDriveButton = new System.Windows.Forms.Button();
+            this.masteryComboBox = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -343,6 +345,7 @@
             this.libraryView.TabIndex = 0;
             this.libraryView.UseCompatibleStateImageBehavior = false;
             this.libraryView.View = System.Windows.Forms.View.Details;
+            this.libraryView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.libraryView_ColumnClick);
             this.libraryView.Click += new System.EventHandler(this.libraryView_Click);
             this.libraryView.DoubleClick += new System.EventHandler(this.libraryView_DoubleClick);
             // 
@@ -382,6 +385,8 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.label1);
+            this.groupBox6.Controls.Add(this.masteryComboBox);
             this.groupBox6.Controls.Add(this.abilityDescriptionBox);
             this.groupBox6.Location = new System.Drawing.Point(3, 3);
             this.groupBox6.Name = "groupBox6";
@@ -395,7 +400,7 @@
             this.abilityDescriptionBox.Location = new System.Drawing.Point(6, 19);
             this.abilityDescriptionBox.Name = "abilityDescriptionBox";
             this.abilityDescriptionBox.ReadOnly = true;
-            this.abilityDescriptionBox.Size = new System.Drawing.Size(388, 397);
+            this.abilityDescriptionBox.Size = new System.Drawing.Size(388, 331);
             this.abilityDescriptionBox.TabIndex = 1;
             this.abilityDescriptionBox.Text = "";
             // 
@@ -408,6 +413,17 @@
             this.groupBox7.Size = new System.Drawing.Size(394, 195);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
+            // 
+            // googleDriveButton
+            // 
+            this.googleDriveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.googleDriveButton.Location = new System.Drawing.Point(9, 135);
+            this.googleDriveButton.Name = "googleDriveButton";
+            this.googleDriveButton.Size = new System.Drawing.Size(376, 54);
+            this.googleDriveButton.TabIndex = 1;
+            this.googleDriveButton.Text = "Send Sheet to Google Drive";
+            this.googleDriveButton.UseVisualStyleBackColor = true;
+            this.googleDriveButton.Click += new System.EventHandler(this.googleDriveButton_Click);
             // 
             // tableLayoutPanel6
             // 
@@ -480,6 +496,7 @@
             this.characterAbilitiesView.TabIndex = 2;
             this.characterAbilitiesView.UseCompatibleStateImageBehavior = false;
             this.characterAbilitiesView.View = System.Windows.Forms.View.Details;
+            this.characterAbilitiesView.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.characterAbilitiesView_ColumnClick);
             this.characterAbilitiesView.Click += new System.EventHandler(this.characterAbilitiesView_Click);
             this.characterAbilitiesView.DoubleClick += new System.EventHandler(this.characterAbilitiesView_DoubleClick);
             // 
@@ -522,16 +539,28 @@
             this.saveExcel.DefaultExt = "xlsx";
             this.saveExcel.FileOk += new System.ComponentModel.CancelEventHandler(this.saveExcel_FileOk);
             // 
-            // googleDriveButton
+            // masteryComboBox
             // 
-            this.googleDriveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.googleDriveButton.Location = new System.Drawing.Point(9, 135);
-            this.googleDriveButton.Name = "googleDriveButton";
-            this.googleDriveButton.Size = new System.Drawing.Size(376, 54);
-            this.googleDriveButton.TabIndex = 1;
-            this.googleDriveButton.Text = "Send Sheet to Google Drive";
-            this.googleDriveButton.UseVisualStyleBackColor = true;
-            this.googleDriveButton.Click += new System.EventHandler(this.googleDriveButton_Click);
+            this.masteryComboBox.FormattingEnabled = true;
+            this.masteryComboBox.Items.AddRange(new object[] {
+            "Not learned",
+            "Learned",
+            "Master",
+            "Head Master"});
+            this.masteryComboBox.Location = new System.Drawing.Point(264, 383);
+            this.masteryComboBox.Name = "masteryComboBox";
+            this.masteryComboBox.Size = new System.Drawing.Size(121, 21);
+            this.masteryComboBox.TabIndex = 2;
+            this.masteryComboBox.SelectedIndexChanged += new System.EventHandler(this.masteryComboBox_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(264, 364);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(74, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Ability Mastery";
             // 
             // CharacterMaker
             // 
@@ -555,6 +584,7 @@
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -608,5 +638,7 @@
         private System.Windows.Forms.Button clearSheetButton;
         private System.Windows.Forms.Button serverSubmissionButton;
         private System.Windows.Forms.Button googleDriveButton;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox masteryComboBox;
     }
 }

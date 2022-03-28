@@ -5489,5 +5489,38 @@
     "skillCostOverride": 1,
     "prereqs": [],
     "isFeat": false
+  },
+  {
+    "ID": 509,
+    "alignment": 3,
+    "Rank": 7,
+    "ability_School": 1,
+    "skillCostOverride": 1,
+    "prereqs": [
+        54
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 510,
+    "alignment": 1,
+    "Rank": 4,
+    "ability_School": 4,
+    "skillCostOverride": 1,
+    "prereqs": [
+        3
+    ],
+    "isFeat": false
+  },
+  {
+    "ID": 511,
+    "alignment": 1,
+    "Rank": 5,
+    "ability_School": 4,
+    "skillCostOverride": 1,
+    "prereqs": [
+        510
+    ],
+    "isFeat": false
   }
 ]

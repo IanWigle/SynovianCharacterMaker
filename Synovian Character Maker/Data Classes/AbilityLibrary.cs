@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Synovian_Character_Maker.Static_Classes;
 
 namespace Synovian_Character_Maker.Data_Classes
 {
@@ -255,6 +256,17 @@ namespace Synovian_Character_Maker.Data_Classes
             foreach (string str in strs)
             {
                 abilities.AddRange(GetAbilitiesContainingString(str));
+            }
+
+            return abilities;
+        }
+
+        public List<Ability> GetAbilitiesContainingIDS(int[] ids)
+        {
+            List<Ability> abilities = new List<Ability>();
+            foreach(int id in ids)
+            {
+                abilities.Add(GetAbility(id));
             }
 
             return abilities;

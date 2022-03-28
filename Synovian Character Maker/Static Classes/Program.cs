@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 using Synovian_Character_Maker.Forms;
 using Synovian_Character_Maker.Static_Classes;
@@ -104,6 +105,8 @@ namespace Synovian_Character_Maker
                 _characterLibrary.ExportSheets();
                 if(deleteGoogleFolderOnClose)
                     Static_Classes.Networking.GoogleDrive.GoogleDriveManager.WipeGoogleFolderOnDisk();
+                if (Directory.Exists(Globals.TempFolder))
+                    Directory.Delete(Globals.TempFolder);
             }
             catch(Exception e) { Helpers.ExceptionHandle(e); }
         }

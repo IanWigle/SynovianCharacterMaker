@@ -505,5 +505,8 @@
   "505": "Data Storage",
   "506": "Research Droid",
   "507": "Visual Recording",
-  "508": "Lightning Storm"
+  "508": "Lightning Storm",
+  "509": "Force Walk",
+  "510": "Force Inertia",
+  "511": "Slow Time"
 }
