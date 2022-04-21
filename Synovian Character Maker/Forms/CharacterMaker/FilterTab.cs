@@ -288,6 +288,12 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                                 else
                                     filters.acceptedSchools.Remove(Ability_Schools.Ability_Close_Quarters);
                                 break;
+                            case "Taming":
+                                if (checkBox.Checked)
+                                    AddSchoolFilter(Ability_Schools.Ability_Taming);
+                                else
+                                    filters.acceptedSchools.Remove(Ability_Schools.Ability_Taming);
+                                break;
                             default:
                                 continue;
                         }

@@ -15,6 +15,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
     public partial class CreateCompanionBox : Form
     {
         private CompanionSheet.CompanionType companionType = CompanionSheet.CompanionType.None;
+        string companionBeastSpecies = "";
 
         public CreateCompanionBox()
         {
@@ -32,6 +33,12 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
             foreach (Control control in beastGroup.Controls)
             {
                 control.Enabled = false;
+            }
+
+            foreach(string species in Program.statRules.PossibleBeastSpecies)
+            {
+                string correct_spelling = species.Replace("_", " ");
+                SpeciesCombo.Items.Add(correct_spelling);
             }
         }
 
@@ -68,7 +75,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
                 goto EndValidation;
             }
 
-            if(comboBox1.SelectedIndex == 2 && beastName.Text == "" && speciesBox.Text == "")
+            if(comboBox1.SelectedIndex == 2 && beastName.Text == "" && SpeciesCombo.Text == "")
             {
                 valid = false;
                 goto EndValidation;
@@ -163,8 +170,63 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
         {
             List<Ability> abilities = Helpers.GetAvailableAbilities(companionType);
 
-            CompanionSheet companionSheet = new CompanionSheet((companionType == CompanionSheet.CompanionType.Beast) ? beastName.Text : droidName.Text, companionType);
-            if (companionType == CompanionSheet.CompanionType.Beast) companionSheet.SetCompanionSpecies(speciesBox.Text);
+            if (companionType == CompanionSheet.CompanionType.Beast)
+            {
+                List<Ability> missingAbilities = new List<Ability>();
+
+                if (!Program.GetOpenedSheet().Contains("Taming I")) missingAbilities.Add(Program.abilityLibrary.GetAbility("Taming I"));
+                if (!Program.GetOpenedSheet().Contains("Taming II")) missingAbilities.Add(Program.abilityLibrary.GetAbility("Taming II"));
+
+                switch (Program.GetOpenedSheet().alignment)
+                {
+                    case Ability_Alignment.Ability_Light:
+                        {
+                            if (!Program.GetOpenedSheet().Contains("Animal Friendship I")) missingAbilities.Add(Program.abilityLibrary.GetAbility("Animal Friendship I"));
+                            break;
+                        }
+                    case Ability_Alignment.Ability_Dark:
+                        {
+                            if (!Program.GetOpenedSheet().Contains("Beast Control I")) missingAbilities.Add(Program.abilityLibrary.GetAbility("Beast Control I"));
+                            break;
+                        }
+                    case Ability_Alignment.Ability_NonForce:
+                        {
+                            break;
+                        }
+                }
+
+                string message = "For this companion you are missing the following abilities for an animal :\n";
+                foreach(Ability ability in missingAbilities)
+                {
+                    message += ability.Name;
+                    message += "\n";
+                }
+                message += "\nWould you like us to add these abilities onto your sheet?";
+
+                if (missingAbilities.Count > 0)
+                {
+                    switch(MessageBox.Show(message,"Notice!",MessageBoxButtons.YesNoCancel,MessageBoxIcon.Warning,MessageBoxDefaultButton.Button1))
+                    {
+                        case DialogResult.Yes:
+                            {
+                                Program.GetOpenedSheet().AddAbilities(missingAbilities);
+                                break;
+                            }
+                        case DialogResult.No:
+                            {
+                                break;
+                            }
+                        case DialogResult.Cancel:
+                            {
+                                Close();
+                                break;
+                            }
+                    }
+                }
+            }
+
+            CompanionSheet companionSheet = new CompanionSheet((companionType == CompanionSheet.CompanionType.Beast) ? beastName.Text : droidName.Text, companionBeastSpecies);
+            //if (companionType == CompanionSheet.CompanionType.Beast) companionSheet.SetCompanionSpecies(speciesBox.Text);
 
             CompanionEditor companionEditor = new CompanionEditor(companionSheet, abilities);
 
@@ -185,9 +247,9 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
             CanMakeCompanion();
         }
 
-        private void speciesBox_TextChanged(object sender, EventArgs e)
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            CanMakeCompanion();
+            companionBeastSpecies = SpeciesCombo.Items[SpeciesCombo.SelectedIndex] as string;
         }
     }
 }

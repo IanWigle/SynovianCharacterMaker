@@ -390,6 +390,18 @@ namespace Synovian_Character_Maker.Static_Classes
                 startingFormIndex++;
             }
 
+            if(startingFormIndex < startingSchoolIndex)
+            {
+                for(int i = 4; i < startingSchoolIndex; i++)
+                {
+                    if(sLDocument.GetCellValueAsString($"J{i}") == "")
+                    {
+                        SetCellBackgroundColor($"J{i}",BLACK);
+                        MergeCells($"J{i}:M{i}");
+                    }
+                }
+            }
+
             int currentLowestIndex = (startingSchoolIndex > startingFormIndex) ? startingSchoolIndex : startingFormIndex;
             if (currentLowestIndex <= 6) currentLowestIndex = 7;
 
@@ -663,7 +675,7 @@ namespace Synovian_Character_Maker.Static_Classes
                     // If the companion is a beast, explain the species
                     if (sheet.primaryCompanionType == CompanionSheet.CompanionType.Beast)
                     {
-                        WriteCell($"A{indexOffsetter}", $"Companion Species : {sheet.companionSpecies}");
+                        WriteCell($"A{indexOffsetter}", $"Companion Species : {sheet.beastSpecies}");
                         MergeCells($"A{indexOffsetter}:I{indexOffsetter}");
 
                         indexOffsetter++;
@@ -1080,7 +1092,7 @@ namespace Synovian_Character_Maker.Static_Classes
                     if (compName != "" && compType != "")
                     {
                         CompanionSheet sheet = new CompanionSheet(compName, compHistory, CompanionSheet.DetermineEnumTypeByString(compType), compAbil);
-                        if(sheet.primaryCompanionType == CompanionSheet.CompanionType.Beast) sheet.SetCompanionSpecies(compSpecies);
+                        if(sheet.primaryCompanionType == CompanionSheet.CompanionType.Beast) sheet.SetBeastSpecies(compSpecies);
                         companionSheets.Add(sheet);
                         indexoffset++;
                     }

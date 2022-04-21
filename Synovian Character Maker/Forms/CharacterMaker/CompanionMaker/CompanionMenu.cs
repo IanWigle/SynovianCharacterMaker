@@ -147,7 +147,6 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
-            CompanionSheet companionSheet = null;
             string name = companionList.SelectedItems[0].Text;
             Program.GetOpenedSheet().RemoveCompanion(name);
 
@@ -155,7 +154,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
 
             foreach (CompanionSheet compSheet in Program.GetOpenedSheet().companionSheets)
             {
-                companionList.Items.Add(new ListViewItem(new string[] { companionSheet.companionName, companionSheet.s_primaryCompanionType }));
+                companionList.Items.Add(new ListViewItem(new string[] { compSheet.companionName, compSheet.s_primaryCompanionType }));
             }
         }
 

@@ -36,11 +36,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.droidName = new System.Windows.Forms.TextBox();
             this.beastGroup = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.beastName = new System.Windows.Forms.TextBox();
             this.makeButton = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.speciesBox = new System.Windows.Forms.TextBox();
+            this.SpeciesCombo = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.droidGroup.SuspendLayout();
             this.beastGroup.SuspendLayout();
@@ -131,8 +131,8 @@
             // 
             // beastGroup
             // 
+            this.beastGroup.Controls.Add(this.SpeciesCombo);
             this.beastGroup.Controls.Add(this.label4);
-            this.beastGroup.Controls.Add(this.speciesBox);
             this.beastGroup.Controls.Add(this.label3);
             this.beastGroup.Controls.Add(this.beastName);
             this.beastGroup.Location = new System.Drawing.Point(202, 72);
@@ -141,6 +141,15 @@
             this.beastGroup.TabIndex = 2;
             this.beastGroup.TabStop = false;
             this.beastGroup.Text = "Beast Info";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 88);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(45, 13);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Species";
             // 
             // label3
             // 
@@ -171,22 +180,14 @@
             this.makeButton.UseVisualStyleBackColor = true;
             this.makeButton.Click += new System.EventHandler(this.makeButton_Click);
             // 
-            // label4
+            // SpeciesCombo
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 88);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(45, 13);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Species";
-            // 
-            // speciesBox
-            // 
-            this.speciesBox.Location = new System.Drawing.Point(9, 105);
-            this.speciesBox.Name = "speciesBox";
-            this.speciesBox.Size = new System.Drawing.Size(151, 20);
-            this.speciesBox.TabIndex = 6;
-            this.speciesBox.TextChanged += new System.EventHandler(this.speciesBox_TextChanged);
+            this.SpeciesCombo.FormattingEnabled = true;
+            this.SpeciesCombo.Location = new System.Drawing.Point(6, 104);
+            this.SpeciesCombo.Name = "SpeciesCombo";
+            this.SpeciesCombo.Size = new System.Drawing.Size(151, 21);
+            this.SpeciesCombo.TabIndex = 6;
+            this.SpeciesCombo.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
             // 
             // CreateCompanionBox
             // 
@@ -222,6 +223,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox beastName;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox speciesBox;
+        private System.Windows.Forms.ComboBox SpeciesCombo;
     }
 }

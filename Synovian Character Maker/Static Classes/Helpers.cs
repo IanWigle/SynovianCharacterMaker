@@ -97,6 +97,7 @@ namespace Synovian_Character_Maker.Static_Classes
 
             string[] offenseAbil = new string[] { "Mounted Rocket", "Stun Cuffs", "Wrist Populsion Device", "Paralize Dart", "Mounted Flamethrower", "Wire Launcher" };
 
+
             switch (companionType1)
             {
                 case CompanionSheet.CompanionType.Research_Droid:
@@ -145,6 +146,7 @@ namespace Synovian_Character_Maker.Static_Classes
                         skillsAvailable.AddRange(Program.abilityLibrary.GetAbilitiesContainingStrings(new string[] { "Aimed", "Swift", "Disabling", "Ranged Precision" }));
                         skillsAvailable.AddRange(Program.abilityLibrary.GetAbilitiesContainingStrings(new string[] { "Critical", "Flurry", "Power Attack", "Bleeding Strike", "Dual Wield", "Teras Kasi", "Broken Gate", "Stava" }));
                         skillsAvailable.AddRange(Program.abilityLibrary.GetAbilitiesContainingStrings(offenseAbil));
+                        skillsAvailable.AddRange(Program.abilityLibrary.GetAbilitiesOfSchool(Ability_Schools.Ability_Mobility));
                         break;
                     }
                 default:
@@ -158,5 +160,6 @@ namespace Synovian_Character_Maker.Static_Classes
 
             return skillsAvailable;
         }
+
     }
 }

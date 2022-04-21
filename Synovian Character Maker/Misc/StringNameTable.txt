@@ -508,5 +508,11 @@
   "508": "Lightning Storm",
   "509": "Force Walk",
   "510": "Force Inertia",
-  "511": "Slow Time"
+  "511": "Slow Time",
+  "512": "Animal Taming",
+  "513": "Taming I",
+  "514": "Taming II",
+  "515": "Taming III",
+  "516": "Taming IV",
+  "517": "Taming V"
 }

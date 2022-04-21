@@ -17,7 +17,6 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
         List<Ability> available_abilities;
         List<Ability> selected_abilities = new List<Ability>();
 
-
         const string CompanionNameStr = "Name : ";
 
         public CompanionEditor(CompanionSheet companionSheet, List<Ability> availableAbilities)
@@ -34,6 +33,8 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
             {
                 selected_abilities.Add(Program.abilityLibrary.GetAbility(abilityID));
             }
+
+            companionDescription.Text = companionSheet.companionHistory;
 
             CleanLists();
         }
@@ -91,7 +92,10 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
 
             foreach (var ability in selected_abilities)
             {
-                companion.abilities.Add(ability.ID);
+                if(!companion.abilities.Contains(ability.ID))
+                {
+                    companion.abilities.Add(ability.ID);
+                }
             }
             companion.SetCompanionHistory(companionDescription.Text);
             Program.GetOpenedSheet().companionSheets.Add(companion);

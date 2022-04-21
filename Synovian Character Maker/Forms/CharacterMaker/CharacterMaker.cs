@@ -361,7 +361,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
                 if (usedSchools > SchoolsMax)
                 {
-                    calculatorLog.AddToLog($"There are {usedSchools - SchoolsMax} more than the character's max of {SchoolsMax}.");
+                    calculatorLog.AddToLog($"There are {usedSchools - SchoolsMax} more than the character's max of {SchoolsMax} Schools.");
                     valid = false;
                     numErrors++;
                 }
@@ -405,8 +405,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                 {
                     if(Program.abilityLibrary.TryGetAbility(i,out Ability ability))
                     {
-                        if (ability.Name == "School Of Defense" || ability.Name == "School Of Offense" || ability.Name == "School Of Mentalism" ||
-                            ability.Name == "School Of Understanding" || ability.Name == "School Of Forms")
+                        if (Program.abilityLibrary.IsASchool(ref ability))
                             continue;
                         if (ability.Name == "Pyrokinesis")
                         {
@@ -414,7 +413,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                                 continue;
                             else
                             {
-                                calculatorLog.AddToLog("Pyrokinesis needs either Advanced Alter Enviroment or Force Repulse");
+                                calculatorLog.AddToLog("Pyrokinesis needs either Alter Enviroment III or Force Repulse");
                                 valid = false;
                                 numErrors++;
                             }
@@ -468,7 +467,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                             {
                                 if (Program.abilityLibrary.TryGetAbility(j, out Ability ability1))
                                 {
-                                    if (ability1.Name == "Instinctive Astrogation")
+                                    if (ability1.Name == "Instinctive Astrogation" || ability1.Name == "School Of Understanding")
                                         continue;
                                     else if (ability1.ability_School == Ability_Schools.Ability_Understanding)
                                         numUnderstanding++;
@@ -519,13 +518,13 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                         {
                             int validNumCheck = 0;
                             string[] intermeidateAbilities = current_characterSheet.GetAbilitiesWithFilters("Advanced");
+                            string[] forms = { "Niman", "Shii Cho", "Makashi", "Soresu", "Ataru", "Shien/Djem-so", "Juyo" };
                             foreach (string str in intermeidateAbilities)
                             {
                                 if (Program.abilityLibrary.TryGetAbility(str, out Ability interAbility))
                                 {
                                     if (interAbility.ability_School == Ability_Schools.Ability_Forms)
                                     {
-                                        string[] forms = { "Niman", "Shii Cho", "Makashi", "Soresu", "Ataru", "Shien/Djem-so", "Juyo" };
                                         foreach (string form in forms)
                                         {
                                             if (interAbility.Name.Contains(form))
@@ -552,13 +551,14 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                         {
                             int validNumCheck = 0;
                             string[] intermeidateAbilities = current_characterSheet.GetAbilitiesWithFilters("Intermediate");
+                            string[] forms = { "Niman", "Shii Cho", "Makashi", "Soresu", "Ataru", "Shien/Djem-so", "Juyo" };
                             foreach (string str in intermeidateAbilities)
                             {
                                 if (Program.abilityLibrary.TryGetAbility(str, out Ability interAbility))
                                 {
                                     if (interAbility.ability_School == Ability_Schools.Ability_Forms)
                                     {
-                                        string[] forms = { "Niman", "Shii Cho", "Makashi", "Soresu", "Ataru", "Shien/Djem-so", "Juyo" };
+                                        
                                         foreach (string form in forms)
                                         {
                                             if (interAbility.Name.Contains(form))
@@ -638,7 +638,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
                             if(!hasFeat)
                             {
-                                calculatorLog.AddToLog("Explosive Diffusing I requires at least one explosive training,");
+                                calculatorLog.AddToLog("Explosive Diffusing I requires at least one explosive training.");
                                 numErrors++;
                             }
                         }
@@ -671,7 +671,42 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                 {
                     if(companion.primaryCompanionType == CompanionSheet.CompanionType.Beast)
                     {
+                        if(!current_characterSheet.Contains("Taming I"))
+                        {
+                            calculatorLog.AddToLog("You are missing Taming I if you wish to have a animal companion.");
+                            numErrors++;
+                            valid = false;
+                        }
+                        if (!current_characterSheet.Contains("Taming II"))
+                        {
+                            calculatorLog.AddToLog("You are missing Taming II if you wish to have a animal companion.");
+                            numErrors++;
+                            valid = false;
+                        }
 
+                        switch(current_characterSheet.alignment)
+                        {
+                            case Ability_Alignment.Ability_Dark:
+                                {
+                                    if(!current_characterSheet.Contains("Beast Control I"))
+                                    {
+                                        calculatorLog.AddToLog("As a darksider you need at mininum Beast Control I if you wish to have a animal companion.");
+                                        numErrors++;
+                                        valid = false;
+                                    }
+                                    break;
+                                }
+                            case Ability_Alignment.Ability_Light:
+                                {
+                                    if (!current_characterSheet.Contains("Animal Friendship I"))
+                                    {
+                                        calculatorLog.AddToLog("As a lightsider you need at mininum Animal Friendship I if you wish to have a animal companion.");
+                                        numErrors++;
+                                        valid = false;
+                                    }
+                                    break;
+                                }
+                        }
                     }
                     else
                     {

@@ -63,6 +63,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.checkBox26 = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.schoolsGroup.SuspendLayout();
             this.alignmentGroup.SuspendLayout();
@@ -110,6 +111,7 @@
             // 
             // schoolsGroup
             // 
+            this.schoolsGroup.Controls.Add(this.checkBox26);
             this.schoolsGroup.Controls.Add(this.checkBox25);
             this.schoolsGroup.Controls.Add(this.checkBox24);
             this.schoolsGroup.Controls.Add(this.checkBox23);
@@ -441,6 +443,16 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // checkBox26
+            // 
+            this.checkBox26.AutoSize = true;
+            this.checkBox26.Location = new System.Drawing.Point(159, 130);
+            this.checkBox26.Name = "checkBox26";
+            this.checkBox26.Size = new System.Drawing.Size(61, 17);
+            this.checkBox26.TabIndex = 25;
+            this.checkBox26.Text = "Taming";
+            this.checkBox26.UseVisualStyleBackColor = true;
+            // 
             // FilterTab
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -503,5 +515,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.CheckBox checkBox26;
     }
 }

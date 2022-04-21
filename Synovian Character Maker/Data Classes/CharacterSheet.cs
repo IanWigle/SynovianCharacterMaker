@@ -167,6 +167,17 @@ namespace Synovian_Character_Maker.Data_Classes
             }
         }
 
+        public void AddAbilities(List<Ability> abs)
+        {
+            foreach(Ability ability in abs)
+            {
+                if(Program.abilityLibrary.Contains(ability.ID) && !_abilities.Contains(ability.ID))
+                {
+                    _abilities.Add(ability.ID);
+                }
+            }
+        }
+
         public void RemoveAbility(ref Ability ability)
         {
             if (Program.abilityLibrary.Contains(ref ability) || !_abilities.Contains(ability.ID))

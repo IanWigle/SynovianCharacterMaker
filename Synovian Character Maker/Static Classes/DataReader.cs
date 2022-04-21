@@ -314,6 +314,8 @@ namespace Synovian_Character_Maker.Static_Classes
             {
                 Helpers.ExceptionHandle(e);
             }
+
+
         }
 
         /// <summary>
@@ -330,6 +332,7 @@ namespace Synovian_Character_Maker.Static_Classes
             statRules.Schools = new Dictionary<Rank, int>();
             statRules.Masteries = new Dictionary<Rank, int>();
             statRules.CompanionDroidDataDictionary = new Dictionary<CompanionSheet.CompanionType, StatRules.CompanionDroidData>();
+            statRules.PossibleBeastSpecies = new List<string>();
 
             string fileData = File.ReadAllText($"{Globals.DataFolder}\\StatRules.txt");
 
@@ -393,6 +396,30 @@ namespace Synovian_Character_Maker.Static_Classes
 
                     statRules.CompanionDroidDataDictionary[companionType] = companionDroidData;
                 }
+            }
+
+            fileData = File.ReadAllText($"{Globals.DataFolder}\\AnimalCompanions.txt");
+            jsonDocument = JsonDocument.Parse(fileData);
+            rootElement = jsonDocument.RootElement;
+
+            try
+            {
+                int index = 0;
+                do
+                {
+                    if (rootElement.TryGetProperty(index.ToString(), out JsonElement jsonElement))
+                    {
+                        statRules.PossibleBeastSpecies.Add(jsonElement.GetString());
+                        index++;
+                        continue;
+                    }
+                    else
+                        break;
+                } while (true);
+            }
+            catch (Exception ex)
+            {
+                Helpers.ExceptionHandle(ex);
             }
         }
 

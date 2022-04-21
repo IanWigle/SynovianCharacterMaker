@@ -376,6 +376,7 @@
     <Content Include="Assets\Graphics\SynoBanner.bmp" />
     <Content Include="Assets\Graphics\SynoImage.ico" />
     <Content Include="Misc\AbilityTable.txt" />
+    <Content Include="Misc\AnimalCompanions.txt" />
     <Content Include="Misc\Settings.txt" />
     <Content Include="Misc\StatRules.txt" />
     <Content Include="Misc\StringDescriptionTable.txt" />

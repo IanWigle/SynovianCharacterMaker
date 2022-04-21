@@ -11,9 +11,6 @@ namespace Synovian_Character_Maker.Data_Classes
         public string companionName { get => _companionName; }
         string _companionName;
 
-        public string companionSpecies { get => _companionSpecies; }
-        string _companionSpecies;
-
         public string companionHistory { get => _companionHistory; }
         string _companionHistory;
 
@@ -35,27 +32,13 @@ namespace Synovian_Character_Maker.Data_Classes
         public CompanionType primaryCompanionType { get => _primaryCompanionType; }
         CompanionType _primaryCompanionType;
 
-        //public List<CompanionType> additionalCompanionTypes { get => _additionalCompanionTypes; }
-        //List<CompanionType> _additionalCompanionTypes = new List<CompanionType>();
+        public string beastSpecies { get => _beastSpecies; }
+        string _beastSpecies;
 
         public Image _image = null;
 
         [JsonIgnore]
         public string s_primaryCompanionType { get => Enum.GetName(typeof(CompanionType), _primaryCompanionType).Replace("_", " "); }
-
-        //[JsonIgnore]
-        //public List<string> s_additionalCompanionTypes
-        //{
-        //    get
-        //    {
-        //        List<string> strings = new List<string>();
-        //
-        //        foreach (CompanionType companionType in _additionalCompanionTypes)
-        //            strings.Add(Enum.GetName(typeof(CompanionType), companionType).Replace("_", " "));
-        //
-        //        return strings;
-        //    }
-        //}
 
         public List<int> abilities { get; set; }
 
@@ -66,42 +49,8 @@ namespace Synovian_Character_Maker.Data_Classes
         {
             _companionName = name;
             _primaryCompanionType = primeType;
-            //_additionalCompanionTypes = new List<CompanionType>();
             abilities = new List<int>();
-
-            //switch (primaryCompanionType)
-            //{
-            //    case CompanionType.Research_Droid:
-            //        _additionalCompanionTypes.Add(CompanionType.Medical_Droid);
-            //        _additionalCompanionTypes.Add(CompanionType.Engineering_Droid);
-            //        _additionalCompanionTypes.Add(CompanionType.Astromech_Droid);
-            //        break;
-            //    case CompanionType.Security_Droid:
-            //        _additionalCompanionTypes.Add(CompanionType.Battle_Droid);
-            //        break;
-            //    case CompanionType.Assassin_Droid:
-            //        _additionalCompanionTypes.Add(CompanionType.Battle_Droid);
-            //        break;
-            //    default:
-            //        break;
-            //}
         }
-
-        //public CompanionSheet(string name, CompanionType primeType, List<CompanionType> secondaryTypes)
-        //{
-        //    _companionName = name;
-        //    _primaryCompanionType = primeType;
-        //    _additionalCompanionTypes = secondaryTypes;
-        //    abilities = new List<int>();
-        //}
-
-        //public CompanionSheet(string name, CompanionType primeType, List<CompanionType> secondaryTypes, List<int> abs)
-        //{
-        //    _companionName = name;
-        //    _primaryCompanionType = primeType;
-        //    _additionalCompanionTypes = secondaryTypes;
-        //    abilities = abs;
-        //}
 
         public CompanionSheet(string name, CompanionType primaryType, List<int> abs)
         {
@@ -111,10 +60,11 @@ namespace Synovian_Character_Maker.Data_Classes
         }
 
         // Used for beast companions
-        public CompanionSheet(string name, string species)
+
+        public CompanionSheet(string name, string beastSpecies)
         {
             _companionName = name;
-            _companionSpecies = species;
+            _beastSpecies = beastSpecies;
 
             _primaryCompanionType = CompanionType.Beast;
 
@@ -195,9 +145,12 @@ namespace Synovian_Character_Maker.Data_Classes
             _companionHistory = history;
         }
 
-        public void SetCompanionSpecies(string spec)
+        public void SetBeastSpecies(string species)
         {
-            _companionSpecies = spec;
+            if(Program.statRules.PossibleBeastSpecies.Contains(species))
+            {
+                _beastSpecies = species;
+            }
         }
     }
 }

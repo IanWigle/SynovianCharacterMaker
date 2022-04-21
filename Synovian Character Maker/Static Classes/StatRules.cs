@@ -26,6 +26,8 @@ namespace Synovian_Character_Maker.Static_Classes
         public Dictionary<Data_Classes.Rank, int> Schools { get; set; }
         public Dictionary<Data_Classes.Rank, int> Masteries { get; set; }
         public Dictionary<Data_Classes.CompanionSheet.CompanionType, CompanionDroidData> CompanionDroidDataDictionary {get; set;}
+        public List<string> PossibleBeastSpecies { get; set; }
+        
 
         public StatRules()
         {

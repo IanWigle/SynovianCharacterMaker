@@ -71,6 +71,7 @@ namespace Synovian_Character_Maker.Data_Classes
         Ability_Technology,
         Ability_Droids,
         Ability_Relics,
+        Ability_Taming,
         /// <summary>
         /// Reserved for program calculating.
         /// </summary>
