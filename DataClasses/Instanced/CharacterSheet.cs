@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Drawing;
 
-namespace Synovian_Character_Maker.Data_Classes
+namespace Synovian_Character_Maker.DataClasses.Instanced
 {
     public class CharacterSheet
     {
@@ -52,9 +52,23 @@ namespace Synovian_Character_Maker.Data_Classes
         [JsonIgnore]
         public Dictionary<int, Ability_Mastery> abilityMasteryDictionary = new Dictionary<int, Ability_Mastery>();
 
-        public CharacterSheet() { }
+        [JsonIgnore]
+        AbilityLibrary AbilityLibraryRef;
 
-        public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment)
+        public List<Ability> GetAbilitiesOfClass
+        {
+            get
+            {
+                List<Ability> abilities = new List<Ability>();
+                foreach(var ability in _abilities)
+                {
+                    abilities.Add(AbilityLibraryRef.GetAbility(ability));
+                }
+                return abilities;
+            }
+        }
+
+        public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment, ref AbilityLibrary libraryRef)
         {
             Name = name;
             Rank = rank;
@@ -62,41 +76,11 @@ namespace Synovian_Character_Maker.Data_Classes
             _abilities = new List<int>();
             characterSpecies = "Unknown";
             sheetFileType = SheetFileType.JustCreated;
+
+            AbilityLibraryRef = libraryRef;
         }
 
-        public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment, List<int> abilities)
-        {
-            Name = name;
-            Rank = rank;
-            alignment = ability_Alignment;
-            _abilities = new List<int>(abilities);
-            characterSpecies = "Unknown";
-            sheetFileType = SheetFileType.JustCreated;
-        }
-
-        public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment, List<int> abilities, Image image)
-        {
-            Name = name;
-            Rank = rank;
-            alignment = ability_Alignment;
-            _abilities = new List<int>(abilities);
-            _image = image;
-            characterSpecies = "Unknown";
-            sheetFileType = SheetFileType.JustCreated;
-        }
-
-        public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment, List<int> abilities, Image image, string species)
-        {
-            Name = name;
-            Rank = rank;
-            alignment = ability_Alignment;
-            _abilities = new List<int>(abilities);
-            _image = image;
-            characterSpecies = species;
-            sheetFileType = SheetFileType.JustCreated;
-        }
-
-        public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment, List<int> abilities, string _lastMod)
+        public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment, List<int> abilities, string _lastMod, ref AbilityLibrary libraryRef)
         {
             Name = name;
             Rank = rank;
@@ -105,21 +89,11 @@ namespace Synovian_Character_Maker.Data_Classes
             lastModified = _lastMod;
             characterSpecies = "Unknown";
             sheetFileType = SheetFileType.JustCreated;
+
+            AbilityLibraryRef = libraryRef;
         }
 
-        public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment, List<int> abilities, string _lastMod, Image image, string species)
-        {
-            Name = name;
-            Rank = rank;
-            alignment = ability_Alignment;
-            _abilities = new List<int>(abilities);
-            lastModified = _lastMod;
-            _image = image;
-            characterSpecies = species;
-            sheetFileType = SheetFileType.JustCreated;
-        }
-
-        public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment, List<int> abilities, string lastMod, Image image, string species, SheetFileType sfT)
+        public CharacterSheet(string name, Rank rank, Ability_Alignment ability_Alignment, List<int> abilities, string lastMod, Image image, string species, SheetFileType sfT, ref AbilityLibrary libraryRef)
         {
             Name = name;
             Rank = rank;
@@ -129,11 +103,13 @@ namespace Synovian_Character_Maker.Data_Classes
             _image = image;
             characterSpecies = species;
             sheetFileType = sfT;
+
+            AbilityLibraryRef = libraryRef;
         }
 
         public void AddAbility(Ability ability)
         {
-            if (Program.abilityLibrary.Contains(ref ability) || !_abilities.Contains(ability.ID))
+            if (AbilityLibraryRef.Contains(ref ability) || !_abilities.Contains(ability.ID))
             {
                 _abilities.Add(ability.ID);
             }
@@ -141,7 +117,7 @@ namespace Synovian_Character_Maker.Data_Classes
 
         public void AddAbility(string name)
         {
-            if(Program.abilityLibrary.TryGetAbility(name, out Ability ability))
+            if(AbilityLibraryRef.TryGetAbility(name, out Ability ability))
             {
                 _abilities.Add(ability.ID);
             }
@@ -149,7 +125,7 @@ namespace Synovian_Character_Maker.Data_Classes
 
         public void AddAbility(int ID)
         {
-            if (Program.abilityLibrary.Contains(ID))
+            if (AbilityLibraryRef.Contains(ID))
             {
                 _abilities.Add(ID);
             } 
@@ -159,7 +135,7 @@ namespace Synovian_Character_Maker.Data_Classes
         {
             foreach(int id in ids)
             {
-                if (Program.abilityLibrary.Contains(id) &&
+                if (AbilityLibraryRef.Contains(id) &&
                     !_abilities.Contains(id))
                 {
                     _abilities.Add(id);
@@ -171,7 +147,7 @@ namespace Synovian_Character_Maker.Data_Classes
         {
             foreach(Ability ability in abs)
             {
-                if(Program.abilityLibrary.Contains(ability.ID) && !_abilities.Contains(ability.ID))
+                if(AbilityLibraryRef.Contains(ability.ID) && !_abilities.Contains(ability.ID))
                 {
                     _abilities.Add(ability.ID);
                 }
@@ -180,7 +156,7 @@ namespace Synovian_Character_Maker.Data_Classes
 
         public void RemoveAbility(ref Ability ability)
         {
-            if (Program.abilityLibrary.Contains(ref ability) || !_abilities.Contains(ability.ID))
+            if (AbilityLibraryRef.Contains(ref ability) || !_abilities.Contains(ability.ID))
             {
                 _abilities.Remove(ability.ID);
             }
@@ -188,7 +164,7 @@ namespace Synovian_Character_Maker.Data_Classes
 
         public void RemoveAbility(string name)
         {
-            if (Program.abilityLibrary.TryGetAbility(name, out Ability ability))
+            if (AbilityLibraryRef.TryGetAbility(name, out Ability ability))
             {
                 _abilities.Remove(ability.ID);
             }
@@ -196,7 +172,7 @@ namespace Synovian_Character_Maker.Data_Classes
 
         public void RemoveAbility(int ID)
         {
-            if (Program.abilityLibrary.Contains(ID))
+            if (AbilityLibraryRef.Contains(ID))
             {
                 _abilities.Remove(ID);
             }
@@ -204,7 +180,7 @@ namespace Synovian_Character_Maker.Data_Classes
 
         public bool Contains(string name)
         {
-            if(Program.abilityLibrary.TryGetAbility(name, out Ability ability))
+            if(AbilityLibraryRef.TryGetAbility(name, out Ability ability))
             {
                 return _abilities.Contains(ability.ID);
             }
@@ -219,7 +195,7 @@ namespace Synovian_Character_Maker.Data_Classes
             List<string> registeredSchoolStrings = new List<string>();
             foreach(Ability_Schools schools1 in ability_Schools)
             {
-                Ability ability = Program.abilityLibrary.GetSchool(schools1);
+                Ability ability = AbilityLibraryRef.GetSchool(schools1);
                 if (ability != null)
                 {
                     registeredSchools.Add(ability);
@@ -230,7 +206,7 @@ namespace Synovian_Character_Maker.Data_Classes
             {
                 foreach(int ability in _abilities)
                 {
-                    if (Program.abilityLibrary.TryGetAbility(ability, out Ability ability1))
+                    if (AbilityLibraryRef.TryGetAbility(ability, out Ability ability1))
                     {
                         if(registeredSchoolStrings.Contains(ability1.Name))
                         {
@@ -247,7 +223,7 @@ namespace Synovian_Character_Maker.Data_Classes
             List<string> vs = new List<string>();
             foreach(int i in _abilities)
             {
-                if(Program.abilityLibrary.TryGetAbility(i,out Ability ability))
+                if(AbilityLibraryRef.TryGetAbility(i,out Ability ability))
                 {
                     if (ability.ability_School == schools)
                         vs.Add(ability.Name);
@@ -256,10 +232,24 @@ namespace Synovian_Character_Maker.Data_Classes
             return vs.ToArray();
         }
 
+        public List<Ability> GetAbilitiesListBySchool(Ability_Schools schools)
+        {
+            List<Ability> vs = new List<Ability>();
+
+            foreach(int i in _abilities)
+            {
+                if(AbilityLibraryRef.TryGetAbility(i,out Ability ability))
+                    if(ability.ability_School == schools)
+                        vs.Add(ability);
+            }
+
+            return vs;
+        }
+
         public string[] GetAbilitiesWithContaingString(string str)
         {
             List<string> vs = new List<string>();
-            List<Ability> existingAbilitiesWithStr = Program.abilityLibrary.GetAbilitiesContainingString(str);
+            List<Ability> existingAbilitiesWithStr = AbilityLibraryRef.GetAbilitiesContainingString(str);
 
             foreach(Ability ability in existingAbilitiesWithStr)
             {
@@ -278,7 +268,7 @@ namespace Synovian_Character_Maker.Data_Classes
         public string[] GetAbilitiesWithFilters(string str, Rank rank)
         {
             List<string> vs = new List<string>();
-            List<Ability> existingAbilitiesWithStr = Program.abilityLibrary.GetAbilitiesContainingString(str);
+            List<Ability> existingAbilitiesWithStr = AbilityLibraryRef.GetAbilitiesContainingString(str);
 
             foreach (Ability ability in existingAbilitiesWithStr)
             {
@@ -292,7 +282,7 @@ namespace Synovian_Character_Maker.Data_Classes
         public string[] GetAbilitiesWithFilters(string str, Rank rank, Ability_Alignment alignment)
         {
             List<string> vs = new List<string>();
-            List<Ability> existingAbilitiesWithStr = Program.abilityLibrary.GetAbilitiesContainingString(str);
+            List<Ability> existingAbilitiesWithStr = AbilityLibraryRef.GetAbilitiesContainingString(str);
 
             foreach (Ability ability in existingAbilitiesWithStr)
             {
@@ -306,7 +296,7 @@ namespace Synovian_Character_Maker.Data_Classes
         public string[] GetAbilitiesWithFilters(string str, Rank rank, Ability_Alignment alignment, Ability_Schools schools)
         {
             List<string> vs = new List<string>();
-            List<Ability> existingAbilitiesWithStr = Program.abilityLibrary.GetAbilitiesContainingString(str);
+            List<Ability> existingAbilitiesWithStr = AbilityLibraryRef.GetAbilitiesContainingString(str);
 
             foreach (Ability ability in existingAbilitiesWithStr)
             {
@@ -327,7 +317,7 @@ namespace Synovian_Character_Maker.Data_Classes
             List<string> descriptions = new List<string>();
             foreach(int ability in abilities)
             {
-                if (Program.abilityLibrary.TryGetAbility(ability, out Ability ability1))
+                if (AbilityLibraryRef.TryGetAbility(ability, out Ability ability1))
                 {
                     if (ability1.ability_School == schools)
                         descriptions.Add(ability1.description);

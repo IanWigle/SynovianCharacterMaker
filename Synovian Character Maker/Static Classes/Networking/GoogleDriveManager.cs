@@ -11,7 +11,9 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Google.Apis.Download;
 
-namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
+using Synovian_Character_Maker.DataClasses.Static;
+
+namespace Synovian_Character_Maker.Networking.GoogleDrive
 {
     static class GoogleDriveManager
     {
@@ -84,7 +86,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
                         }
                     default:
                         {
-                            Helpers.ExceptionHandle("Reached out of bounds of possible outcomes.");
+                            ExceptionHandles.ExceptionHandle("Reached out of bounds of possible outcomes.");
                             break;
                         }
                 }
@@ -108,6 +110,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
                     request = googleDriveService.Files.Create(newFile, stream, "spreadsheet/xlsx");
                     request.Fields = "id";
                     request.Upload();
+                    
                 }
                 Console.WriteLine("Created the text file called TestFile.txt in your google drive");
                 MessageBox.Show("Character sheet successfully sent!", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
@@ -115,7 +118,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
             }
             catch (Exception e)
             {
-                Helpers.ExceptionHandle(e);
+                ExceptionHandles.ExceptionHandle(e);
                 return false;
             }
         }
@@ -127,11 +130,9 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
         /// <returns>Returns true if charactersheet exists.</returns>
         static public bool IsCharacterInDrive(string name)
         {
-            string pageToken = "";
             FilesResource.ListRequest listRequest = googleDriveService.Files.List();
             listRequest.Spaces = ("drive");
             listRequest.Fields = "nextPageToken, files(id, name)";
-            listRequest.PageToken = pageToken;
             listRequest.Q = $"name contains '{name}' and mimeType = 'application/vnd.google-apps.spreadsheet' and '{GetFolderID()}' in parents";
             listRequest.PageSize = 20;
             
@@ -142,7 +143,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
             }
             catch (Exception e)
             {
-                Helpers.ExceptionHandle(e);
+                ExceptionHandles.ExceptionHandle(e);
                 return false;
             }
 
@@ -180,7 +181,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
             }
             catch (Exception e)
             {
-                Helpers.ExceptionHandle(e);
+                ExceptionHandles.ExceptionHandle(e);
                 return "";
             }
 
@@ -249,7 +250,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
             }
             catch (Exception e)
             {
-                Helpers.ExceptionHandle(e);
+                ExceptionHandles.ExceptionHandle(e);
                 return "";
             }
             // Look through the provided list and search for our specific folder.
@@ -278,7 +279,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
                 }
                 catch (Exception e)
                 {
-                    Helpers.ExceptionHandle(e);
+                    ExceptionHandles.ExceptionHandle(e);
                 }
             }
 
@@ -342,7 +343,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
             }
             catch(Exception e)
             {
-                Helpers.ExceptionHandle(e);
+                ExceptionHandles.ExceptionHandle(e);
                 return null;
             }
 
@@ -397,7 +398,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
                         }
                     case DownloadStatus.Failed:
                         {
-                            Helpers.ExceptionHandle("Download failed!");
+                            ExceptionHandles.ExceptionHandle("Download failed!");
                             successful = false;
                             break;
                         }
@@ -422,7 +423,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
             }
             catch(Exception e)
             {
-                Helpers.ExceptionHandle(e);
+                ExceptionHandles.ExceptionHandle(e);
                 return false;
             }
         }

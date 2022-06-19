@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using Synovian_Character_Maker.DataClasses.Instanced;
+
 namespace Synovian_Character_Maker.Forms.CharacterMaker
 {
     public partial class ZipExportOptions : Form
@@ -11,19 +13,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             Failed
         }
 
-        public struct ZipExportSettings
-        {
-            public bool savePicture;
-            public bool saveExcel;
-            public bool saveCompExcelSeperate;
-
-            public ZipExportSettings(bool option1, bool option2, bool option3)
-            {
-                savePicture = option1;
-                saveExcel = option2;
-                saveCompExcelSeperate = option3;
-            }
-        }
+        
 
         public ExitStatus exitStatus = ExitStatus.Failed;
         public ZipExportSettings exportSettings = new ZipExportSettings(false, false, false);

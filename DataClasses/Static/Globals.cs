@@ -1,8 +1,8 @@
 ﻿using System.IO;
 
-namespace Synovian_Character_Maker.Static_Classes
+namespace Synovian_Character_Maker.DataClasses.Static
 {
-    static class Globals
+    public static class Globals
     {
         public static string StringNameTable { get => $"{Directory.GetCurrentDirectory()}\\Data\\StringNameTable.txt"; }
         public static string StringDescriptionTable { get => $"{Directory.GetCurrentDirectory()}\\Data\\StringDescriptionTable.txt"; }

@@ -6,7 +6,8 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
 using Synovian_Character_Maker.Static_Classes;
-using Synovian_Character_Maker.Data_Classes;
+using Synovian_Character_Maker.DataClasses.Instanced;
+using Synovian_Character_Maker.DataClasses.Static;
 
 namespace Synovian_Character_Maker.Forms
 {
@@ -57,7 +58,7 @@ namespace Synovian_Character_Maker.Forms
             }
             catch(Exception e)
             {
-                Helpers.ExceptionHandle(e);
+                ExceptionHandles.ExceptionHandle(e);
             }
 
             ChangeActiveTutorial(TutorialMode.Creation);
@@ -106,7 +107,8 @@ namespace Synovian_Character_Maker.Forms
 
                 CharacterSheet characterSheet = new CharacterSheet(generalInfoWindow.name,
                                                                    generalInfoWindow.rank,
-                                                                   generalInfoWindow.alignment);
+                                                                   generalInfoWindow.alignment,
+                                                                   ref Program.abilityLibrary);
 
                 Program.characterLibrary.AddCharacter(characterSheet, generalInfoWindow.saveImmediatly);
 
@@ -215,17 +217,17 @@ namespace Synovian_Character_Maker.Forms
                     }
                 case DataReader.DataReadTypes.xls:
                     {
-                        characterSheet = ExcelManager.ImportSheet(openCharacter.FileName);
+                        characterSheet = Program.excelManager.ImportSheet(openCharacter.FileName);
                         break;
                     }
                 case DataReader.DataReadTypes.xlsx:
                     {
-                        characterSheet = ExcelManager.ImportSheet(openCharacter.FileName);
+                        characterSheet = Program.excelManager.ImportSheet(openCharacter.FileName);
                         break;
                     }
                 default:
                     {
-                        Helpers.ExceptionHandle("Was unable to get the get the correct file type of the selected file to load.");
+                        ExceptionHandles.ExceptionHandle("Was unable to get the get the correct file type of the selected file to load.");
                         return;
                     }
             }

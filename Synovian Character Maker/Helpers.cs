@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using Synovian_Character_Maker.Data_Classes;
+using Synovian_Character_Maker.DataClasses.Instanced;
 
-namespace Synovian_Character_Maker.Static_Classes
+namespace Synovian_Character_Maker
 {
     static public class Helpers
     {
@@ -59,27 +58,6 @@ namespace Synovian_Character_Maker.Static_Classes
                     return casted_form;
             }
             return null;
-        }
-
-        public static void ExceptionHandle(string message)
-        {
-#if DEBUG
-            Debug.Write(message);
-            throw new Exception(message);
-#else
-            MessageBox.Show(message,"Error!",MessageBoxButtons.OK,MessageBoxIcon.Error);
-#endif
-        }
-
-        public static void ExceptionHandle(Exception e)
-        {
-#if DEBUG
-            Debug.Write(e.Message);
-            if (e.InnerException != null) Debug.Write(e.InnerException.Message);
-            throw e;
-#else
-            MessageBox.Show(e.Message,"Error!",MessageBoxButtons.OK,MessageBoxIcon.Error);
-#endif
         }
 
         public static List<Ability> GetAvailableAbilities(CompanionSheet.CompanionType companionType1)

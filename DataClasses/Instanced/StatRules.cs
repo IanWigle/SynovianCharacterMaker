@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Synovian_Character_Maker.DataClasses.Instanced;
 
-namespace Synovian_Character_Maker.Static_Classes
+namespace Synovian_Character_Maker.DataClasses.Instanced
 {
     public class StatRules
     {
@@ -21,11 +22,11 @@ namespace Synovian_Character_Maker.Static_Classes
         }
 
 
-        public Dictionary<Data_Classes.Rank, int> FeatPoints { get; set; }
-        public Dictionary<Data_Classes.Rank, int> SkillPoints { get; set; }
-        public Dictionary<Data_Classes.Rank, int> Schools { get; set; }
-        public Dictionary<Data_Classes.Rank, int> Masteries { get; set; }
-        public Dictionary<Data_Classes.CompanionSheet.CompanionType, CompanionDroidData> CompanionDroidDataDictionary {get; set;}
+        public Dictionary<Rank, int> FeatPoints { get; set; }
+        public Dictionary<Rank, int> SkillPoints { get; set; }
+        public Dictionary<Rank, int> Schools { get; set; }
+        public Dictionary<Rank, int> Masteries { get; set; }
+        public Dictionary<DataClasses.Instanced.CompanionSheet.CompanionType, CompanionDroidData> CompanionDroidDataDictionary {get; set;}
         public List<string> PossibleBeastSpecies { get; set; }
         
 
@@ -35,8 +36,8 @@ namespace Synovian_Character_Maker.Static_Classes
 
         ~StatRules()
         {
-            if (DataWriter.ExportRules.EXPORT_STATRULES)
-                DataWriter.ExportStatRules(this);
+            //if (false)
+            //    DataWriter.ExportStatRules(this);
         }
     }
 }

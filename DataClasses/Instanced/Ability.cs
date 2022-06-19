@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Synovian_Character_Maker.Data_Classes
+namespace Synovian_Character_Maker.DataClasses.Instanced
 {
     /// <summary>
     /// The alignment of characters and abilities/feats that can determine or aid in filtering, and unlocking options.
@@ -153,25 +153,25 @@ namespace Synovian_Character_Maker.Data_Classes
         /// <summary>
         /// Returns a string list of all the prerequisite abilitys for the ability. Returns the names, not IDs.
         /// </summary>
-        [JsonIgnore]
-        public List<string> s_prereqs
-        {
-            get
-            {
-                List<string> list = new List<string>();
-                if (Program.abilityLibrary == null)
-                    return list;
-                else
-                {
-                    foreach (int i in prereqs)
-                    {
-                        if (Program.abilityLibrary.TryGetAbility(i, out Ability ability))
-                            list.Add(ability.Name);
-                    }
-                    return list;
-                }
-            }
-        }
+        //[JsonIgnore]
+        //public List<string> s_prereqs
+        //{
+        //    get
+        //    {
+        //        List<string> list = new List<string>();
+        //        if (Program.abilityLibrary == null)
+        //            return list;
+        //        else
+        //        {
+        //            foreach (int i in prereqs)
+        //            {
+        //                if (Program.abilityLibrary.TryGetAbility(i, out Ability ability))
+        //                    list.Add(ability.Name);
+        //            }
+        //            return list;
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Integer list of the ability IDs required for this ability.

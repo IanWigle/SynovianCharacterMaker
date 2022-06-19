@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Synovian_Character_Maker.Data_Classes;
+using Synovian_Character_Maker.DataClasses;
+using Synovian_Character_Maker.DataClasses.Instanced;
 
 namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
 {

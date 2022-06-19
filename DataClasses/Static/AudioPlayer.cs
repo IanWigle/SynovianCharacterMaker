@@ -2,7 +2,7 @@
 using System.Linq;
 using NAudio.Wave;
 
-namespace Synovian_Character_Maker.Static_Classes
+namespace Synovian_Character_Maker.DataClasses.Static
 {
     public class AudioPlayer
     {
@@ -12,6 +12,8 @@ namespace Synovian_Character_Maker.Static_Classes
 
         private WaveOutEvent outputDevice;
         private AudioFileReader audioFile;
+
+        ProgramSettings settings;
         
         public bool onLoop 
         {
@@ -19,9 +21,9 @@ namespace Synovian_Character_Maker.Static_Classes
             set
             {
                 _onLoop = value;
-                if(Program.programSettings != null)
+                if(settings != null)
                 {
-                    Program.programSettings.LoopSong = value;
+                    settings.LoopSong = value;
                 }
             }
         }
@@ -36,15 +38,17 @@ namespace Synovian_Character_Maker.Static_Classes
                 {
                     outputDevice.Volume = (float)value;
                 }
-                if(Program.programSettings != null)
+                if(settings != null)
                 {
-                    Program.programSettings.AudioVolume = value;
+                    settings.AudioVolume = value;
                 }
             }
         }
 
-        public AudioPlayer(string audioFileUrl)
+        public AudioPlayer(string audioFileUrl, ref ProgramSettings programSettings)
         {
+            settings = programSettings;
+
             if (audioFileUrl != "")
             {
                 try
@@ -58,13 +62,15 @@ namespace Synovian_Character_Maker.Static_Classes
                 }
                 catch(Exception e)
                 { 
-                    Helpers.ExceptionHandle(e); 
+                    ExceptionHandles.ExceptionHandle(e); 
                 }
             }
         }
 
-        public AudioPlayer(string audioFileUrl, bool loop = true)
+        public AudioPlayer(string audioFileUrl, ref ProgramSettings programSettings, bool loop = true)
         {
+            settings = programSettings;
+
             try
             {
                 if (audioFileUrl != "")
@@ -77,7 +83,7 @@ namespace Synovian_Character_Maker.Static_Classes
                     onLoop = loop;
                 }
             }
-            catch(Exception e) { Helpers.ExceptionHandle(e); }
+            catch(Exception e) { ExceptionHandles.ExceptionHandle(e); }
         }
 
         public void ChangeSong(string audioFileUrl)
@@ -108,7 +114,7 @@ namespace Synovian_Character_Maker.Static_Classes
                 outputDevice.PlaybackStopped += OnPlaybackStopped;
                 outputDevice.Play();
             }
-            catch(Exception e) { Helpers.ExceptionHandle(e); }
+            catch(Exception e) { ExceptionHandles.ExceptionHandle(e); }
         }
 
         public TimeSpan CurrentTime() => audioFile.CurrentTime;

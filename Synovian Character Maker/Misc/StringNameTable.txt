@@ -514,5 +514,9 @@
   "514": "Taming II",
   "515": "Taming III",
   "516": "Taming IV",
-  "517": "Taming V"
+  "517": "Taming V",
+  "518": "Basic Echani Martial Arts",
+  "519": "Intermediate Echani Martial Arts",
+  "520": "Advanced Echani Martial Arts",
+  "521": "Expert Echani Martial Arts"
 }

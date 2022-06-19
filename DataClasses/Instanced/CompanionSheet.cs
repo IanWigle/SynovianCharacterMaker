@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Drawing;
 
-namespace Synovian_Character_Maker.Data_Classes
+namespace Synovian_Character_Maker.DataClasses.Instanced
 {
     public class CompanionSheet
     {
@@ -37,6 +37,9 @@ namespace Synovian_Character_Maker.Data_Classes
 
         public Image _image = null;
 
+        public AbilityLibrary libraryRef;
+        public StatRules statRulesRef;
+
         [JsonIgnore]
         public string s_primaryCompanionType { get => Enum.GetName(typeof(CompanionType), _primaryCompanionType).Replace("_", " "); }
 
@@ -45,23 +48,7 @@ namespace Synovian_Character_Maker.Data_Classes
         [JsonIgnore]
         public int usedSkillPoints { get => abilities.Count() * 5; }
 
-        public CompanionSheet(string name, CompanionType primeType)
-        {
-            _companionName = name;
-            _primaryCompanionType = primeType;
-            abilities = new List<int>();
-        }
-
-        public CompanionSheet(string name, CompanionType primaryType, List<int> abs)
-        {
-            _companionName = name;
-            _primaryCompanionType = primaryType;
-            abilities = abs;
-        }
-
-        // Used for beast companions
-
-        public CompanionSheet(string name, string beastSpecies)
+        public CompanionSheet(string name, string beastSpecies, ref StatRules rules, ref AbilityLibrary abilityLibrary)
         {
             _companionName = name;
             _beastSpecies = beastSpecies;
@@ -69,14 +56,38 @@ namespace Synovian_Character_Maker.Data_Classes
             _primaryCompanionType = CompanionType.Beast;
 
             abilities = new List<int>();
+
+            statRulesRef = rules;
+            libraryRef = abilityLibrary;
         }
 
-        public CompanionSheet(string name, string history, CompanionType primaryType, List<int> abs)
+        public CompanionSheet(string name, CompanionType primaryType, List<int> abs, ref StatRules rules, ref AbilityLibrary abilityLibrary)
+        {
+            _companionName = name;
+            _primaryCompanionType = primaryType;
+            abilities = abs;
+
+            statRulesRef = rules;
+            libraryRef = abilityLibrary;
+        }
+
+        public CompanionSheet(string name, CompanionType primaryType, ref StatRules rules, ref AbilityLibrary abilityLibrary)
+        {
+            _companionName = name;
+            _primaryCompanionType = primaryType;
+            abilities = new List<int>();
+            statRulesRef = rules;
+            libraryRef = abilityLibrary;
+        }
+
+        public CompanionSheet(string name, string history, CompanionType primaryType, List<int> abs, ref StatRules rules, ref AbilityLibrary abilityLibrary)
         {
             _companionName = name;
             SetCompanionHistory(history);
             _primaryCompanionType = primaryType;
             abilities = new List<int>(abs);
+            statRulesRef = rules;
+            libraryRef = abilityLibrary;
         }
 
         static public int DetermineSkillPointsByType(CompanionType companionType)
@@ -135,7 +146,7 @@ namespace Synovian_Character_Maker.Data_Classes
 
         public bool ContainsAbility(string ability)
         {
-            if (Program.abilityLibrary.TryGetAbility(ability, out Ability ability1))
+            if (libraryRef.TryGetAbility(ability, out Ability ability1))
                 return ContainsAbility(ability1.ID);
             return false;
         }
@@ -147,7 +158,7 @@ namespace Synovian_Character_Maker.Data_Classes
 
         public void SetBeastSpecies(string species)
         {
-            if(Program.statRules.PossibleBeastSpecies.Contains(species))
+            if(statRulesRef.PossibleBeastSpecies.Contains(species))
             {
                 _beastSpecies = species;
             }

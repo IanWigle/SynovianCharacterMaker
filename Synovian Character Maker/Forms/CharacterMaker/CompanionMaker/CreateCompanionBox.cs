@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Synovian_Character_Maker.Data_Classes;
+using Synovian_Character_Maker.DataClasses;
+using Synovian_Character_Maker.DataClasses.Instanced;
 using Synovian_Character_Maker.Static_Classes;
 
 namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
@@ -35,7 +36,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
                 control.Enabled = false;
             }
 
-            foreach(string species in Program.statRules.PossibleBeastSpecies)
+            foreach(string species in Program._statRules.PossibleBeastSpecies)
             {
                 string correct_spelling = species.Replace("_", " ");
                 SpeciesCombo.Items.Add(correct_spelling);
@@ -225,7 +226,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
                 }
             }
 
-            CompanionSheet companionSheet = new CompanionSheet((companionType == CompanionSheet.CompanionType.Beast) ? beastName.Text : droidName.Text, companionBeastSpecies);
+            CompanionSheet companionSheet = new CompanionSheet((companionType == CompanionSheet.CompanionType.Beast) ? beastName.Text : droidName.Text, companionBeastSpecies,ref Program._statRules, ref Program.abilityLibrary);
             //if (companionType == CompanionSheet.CompanionType.Beast) companionSheet.SetCompanionSpecies(speciesBox.Text);
 
             CompanionEditor companionEditor = new CompanionEditor(companionSheet, abilities);

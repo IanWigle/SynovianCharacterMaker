@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Synovian_Character_Maker.Static_Classes;
 
-namespace Synovian_Character_Maker.Data_Classes
+namespace Synovian_Character_Maker.DataClasses.Instanced
 {
     public class AbilityLibrary
     {
