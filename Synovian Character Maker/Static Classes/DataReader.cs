@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Aspose.Zip;
+using Synovian_Character_Maker.DataClasses.Instanced;
+using Synovian_Character_Maker.DataClasses.Static;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System.Text.Json;
 using System.Drawing;
-using Synovian_Character_Maker.Data_Classes;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
 
-using Aspose.Zip;
-
-namespace Synovian_Character_Maker.Static_Classes
+namespace Synovian_Character_Maker
 {
     static public class DataReader
     {
@@ -21,6 +21,8 @@ namespace Synovian_Character_Maker.Static_Classes
             max
         }
 
+        //public static StatRules StatRulesRef = null;
+        //public static AbilityLibrary abilityLibraryRef = null;
 
         /// <summary>
         /// Main method of reading abilities from disk.
@@ -52,7 +54,7 @@ namespace Synovian_Character_Maker.Static_Classes
             JsonElement nameRoot = NamejsonDocument.RootElement;
             JsonElement descRoot = DescjsonDocument.RootElement;
 
-            foreach(JsonElement abilityElement in tableRoot.EnumerateArray())
+            foreach (JsonElement abilityElement in tableRoot.EnumerateArray())
             {
                 string name = "";
                 string desc = "";
@@ -76,7 +78,7 @@ namespace Synovian_Character_Maker.Static_Classes
                     skillCostOverride = skillElement.GetInt32();
                 if (abilityElement.TryGetProperty("prereqs", out JsonElement prereqElement))
                 {
-                    foreach(JsonElement preElement in prereqElement.EnumerateArray())
+                    foreach (JsonElement preElement in prereqElement.EnumerateArray())
                     {
                         ids.Add(preElement.GetInt32());
                     }
@@ -120,15 +122,15 @@ namespace Synovian_Character_Maker.Static_Classes
 
                 JsonElement rootElement = jsonDocument.RootElement;
 
-                if(rootElement.TryGetProperty("FocusOnZipsOverTxts", out JsonElement jsonElement))
+                if (rootElement.TryGetProperty("FocusOnZipsOverTxts", out JsonElement jsonElement))
                 {
                     programSettings.FocusOnZipsOverTxts = jsonElement.GetBoolean();
                 }
-                if(rootElement.TryGetProperty("HideMainMenu", out JsonElement jsonElement1))
+                if (rootElement.TryGetProperty("HideMainMenu", out JsonElement jsonElement1))
                 {
                     programSettings.HideMainMenu = jsonElement1.GetBoolean();
                 }
-                if(rootElement.TryGetProperty("DetectExcelSheets", out JsonElement jsonElement2))
+                if (rootElement.TryGetProperty("DetectExcelSheets", out JsonElement jsonElement2))
                 {
                     programSettings.DetectExcelSheets = jsonElement2.GetBoolean();
                 }
@@ -141,7 +143,7 @@ namespace Synovian_Character_Maker.Static_Classes
         /// <param name="characterLibrary">Referance for library.</param>
         public static void ReadAllSheets(ref CharacterLibrary characterLibrary)
         {
-            if(!Directory.Exists(Globals.CharacterFolder))
+            if (!Directory.Exists(Globals.CharacterFolder))
                 Directory.CreateDirectory(Globals.CharacterFolder);
 
             // First, get all files in the sheets folder
@@ -190,19 +192,19 @@ namespace Synovian_Character_Maker.Static_Classes
                     if (compElement.GetRawText() != "null")
                     {
                         string compName = "";
-                        Data_Classes.CompanionSheet.CompanionType primaryType = CompanionSheet.CompanionType.None;
-                        List<Data_Classes.CompanionSheet.CompanionType> secondaryTypes = new List<CompanionSheet.CompanionType>();
+                        CompanionSheet.CompanionType primaryType = CompanionSheet.CompanionType.None;
+                        List<CompanionSheet.CompanionType> secondaryTypes = new List<CompanionSheet.CompanionType>();
                         List<int> abilities = new List<int>();
 
                         if (compElement.TryGetProperty("companionName", out JsonElement jsonElement4))
                             compName = jsonElement4.GetString();
                         if (compElement.TryGetProperty("primaryCompanionType", out JsonElement jsonElement6))
-                            primaryType = (Data_Classes.CompanionSheet.CompanionType)jsonElement6.GetInt32();
+                            primaryType = (CompanionSheet.CompanionType)jsonElement6.GetInt32();
                         if (compElement.TryGetProperty("additionalCompanionTypes", out JsonElement jsonElement7))
                         {
                             foreach (JsonElement jsonElement8 in jsonElement7.EnumerateArray())
                             {
-                                secondaryTypes.Add((Data_Classes.CompanionSheet.CompanionType)jsonElement8.GetInt32());
+                                secondaryTypes.Add((CompanionSheet.CompanionType)jsonElement8.GetInt32());
                             }
                         }
                         if (compElement.TryGetProperty("abilities", out JsonElement jsonElement9))
@@ -215,7 +217,7 @@ namespace Synovian_Character_Maker.Static_Classes
 
                         if (compName != "" && primaryType != CompanionSheet.CompanionType.None)
                         {
-                            companionSheet = new CompanionSheet(compName, primaryType, abilities);
+                            companionSheet = new CompanionSheet(compName, primaryType, abilities, ref Program._statRules, ref Program.abilityLibrary);
                         }
                     }
                 }
@@ -242,7 +244,8 @@ namespace Synovian_Character_Maker.Static_Classes
                                                                        dateTimeofMod,
                                                                        null,
                                                                        species,
-                                                                       CharacterSheet.SheetFileType.Txt);
+                                                                       CharacterSheet.SheetFileType.Txt,
+                                                                       ref Program.abilityLibrary);
                     characterSheet.characterDescription = description;
                     if (companionSheet != null) characterSheet.companionSheets.Add(companionSheet);
                     return characterSheet;
@@ -276,9 +279,9 @@ namespace Synovian_Character_Maker.Static_Classes
 
                         string jsonString = "";
                         string imageString = "";
-                        string[] acceptedImageFormats = { ".jpg", ".png", ".bmp", ".gif", ".ico", ".wdp", ".tiff" };                       
+                        string[] acceptedImageFormats = { ".jpg", ".png", ".bmp", ".gif", ".ico", ".wdp", ".tiff" };
 
-                        foreach(var entry in Directory.GetFiles(Globals.TempFolder))
+                        foreach (var entry in Directory.GetFiles(Globals.TempFolder))
                         {
                             FileInfo fileInfo = new FileInfo(entry);
 
@@ -299,20 +302,20 @@ namespace Synovian_Character_Maker.Static_Classes
                     else if (extension == "xls")
                     {
                         //CharacterSheet characterSheet = LoadExelSheet(fullFile, ExcelFileFormat.XLS);
-                        CharacterSheet characterSheet = ExcelManager.ImportSheet(fullFile);
+                        CharacterSheet characterSheet = Program.excelManager.ImportSheet(fullFile);
                         characterLibrary.AddCharacter(characterSheet);
                     }
                     else if (extension == "xlsx")
                     {
                         //CharacterSheet characterSheet = LoadExelSheet(fullFile, ExcelFileFormat.XLSX);
-                        CharacterSheet characterSheet = ExcelManager.ImportSheet(fullFile);
+                        CharacterSheet characterSheet = Program.excelManager.ImportSheet(fullFile);
                         characterLibrary.AddCharacter(characterSheet);
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Helpers.ExceptionHandle(e);
+                ExceptionHandles.ExceptionHandle(e);
             }
 
 
@@ -341,7 +344,7 @@ namespace Synovian_Character_Maker.Static_Classes
 
             if (rootElement.TryGetProperty("FeatPoints", out JsonElement jsonElementFeats))
             {
-                foreach(Rank rank in (Rank[])Enum.GetValues(typeof(Rank)))
+                foreach (Rank rank in (Rank[])Enum.GetValues(typeof(Rank)))
                 {
                     string enumName = Enum.GetName(typeof(Rank), rank);
                     if (jsonElementFeats.TryGetProperty(enumName, out JsonElement jsonElement))
@@ -377,7 +380,7 @@ namespace Synovian_Character_Maker.Static_Classes
             }
             if (rootElement.TryGetProperty("CompanionDroidDataDictionary", out JsonElement jsonElementCompData))
             {
-                foreach(CompanionSheet.CompanionType companionType in (CompanionSheet.CompanionType[])Enum.GetValues(typeof(CompanionSheet.CompanionType)))
+                foreach (CompanionSheet.CompanionType companionType in (CompanionSheet.CompanionType[])Enum.GetValues(typeof(CompanionSheet.CompanionType)))
                 {
                     StatRules.CompanionDroidData companionDroidData = new StatRules.CompanionDroidData();
 
@@ -419,7 +422,7 @@ namespace Synovian_Character_Maker.Static_Classes
             }
             catch (Exception ex)
             {
-                Helpers.ExceptionHandle(ex);
+                ExceptionHandles.ExceptionHandle(ex);
             }
         }
 
@@ -475,8 +478,9 @@ namespace Synovian_Character_Maker.Static_Classes
                                           rank,
                                           ability_Alignment,
                                           vs,
-                                          dateTimeofMod);
-                
+                                          dateTimeofMod,
+                                          ref Program.abilityLibrary);
+
             }
 
             return null;
@@ -527,19 +531,19 @@ namespace Synovian_Character_Maker.Static_Classes
                     if (compElement.GetRawText() != "null")
                     {
                         string compName = "";
-                        Data_Classes.CompanionSheet.CompanionType primaryType = CompanionSheet.CompanionType.None;
-                        List<Data_Classes.CompanionSheet.CompanionType> secondaryTypes = new List<CompanionSheet.CompanionType>();
+                        CompanionSheet.CompanionType primaryType = CompanionSheet.CompanionType.None;
+                        List<CompanionSheet.CompanionType> secondaryTypes = new List<CompanionSheet.CompanionType>();
                         List<int> abilities = new List<int>();
 
                         if (compElement.TryGetProperty("companionName", out JsonElement jsonElement4))
                             compName = jsonElement4.GetString();
                         if (compElement.TryGetProperty("primaryCompanionType", out JsonElement jsonElement6))
-                            primaryType = (Data_Classes.CompanionSheet.CompanionType)jsonElement6.GetInt32();
+                            primaryType = (CompanionSheet.CompanionType)jsonElement6.GetInt32();
                         if (compElement.TryGetProperty("additionalCompanionTypes", out JsonElement jsonElement7))
                         {
                             foreach (JsonElement jsonElement8 in jsonElement7.EnumerateArray())
                             {
-                                secondaryTypes.Add((Data_Classes.CompanionSheet.CompanionType)jsonElement8.GetInt32());
+                                secondaryTypes.Add((CompanionSheet.CompanionType)jsonElement8.GetInt32());
                             }
                         }
                         if (compElement.TryGetProperty("abilities", out JsonElement jsonElement9))
@@ -552,7 +556,7 @@ namespace Synovian_Character_Maker.Static_Classes
 
                         if (compName != "" && primaryType != CompanionSheet.CompanionType.None)
                         {
-                            companionSheet = new CompanionSheet(compName, primaryType, abilities);
+                            companionSheet = new CompanionSheet(compName, primaryType, abilities, ref Program._statRules, ref Program.abilityLibrary);
                         }
                     }
                 }
@@ -579,7 +583,8 @@ namespace Synovian_Character_Maker.Static_Classes
                                                                        dateTimeofMod,
                                                                        null,
                                                                        species,
-                                                                       CharacterSheet.SheetFileType.Txt);
+                                                                       CharacterSheet.SheetFileType.Txt,
+                                                                       ref Program.abilityLibrary);
                     new_characterSheet.characterDescription = description;
                     if (companionSheet != null) new_characterSheet.companionSheets.Add(companionSheet);
                     return new_characterSheet;

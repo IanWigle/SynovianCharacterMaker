@@ -3,10 +3,12 @@ using System.Text;
 using System.Text.Json;
 using System.Net;
 using System.Net.Sockets;
-using Synovian_Character_Maker.Data_Classes;
+using Synovian_Character_Maker.Static_Classes;
 using Synovian_Character_Maker.Forms.Experimental;
+using Synovian_Character_Maker.DataClasses.Instanced;
+using Synovian_Character_Maker.DataClasses.Static;
 
-namespace Synovian_Character_Maker.Static_Classes.Networking.TCP
+namespace Synovian_Character_Maker.Networking
 {
     public class TCPManager
     {

@@ -11,7 +11,9 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Google.Apis.Download;
 
-namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
+using Synovian_Character_Maker.DataClasses.Static;
+
+namespace Synovian_Character_Maker.Networking
 {
     static class GoogleDriveManager
     {
@@ -84,7 +86,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
                         }
                     default:
                         {
-                            Helpers.ExceptionHandle("Reached out of bounds of possible outcomes.");
+                            ExceptionHandles.ExceptionHandle("Reached out of bounds of possible outcomes.");
                             break;
                         }
                 }
@@ -115,7 +117,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
             }
             catch (Exception e)
             {
-                Helpers.ExceptionHandle(e);
+                ExceptionHandles.ExceptionHandle(e);
                 return false;
             }
         }
@@ -142,7 +144,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
             }
             catch (Exception e)
             {
-                Helpers.ExceptionHandle(e);
+                ExceptionHandles.ExceptionHandle(e);
                 return false;
             }
 
@@ -180,7 +182,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
             }
             catch (Exception e)
             {
-                Helpers.ExceptionHandle(e);
+                ExceptionHandles.ExceptionHandle(e);
                 return "";
             }
 
@@ -249,7 +251,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
             }
             catch (Exception e)
             {
-                Helpers.ExceptionHandle(e);
+                ExceptionHandles.ExceptionHandle(e);
                 return "";
             }
             // Look through the provided list and search for our specific folder.
@@ -278,7 +280,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
                 }
                 catch (Exception e)
                 {
-                    Helpers.ExceptionHandle(e);
+                    ExceptionHandles.ExceptionHandle(e);
                 }
             }
 
@@ -342,7 +344,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
             }
             catch(Exception e)
             {
-                Helpers.ExceptionHandle(e);
+                ExceptionHandles.ExceptionHandle(e);
                 return null;
             }
 
@@ -397,7 +399,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
                         }
                     case DownloadStatus.Failed:
                         {
-                            Helpers.ExceptionHandle("Download failed!");
+                            ExceptionHandles.ExceptionHandle("Download failed!");
                             successful = false;
                             break;
                         }
@@ -422,7 +424,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive
             }
             catch(Exception e)
             {
-                Helpers.ExceptionHandle(e);
+                ExceptionHandles.ExceptionHandle(e);
                 return false;
             }
         }

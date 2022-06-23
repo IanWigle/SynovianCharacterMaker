@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Synovian_Character_Maker.Static_Classes.Networking.GoogleDrive;
+using Synovian_Character_Maker.Networking;
+using Synovian_Character_Maker.DataClasses.Instanced;
+using Synovian_Character_Maker.DataClasses.Static;
 
 namespace Synovian_Character_Maker.Forms.Google
 {
@@ -10,7 +12,7 @@ namespace Synovian_Character_Maker.Forms.Google
         private int startingValue = 10;
         private List<GoogleDriveManager.FileSearch> savedSearches = null;
 
-        public Data_Classes.CharacterSheet sheet = null;
+        public CharacterSheet sheet = null;
 
         public Google_Sheets()
         {
@@ -67,7 +69,7 @@ namespace Synovian_Character_Maker.Forms.Google
             try
             {
                 GoogleDriveManager.DownloadSheet(selectedID, listView1.FocusedItem.Text);
-                sheet = Static_Classes.ExcelManager.ImportSheet($"{Static_Classes.Globals.GoogleDownloads}\\{listView1.FocusedItem.Text}");
+                sheet = Program.excelManager.ImportSheet($"{Globals.GoogleDownloads}\\{listView1.FocusedItem.Text}");
 
                 DialogResult result = MessageBox.Show("Would you like to keep this sheet on disk?", "Download Complete", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
 
@@ -75,13 +77,13 @@ namespace Synovian_Character_Maker.Forms.Google
                 {
                     case DialogResult.Yes:
                         {
-                            sheet.setFileType(Data_Classes.CharacterSheet.SheetFileType.XlSx);
+                            sheet.setFileType(CharacterSheet.SheetFileType.XlSx);
                             break;
                         }
                     case DialogResult.No:
                         {
-                            sheet.setFileType(Data_Classes.CharacterSheet.SheetFileType.Xlsx_Google);
-                            System.IO.File.Delete($"{Static_Classes.Globals.GoogleDownloads}\\{listView1.FocusedItem.Text}.xlsx");
+                            sheet.setFileType(CharacterSheet.SheetFileType.Xlsx_Google);
+                            System.IO.File.Delete($"{Globals.GoogleDownloads}\\{listView1.FocusedItem.Text}.xlsx");
                             break;
                         }
                 }

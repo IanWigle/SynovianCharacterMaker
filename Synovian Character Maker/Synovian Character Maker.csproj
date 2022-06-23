@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Synovian_Character_Maker</RootNamespace>
     <AssemblyName>Synovian Character Maker</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -29,6 +29,7 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -98,27 +99,6 @@
     </Reference>
     <Reference Include="Microsoft.Win32.Registry, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Registry.5.0.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio, Version=2.0.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.2.0.1\lib\netstandard2.0\NAudio.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.Asio, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.Asio.2.0.0\lib\netstandard2.0\NAudio.Asio.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.Core.2.0.0\lib\netstandard2.0\NAudio.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.Midi, Version=2.0.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.Midi.2.0.1\lib\netstandard2.0\NAudio.Midi.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.Wasapi, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.Wasapi.2.0.0\lib\netstandard2.0\NAudio.Wasapi.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.WinForms, Version=2.0.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.WinForms.2.0.1\lib\net472\NAudio.WinForms.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.WinMM, Version=2.0.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
-      <HintPath>..\packages\NAudio.WinMM.2.0.1\lib\netstandard2.0\NAudio.WinMM.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -190,11 +170,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data Classes\Ability.cs" />
-    <Compile Include="Data Classes\AbilityLibrary.cs" />
-    <Compile Include="Data Classes\CharacterLibrary.cs" />
-    <Compile Include="Data Classes\CharacterSheet.cs" />
-    <Compile Include="Data Classes\CompanionSheet.cs" />
     <Compile Include="Forms\AbilityMaker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -249,6 +224,12 @@
     <Compile Include="Forms\CharacterMaker\GeneralInfoWindow.Designer.cs">
       <DependentUpon>GeneralInfoWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CharacterMaker\SheetExportSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CharacterMaker\SheetExportSettingsForm.Designer.cs">
+      <DependentUpon>SheetExportSettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\CharacterMaker\ZipExportOptions.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -279,18 +260,13 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Static Classes\AudioPlayer.cs" />
     <Compile Include="Static Classes\DataReader.cs" />
     <Compile Include="Static Classes\DataWriter.cs" />
-    <Compile Include="Static Classes\ExcelManager.cs" />
-    <Compile Include="Static Classes\Globals.cs" />
     <Compile Include="Static Classes\Helpers.cs" />
-    <Compile Include="Static Classes\Networking\GoogleDriveManager.cs" />
-    <Compile Include="Static Classes\Networking\TCPManager.cs" />
+    <Compile Include="Networking\GoogleDriveManager.cs" />
+    <Compile Include="Networking\TCPManager.cs" />
     <Compile Include="Static Classes\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Static Classes\ProgramSettings.cs" />
-    <Compile Include="Static Classes\StatRules.cs" />
     <EmbeddedResource Include="Forms\AbilityMaker.resx">
       <DependentUpon>AbilityMaker.cs</DependentUpon>
     </EmbeddedResource>
@@ -344,6 +320,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="App Config files\app.manifest" />
+    <None Include="app.config" />
     <None Include="Editor Files\ClassDiagram1.cd" />
     <None Include="Misc\FAQ.rtf" />
     <None Include="Misc\Tutorials\TutorialBasicCreation.rtf" />
@@ -413,6 +390,16 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Calculator\Calculator.csproj">
+      <Project>{a75e279d-8103-40fc-ad85-a66ea0be7ceb}</Project>
+      <Name>Calculator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataClasses\DataClasses.csproj">
+      <Project>{d27398ee-3fe6-4c53-9316-85788da9e301}</Project>
+      <Name>DataClasses</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

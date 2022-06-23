@@ -4,8 +4,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.IO;
 using System.Windows.Forms;
-using Synovian_Character_Maker.Data_Classes;
 using Synovian_Character_Maker.Static_Classes;
+using Synovian_Character_Maker.DataClasses.Static;
+using Synovian_Character_Maker.DataClasses.Instanced;
 using Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker;
 
 namespace Synovian_Character_Maker.Forms.CharacterMaker
@@ -200,8 +201,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                 }
                 else if (extension == "xls" || extension == "xlsx")
                 {
-                    //current_characterSheet = DataReader.LoadExelSheet(openCharacterDialog.FileName, ((extension == ".xls") ? IronXL.ExcelFileFormat.XLS : IronXL.ExcelFileFormat.XLSX));
-                    current_characterSheet = ExcelManager.ImportSheet(openCharacterDialog.FileName);
+                    current_characterSheet = Program.excelManager.ImportSheet(openCharacterDialog.FileName);
                 }
                 else
                 {
@@ -235,13 +235,14 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
         private void saveZip_FileOk(object sender, CancelEventArgs e)
         {
-            ZipExportOptions zipExportOptions = new ZipExportOptions();
-            zipExportOptions.ShowDialog();
-            if (zipExportOptions.exitStatus == ZipExportOptions.ExitStatus.Failed)
-                return;
-
-            DataWriter.WriteCharacterToDiskZip(current_characterSheet, saveZip.FileName, zipExportOptions.exportSettings);
-            WriteLog("Saved character as zip to disk.");
+            return;
+            //ZipExportOptions zipExportOptions = new ZipExportOptions();
+            //zipExportOptions.ShowDialog();
+            //if (zipExportOptions.exitStatus == ZipExportOptions.ExitStatus.Failed)
+            //    return;
+            //
+            //DataWriter.WriteCharacterToDiskZip(current_characterSheet, saveZip.FileName, zipExportOptions.exportSettings);
+            //WriteLog("Saved character as zip to disk.");
         }
 
         private void companionButton_Click(object sender, EventArgs e)
@@ -274,648 +275,13 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
         private void calculateButton_Click(object sender, EventArgs e)
         {
-            // Get the rules for the specific rank setup for this character.
-            int FeatPointMax = Program.statRules.FeatPoints[current_characterSheet.Rank];
-            int SkillPointsMax = Program.statRules.SkillPoints[current_characterSheet.Rank];
-            int SchoolsMax = Program.statRules.Schools[current_characterSheet.Rank];
-            int MasteriesMax = Program.statRules.Masteries[current_characterSheet.Rank];
-
             CalculatorLog calculatorLog = new CalculatorLog();
-
-            // Validation check value
-            bool valid = true;
-
-            int numErrors = 0;
-
-            // Start by calculating all used skill points
-            {
-                int usedSkillPoints = 0;
-
-                foreach(int int_ability in current_characterSheet.abilities)
-                {
-                    if (Program.abilityLibrary.TryGetAbility(int_ability, out Ability ability))
-                    {
-                        
-                        if (ability.isFeat)
-                            continue;
-                        else
-                            usedSkillPoints += ability.skillCostOverride;
-                    }
-                }
-
-                if (usedSkillPoints > SkillPointsMax)
-                {
-                    calculatorLog.AddToLog($"There are {usedSkillPoints - SkillPointsMax} more skillpoints being used than the character's max of {SkillPointsMax}.");
-                    valid = false;
-                    numErrors++;
-                }
-                else
-                {
-                    calculatorLog.AddToLog($"Used {usedSkillPoints} skill points of the character's {SkillPointsMax}.");
-                }
-            }
-            // Calculate all feat points
-            {
-                int usedFeatPoints = 0;
-
-                foreach(int int_ability in current_characterSheet.abilities)
-                {
-                    if (Program.abilityLibrary.TryGetAbility(int_ability, out Ability ability))
-                    {
-                        if (ability.Name == "School Of Forms") continue;
-                        if (ability.isFeat)
-                            usedFeatPoints += ability.skillCostOverride;
-                        else
-                            continue;
-                    }
-                }
-
-                if (usedFeatPoints > FeatPointMax)
-                {
-                    calculatorLog.AddToLog($"There are {usedFeatPoints - FeatPointMax} more feat points than the character's max of {FeatPointMax}.");
-                    valid = false;
-                    numErrors++;
-                }
-                else
-                {
-                    calculatorLog.AddToLog($"Used {usedFeatPoints} feat points of the character's {FeatPointMax}");
-                }
-            }
-            // Calculate if the sheet has right number of schools
-            {
-                int usedSchools = 0;
-                List<Ability> schools = new List<Ability>();
-
-                foreach(Ability_Schools ability_Schools in (Ability_Schools[])Enum.GetValues(typeof(Ability_Schools)))
-                {
-                    Ability abilitySchool = Program.abilityLibrary.GetSchool(ability_Schools);
-                    if (abilitySchool != null) schools.Add(abilitySchool);
-                }
-
-                foreach(Ability abilitySchool in schools)
-                {
-                    if (abilitySchool.ability_School == Ability_Schools.Ability_Forms) continue;
-                    if (current_characterSheet.abilities.Contains(abilitySchool.ID))
-                        usedSchools++;
-                }
-
-                if (usedSchools > SchoolsMax)
-                {
-                    calculatorLog.AddToLog($"There are {usedSchools - SchoolsMax} more than the character's max of {SchoolsMax} Schools.");
-                    valid = false;
-                    numErrors++;
-                }
-            }
-            // Determine all school specializations
-            {
-                foreach (int i in current_characterSheet.abilities)
-                {
-                    if (Program.abilityLibrary.TryGetAbility(i, out Ability ability))
-                    {
-                        if (ability.Rank > Rank.Apprentice)
-                        {
-                            if (ability.ability_School >= Ability_Schools.Ability_Forms) continue;
-
-                            Ability_Schools schoolEnum = ability.ability_School;
-                            Ability ability_School = Program.abilityLibrary.GetSchool(schoolEnum);
-                            if (ability_School == null)
-                            {
-#if DEBUG
-                                throw new Exception($"The ability school {Enum.GetName(typeof(Ability_Schools),ability.ability_School)} does not exist");
-#else
-                                MessageBox.Show($"The ability school {Enum.GetName(typeof(Ability_Schools),ability.ability_School)} does not exist", "Error!", MessageBoxButtons.OK,MessageBoxIcon.Error);
-                                continue;
-#endif
-                            }
-                            if (!current_characterSheet.abilities.Contains(ability_School.ID))
-                            {
-                                valid = false;
-                                calculatorLog.AddToLog($"{ability.Name} is a {ability.s_rank} ability, requiring you to specialize in the {ability_School.Name}.");
-                                numErrors++;
-                            }
-                        }
-                        else
-                            continue;
-                    }
-                }
-            }
-            // Calculate all prereq checks
-            {
-                foreach(int i in current_characterSheet.abilities)
-                {
-                    if(Program.abilityLibrary.TryGetAbility(i,out Ability ability))
-                    {
-                        if (Program.abilityLibrary.IsASchool(ref ability))
-                            continue;
-                        if (ability.Name == "Pyrokinesis")
-                        {
-                            if (Program.abilityLibrary.Contains("Alter Enviroment III") || Program.abilityLibrary.Contains("Force Repulse"))
-                                continue;
-                            else
-                            {
-                                calculatorLog.AddToLog("Pyrokinesis needs either Alter Enviroment III or Force Repulse");
-                                valid = false;
-                                numErrors++;
-                            }
-                        }
-                        else if (ability.Name == "Shatterpoint")
-                        {
-                            int numUnderstanding = 0;
-
-                            if (current_characterSheet.Contains("Battle Mind"))
-                                numUnderstanding++;
-                            else
-                            {
-                                valid = false;
-                                calculatorLog.AddToLog("Shatterpoint requires Battle Mind");
-                                numErrors++;
-                            }
-                            if (current_characterSheet.Contains("Force Sight"))
-                                numUnderstanding++;
-                            else
-                            {
-                                valid = false;
-                                calculatorLog.AddToLog("Shatterpoint requires Force Sight");
-                                numErrors++;
-                            }
-
-                            foreach (int j in current_characterSheet.abilities)
-                            {
-                                if (Program.abilityLibrary.TryGetAbility(j, out Ability ability1))
-                                {
-                                    if (ability1.Name == "Battle Mind" || ability1.Name == "Force Sight" || ability1.Name == "Shatterpoint" || ability1.Name == "School Of Understanding")
-                                        continue;
-                                    else if (ability1.ability_School == Ability_Schools.Ability_Understanding)
-                                        numUnderstanding++;
-                                }
-                            }
-
-                            if (numUnderstanding >= 10)
-                                continue;
-                            else
-                            {
-                                valid = false;
-                                calculatorLog.AddToLog($"Shatterpoint requires 10 abilities from the school of understanding. You only have {numUnderstanding}.");
-                                numErrors++;
-                            }
-                        }
-                        else if (ability.Name == "Instinctive Astrogation")
-                        {
-                            int numUnderstanding = 0;
-
-                            foreach (int j in current_characterSheet.abilities)
-                            {
-                                if (Program.abilityLibrary.TryGetAbility(j, out Ability ability1))
-                                {
-                                    if (ability1.Name == "Instinctive Astrogation" || ability1.Name == "School Of Understanding")
-                                        continue;
-                                    else if (ability1.ability_School == Ability_Schools.Ability_Understanding)
-                                        numUnderstanding++;
-                                }
-                            }
-
-                            if (numUnderstanding >= 5)
-                                continue;
-                            else
-                            {
-                                valid = false;
-                                calculatorLog.AddToLog($"Instinctive Astrogation requires 5 abilities from the school of understanding. You only have {numUnderstanding}.");
-                                numErrors++;
-                            }
-                        }
-                        else if (ability.Name == "Force Body")
-                        {
-                            if (current_characterSheet.Contains("Control Pain") || current_characterSheet.Contains("Force Rage"))
-                                continue;
-                            else
-                            {
-                                valid = false;
-                                calculatorLog.AddToLog("Force Body requires either Control Pain or Force Rage. You have neither");
-                                numErrors++;
-                            }
-                        }
-                        else if (ability.Name == "Flow Walking")
-                        {
-                            if (current_characterSheet.Contains("Psychometry"))
-                            {
-                                if (current_characterSheet.Contains("Farseeing") || current_characterSheet.Contains("Darksight"))
-                                    continue;
-                                else
-                                {
-                                    valid = false;
-                                    calculatorLog.AddToLog("Flow Walking requires either Farseeing or Darksight. You don't have either one.");
-                                    numErrors++;
-                                }
-                            }
-                            else
-                            {
-                                valid = false;
-                                calculatorLog.AddToLog("Flow Walking requires Psychometry, plus either Farseeing or Darksight. You are missing Psychometry");
-                                numErrors++;
-                            }
-                        }
-                        else if (ability.Name == "Saber Staff" || ability.Name == "Jar'kai" || ability.Name == "Saber Pike")
-                        {
-                            int validNumCheck = 0;
-                            string[] intermeidateAbilities = current_characterSheet.GetAbilitiesWithFilters("Advanced");
-                            string[] forms = { "Niman", "Shii Cho", "Makashi", "Soresu", "Ataru", "Shien/Djem-so", "Juyo" };
-                            foreach (string str in intermeidateAbilities)
-                            {
-                                if (Program.abilityLibrary.TryGetAbility(str, out Ability interAbility))
-                                {
-                                    if (interAbility.ability_School == Ability_Schools.Ability_Forms)
-                                    {
-                                        foreach (string form in forms)
-                                        {
-                                            if (interAbility.Name.Contains(form))
-                                                validNumCheck++;
-                                            if (validNumCheck > 0)
-                                                break;
-                                        }
-                                    }
-                                }
-                                if (validNumCheck > 0)
-                                    break;
-                            }
-                            if (validNumCheck > 0)
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                calculatorLog.AddToLog($"{ability.Name} requires at least 1 Advanced saber form.");
-                                numErrors++;
-                            }
-                        }
-                        else if (ability.Name == "Trakata")
-                        {
-                            int validNumCheck = 0;
-                            string[] intermeidateAbilities = current_characterSheet.GetAbilitiesWithFilters("Intermediate");
-                            string[] forms = { "Niman", "Shii Cho", "Makashi", "Soresu", "Ataru", "Shien/Djem-so", "Juyo" };
-                            foreach (string str in intermeidateAbilities)
-                            {
-                                if (Program.abilityLibrary.TryGetAbility(str, out Ability interAbility))
-                                {
-                                    if (interAbility.ability_School == Ability_Schools.Ability_Forms)
-                                    {
-                                        
-                                        foreach (string form in forms)
-                                        {
-                                            if (interAbility.Name.Contains(form))
-                                                validNumCheck++;
-                                            if (validNumCheck > 0)
-                                                break;
-                                        }
-                                    }
-                                }
-                                else if (validNumCheck > 0)
-                                    break;
-                            }
-                            if (validNumCheck > 0)
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                calculatorLog.AddToLog("Trakata requires at least 1 Intermediate saber form.");
-                                numErrors++;
-                            }
-                        }
-                        else if (ability.Name == "Lightning Storm")
-                        {
-                            int MaxNumLightning = Program.abilityLibrary.GetAbilitiesContainingString("Lightning").Count;
-                            int sheetNumLightning = 0;
-
-                            string[] abList = current_characterSheet.GetAbilitiesWithContaingString("Lightning");
-
-                            foreach (string str in abList)
-                            {
-                                if (str == "Lightning Storm") continue;
-                                else
-                                    sheetNumLightning++;
-                            }
-
-                            if (sheetNumLightning >= MaxNumLightning)
-                                continue;
-                            else
-                            {
-                                calculatorLog.AddToLog($"Lightning Storm requires all of the lightning abilities in the Offense School. So far, you only have {sheetNumLightning} of the {MaxNumLightning} lightning abilities.");
-                                numErrors++;
-                            }
-                        }
-                        else if (ability.Name == "Blaster" || ability.Name == "Slug Thrower" || ability.Name.Contains("Anti-") || ability.Name == "Covering Fire" || ability.Name == "Tactical Reload" || ability.Name == "Rail Shot" || ability.Name == "Laze Target" || ability.Name == "High Impact Bolt")
-                        {
-                            string[] rangeFeats = { "Blaster Training", "Marksman Training", "Pistol Training", "Heavy Weapons Training" };
-                            bool hasFeat = false;
-
-                            foreach(string str in rangeFeats)
-                            {
-                                if (current_characterSheet.Contains(str))
-                                {
-                                    hasFeat = true;
-                                    break;
-                                }
-                            }
-                            if(!hasFeat)
-                            {
-                                numErrors++;
-                                calculatorLog.AddToLog($"{ability.Name} requires one of the four ranged weapon training feats.");
-                            }
-                        }
-                        else if (ability.Name == "Explosive Diffusing I")
-                        {
-                            string[] explosiveFeats = { "Timed Explosives", "Impact Explosives", "Trap Explosives" };
-                            bool hasFeat = false;
-
-                            foreach(string str in explosiveFeats)
-                            {
-                                if(current_characterSheet.Contains(str))
-                                {
-                                    hasFeat = true;
-                                    break;
-                                }
-                            }
-
-                            if(!hasFeat)
-                            {
-                                calculatorLog.AddToLog("Explosive Diffusing I requires at least one explosive training.");
-                                numErrors++;
-                            }
-                        }
-                        else
-                        {
-                            foreach(int j in ability.prereqs)
-                            {
-                                // Skip if the prereq j being compared is the same ability.
-                                if (i == j)
-                                    continue;
-                                else
-                                {
-                                    if (current_characterSheet.abilities.Contains(j))
-                                        continue;
-                                    else
-                                    {
-                                        calculatorLog.AddToLog($"{ability.Name} is missing the prereq {Program.abilityLibrary.GetAbility(j).Name}");
-                                        valid = false;
-                                        numErrors++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            // Calculate companions
-            {
-                foreach(CompanionSheet companion in current_characterSheet.companionSheets)
-                {
-                    if(companion.primaryCompanionType == CompanionSheet.CompanionType.Beast)
-                    {
-                        if(!current_characterSheet.Contains("Taming I"))
-                        {
-                            calculatorLog.AddToLog("You are missing Taming I if you wish to have a animal companion.");
-                            numErrors++;
-                            valid = false;
-                        }
-                        if (!current_characterSheet.Contains("Taming II"))
-                        {
-                            calculatorLog.AddToLog("You are missing Taming II if you wish to have a animal companion.");
-                            numErrors++;
-                            valid = false;
-                        }
-
-                        switch(current_characterSheet.alignment)
-                        {
-                            case Ability_Alignment.Ability_Dark:
-                                {
-                                    if(!current_characterSheet.Contains("Beast Control I"))
-                                    {
-                                        calculatorLog.AddToLog("As a darksider you need at mininum Beast Control I if you wish to have a animal companion.");
-                                        numErrors++;
-                                        valid = false;
-                                    }
-                                    break;
-                                }
-                            case Ability_Alignment.Ability_Light:
-                                {
-                                    if (!current_characterSheet.Contains("Animal Friendship I"))
-                                    {
-                                        calculatorLog.AddToLog("As a lightsider you need at mininum Animal Friendship I if you wish to have a animal companion.");
-                                        numErrors++;
-                                        valid = false;
-                                    }
-                                    break;
-                                }
-                        }
-                    }
-                    else
-                    {
-                        switch(companion.primaryCompanionType)
-                        {
-                            case CompanionSheet.CompanionType.Research_Droid:
-                                {
-                                    if(!current_characterSheet.Contains("Class I Droids"))
-                                    {
-                                        numErrors++;
-                                        valid = false;
-                                        calculatorLog.AddToLog($"To use the droid companion {companion.companionName}, you need Class I Droids for missions");
-                                    }
-                                    break;
-                                }
-                            case CompanionSheet.CompanionType.Medical_Droid:
-                                {
-                                    if (!current_characterSheet.Contains("Class I Droids"))
-                                    {
-                                        numErrors++;
-                                        valid = false;
-                                        calculatorLog.AddToLog($"To use the droid companion {companion.companionName}, you need Class I Droids for missions");
-                                    }
-                                    break;
-                                }
-                            case CompanionSheet.CompanionType.Engineering_Droid:
-                                {
-                                    if (!current_characterSheet.Contains("Class II Droids"))
-                                    {
-                                        numErrors++;
-                                        valid = false;
-                                        calculatorLog.AddToLog($"To use the droid companion {companion.companionName}, you need Class II Droids for missions");
-                                    }
-                                    break;
-                                }
-                            case CompanionSheet.CompanionType.Astromech_Droid:
-                                {
-                                    if (!current_characterSheet.Contains("Class II Droids"))
-                                    {
-                                        numErrors++;
-                                        valid = false;
-                                        calculatorLog.AddToLog($"To use the droid companion {companion.companionName}, you need Class II Droids for missions");
-                                    }
-                                    break;
-                                }
-                            case CompanionSheet.CompanionType.Protocol_Droid:
-                                {
-                                    if (!current_characterSheet.Contains("Class III Droids"))
-                                    {
-                                        numErrors++;
-                                        valid = false;
-                                        calculatorLog.AddToLog($"To use the droid companion {companion.companionName}, you need Class III Droids for missions");
-                                    }
-                                    break;
-                                }
-                            case CompanionSheet.CompanionType.Battle_Droid:
-                                {
-                                    if (!current_characterSheet.Contains("Class IV Droids"))
-                                    {
-                                        numErrors++;
-                                        valid = false;
-                                        calculatorLog.AddToLog($"To use the droid companion {companion.companionName}, you need Class IV Droids for missions");
-                                    }
-                                    break;
-                                }
-                            case CompanionSheet.CompanionType.Security_Droid:
-                                {
-                                    if (!current_characterSheet.Contains("Class IV Droids"))
-                                    {
-                                        numErrors++;
-                                        valid = false;
-                                        calculatorLog.AddToLog($"To use the droid companion {companion.companionName}, you need Class IV Droids for missions");
-                                    }
-                                    break;
-                                }
-                            case CompanionSheet.CompanionType.Assassin_Droid:
-                                {
-                                    if (!current_characterSheet.Contains("Class IV Droids"))
-                                    {
-                                        numErrors++;
-                                        valid = false;
-                                        calculatorLog.AddToLog($"To use the droid companion {companion.companionName}, you need Class IV Droids for missions");
-                                    }
-                                    break;
-                                }
-                            default:
-                                break;
-                        }
-                    }
-                }
-
-                
-            }
-            // If the character has a companion, check if the sheet has the needed abilities
-            //{
-            //    if (current_characterSheet.companionSheets == null)
-            //        goto SkipCompaionChecks;
-            //
-            //    CompanionSheet.CompanionType companionType = current_characterSheet.companionSheet.primaryCompanionType;
-            //
-            //    if(companionType == CompanionSheet.CompanionType.Beast)
-            //    {
-            //        if(!current_characterSheet.Contains("Dominate Mind") &&
-            //           !current_characterSheet.Contains("Basic Animal Friendship"))
-            //        {
-            //            valid = false;
-            //            numErrors++;
-            //
-            //            calculatorLog.AddToLog("Having a beast companion requires you to have either Dominate Mind or at least Basic Animal Friendship");
-            //        }
-            //    }
-            //    else if(companionType == CompanionSheet.CompanionType.Medical_Droid ||
-            //            companionType == CompanionSheet.CompanionType.Research_Droid)
-            //    {
-            //        if(!current_characterSheet.Contains("Creation Training")    ||
-            //           !current_characterSheet.Contains("Basic Engineering Training") ||
-            //           !current_characterSheet.Contains("Class I Droids"))
-            //        {
-            //            valid = false;
-            //            numErrors++;
-            //
-            //            string errorMessage = "You are missing: ";
-            //
-            //            if (!current_characterSheet.Contains("Basic Creation"))
-            //                errorMessage += "Basic Creation ";
-            //            if (!current_characterSheet.Contains("Basic Engineering"))
-            //                errorMessage += "Basic Engineering ";
-            //            if (!current_characterSheet.Contains("Class I Droids"))
-            //                errorMessage += "Class I Droids";
-            //
-            //            errorMessage += " for your droid companion.";
-            //            calculatorLog.AddToLog(errorMessage);
-            //        }
-            //    }
-            //    else if (companionType == CompanionSheet.CompanionType.Engineering_Droid ||
-            //             companionType == CompanionSheet.CompanionType.Astromech_Droid)
-            //    {
-            //        if (!current_characterSheet.Contains("Basic Creation")    ||
-            //            !current_characterSheet.Contains("Basic Engineering") ||
-            //            !current_characterSheet.Contains("Class II Droids"))
-            //        {
-            //            valid = false;
-            //            numErrors++;
-            //
-            //            string errorMessage = "You are missing: ";
-            //
-            //            if (!current_characterSheet.Contains("Basic Creation"))
-            //                errorMessage += "Basic Creation ";
-            //            if (!current_characterSheet.Contains("Basic Engineering"))
-            //                errorMessage += "Basic Engineering ";
-            //            if (!current_characterSheet.Contains("Class II Droids"))
-            //                errorMessage += "Class II Droids";
-            //
-            //            errorMessage += " for your droid companion.";
-            //            calculatorLog.AddToLog(errorMessage);
-            //        }
-            //    }
-            //    else if (companionType == CompanionSheet.CompanionType.Protocol_Droid)
-            //    {
-            //        if (!current_characterSheet.Contains("Intermediate Creation") ||
-            //            !current_characterSheet.Contains("Basic Engineering")     ||
-            //            !current_characterSheet.Contains("Class III Droids"))
-            //        {
-            //            valid = false;
-            //            numErrors++;
-            //
-            //            string errorMessage = "You are missing: ";
-            //
-            //            if (!current_characterSheet.Contains("Intermediate Creation"))
-            //                errorMessage += "Intermediate Creation ";
-            //            if (!current_characterSheet.Contains("Basic Engineering"))
-            //                errorMessage += "Basic Engineering ";
-            //            if (!current_characterSheet.Contains("Class III Droids"))
-            //                errorMessage += "Class III Droids";
-            //
-            //            errorMessage += " for your droid companion.";
-            //            calculatorLog.AddToLog(errorMessage);
-            //        }
-            //    }
-            //    else if (companionType == CompanionSheet.CompanionType.Battle_Droid   ||
-            //             companionType == CompanionSheet.CompanionType.Security_Droid ||
-            //             companionType == CompanionSheet.CompanionType.Astromech_Droid)
-            //    {
-            //        if (!current_characterSheet.Contains("Advanced Creation")  ||
-            //            !current_characterSheet.Contains("Basic Engineering")  ||
-            //            !current_characterSheet.Contains("Class IV Droids"))
-            //        {
-            //            valid = false;
-            //            numErrors++;
-            //
-            //            string errorMessage = "You are missing: ";
-            //
-            //            if (!current_characterSheet.Contains("Advanced Creation"))
-            //                errorMessage += "Advanced Creation ";
-            //            if (!current_characterSheet.Contains("Basic Engineering"))
-            //                errorMessage += "Basic Engineering ";
-            //            if (!current_characterSheet.Contains("Class IV Droids"))
-            //                errorMessage += "Class IV Droids";
-            //
-            //            errorMessage += " for your droid companion.";
-            //            calculatorLog.AddToLog(errorMessage);
-            //        }
-            //    }
-            //
-            //    SkipCompaionChecks:;                
-            //}
-
-            calculatorLog.AddToLog($"Results are in: your sheet is {((valid == true) ? "valid" : "invalid")}.");
-            calculatorLog.AddToLog($"Number of errors: {numErrors}");
+            string log = "";
+            int errors = 0;
+            bool success = Program.calculator.Calculate(ref current_characterSheet, ref log, ref errors);
+            calculatorLog.AddToLog(log);
+            calculatorLog.AddToLog($"Results are in: your sheet is {((success == true) ? "valid" : "invalid")}.");
+            calculatorLog.AddToLog($"Number of errors: {errors}");
             calculatorLog.ShowDialog();
             WriteLog("Did big brain math.");
         }
@@ -931,7 +297,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
         private void saveExcel_FileOk(object sender, CancelEventArgs e)
         {
-            DataWriter.ExportCharacterSheetExcel(current_characterSheet, saveExcel.FileName, (saveExcel.FileName.Split('.')[1] == "xlsx") ? DataWriter.ExcelFormats.XLSX : DataWriter.ExcelFormats.XLS);
+            //DataWriter.ExportCharacterSheetExcel(current_characterSheet, saveExcel.FileName, (saveExcel.FileName.Split('.')[1] == "xlsx") ? DataWriter.ExcelFormats.XLSX : DataWriter.ExcelFormats.XLS);
             WriteLog("Saved character to disk as excel");
         }
 
@@ -975,7 +341,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
         {
             if(Program.programArgs.Contains("-TCN"))
             {
-                Static_Classes.Networking.TCP.TCPManager tCP = new Static_Classes.Networking.TCP.TCPManager(false, true);
+                Networking.TCPManager tCP = new Networking.TCPManager(false, true);
                 Experimental.SheetSubmission sheetSubmission = new Experimental.SheetSubmission();
                 tCP.SendSheet(current_characterSheet);
             }
@@ -983,10 +349,25 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
         private void googleDriveButton_Click(object sender, EventArgs e)
         {
+            SheetExportSettingsForm sheetExportSettings = new SheetExportSettingsForm();
+            sheetExportSettings.ShowDialog();
+            if (!sheetExportSettings.finishedSetup) return;
+            SheetExportSettings sheetExport = sheetExportSettings.sheetExportSettings;
+
             if (!Directory.Exists(Globals.TempFolder)) Directory.CreateDirectory(Globals.TempFolder);
-            DataWriter.ExportCharacterSheetExcel(current_characterSheet, $"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx", DataWriter.ExcelFormats.XLSX);
-            Static_Classes.Networking.GoogleDrive.GoogleDriveManager.SubmitSheetToDrive($"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx");
+
+
+            // Create the file
+            //DataWriter.ExportCharacterSheetExcel(current_characterSheet, $"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx", sheetExport, DataWriter.ExcelFormats.XLSX);
+            Program.excelManager.ExportSheet(current_characterSheet, $"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx", sheetExport);
+
+            // Send file to google drive
+            Networking.GoogleDriveManager.SubmitSheetToDrive($"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx");
+
+            // Delete the file, we don't need it on disk
             File.Delete($"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx");
+
+
             WriteLog("Sent sheet to google drive.");
         }
 

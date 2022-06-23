@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using Synovian_Character_Maker.Networking;
+
 namespace Synovian_Character_Maker.Forms.Experimental
 {
     public partial class IPRequest : Form
@@ -31,7 +33,7 @@ namespace Synovian_Character_Maker.Forms.Experimental
 
         private void button2_Click(object sender, EventArgs e)
         {
-            textBox1.Text = Static_Classes.Networking.TCP.TCPManager.GetLocalIPAddress();
+            textBox1.Text = TCPManager.GetLocalIPAddress();
         }
     }
 }

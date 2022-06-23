@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 using System.Text.RegularExpressions;
-using Synovian_Character_Maker.Data_Classes;
+using System.Windows.Forms;
+using Synovian_Character_Maker.DataClasses.Instanced;
+using Synovian_Character_Maker.Static_Classes;
 
 namespace Synovian_Character_Maker.Forms
 {
@@ -24,9 +25,9 @@ namespace Synovian_Character_Maker.Forms
         {
             listView1.Items.Clear();
 
-            foreach(Ability ability in Program.abilityLibrary.GetAbilities())
+            foreach (Ability ability in Program.abilityLibrary.GetAbilities())
             {
-                string[] subitems = { ability.Name, ability.s_alignment, ability.s_rank, ability.s_ability_School, ability.isFeat.ToString(),ability.ID.ToString() };
+                string[] subitems = { ability.Name, ability.s_alignment, ability.s_rank, ability.s_ability_School, ability.isFeat.ToString(), ability.ID.ToString() };
                 ListViewItem listViewItem = new ListViewItem(subitems);
                 listView1.Items.Add(listViewItem);
             }
@@ -54,7 +55,7 @@ namespace Synovian_Character_Maker.Forms
                     int endRange = int.Parse(line.Split('-')[1]);
                     for (int i = startRange; i < endRange + 1; i++)
                     {
-                        if(Program.abilityLibrary.Contains(i))
+                        if (Program.abilityLibrary.Contains(i))
                             prereqs.Add(i);
                         else
                         {
@@ -112,7 +113,7 @@ namespace Synovian_Character_Maker.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(listView1.FocusedItem == null)
+            if (listView1.FocusedItem == null)
             {
                 MessageBox.Show("Select a ability", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -134,20 +135,20 @@ namespace Synovian_Character_Maker.Forms
         {
             if (!Regex.IsMatch(textBox2.Text, @"^\d+$"))
                 textBox2.Text = "1";
-            
+
         }
 
-        private void AbilityMaker_FormClosing(object sender, FormClosingEventArgs e) => Static_Classes.DataWriter.WriteAbilitiesToDisk(Program.abilityLibrary.GetAbilities());
+        private void AbilityMaker_FormClosing(object sender, FormClosingEventArgs e) => DataWriter.WriteAbilitiesToDisk(Program.abilityLibrary.GetAbilities());
 
         private void listView1_Click(object sender, EventArgs e)
         {
-            if(Program.abilityLibrary.TryGetAbility(listView1.FocusedItem.Text, out Ability ability))
+            if (Program.abilityLibrary.TryGetAbility(listView1.FocusedItem.Text, out Ability ability))
             {
-                comboBox1.SelectedIndex = (int)ability.alignment -1 ;
+                comboBox1.SelectedIndex = (int)ability.alignment - 1;
 
-                comboBox2.SelectedIndex = (int)ability.Rank-1;
+                comboBox2.SelectedIndex = (int)ability.Rank - 1;
 
-                comboBox3.SelectedIndex = (int)ability.ability_School-1;
+                comboBox3.SelectedIndex = (int)ability.ability_School - 1;
 
                 textBox1.Text = ability.Name;
 
@@ -163,7 +164,7 @@ namespace Synovian_Character_Maker.Forms
                 foreach (int i in ability.prereqs)
                     vs.Add(i.ToString());
 
-                prereqBox.Lines = vs.ToArray();                
+                prereqBox.Lines = vs.ToArray();
             }
             else
             {
