@@ -20,3 +20,5 @@ Synovian Character Maker/Misc/client_secret.json
 *.htm
 /Calculator/obj/Debug
 /DataClasses/obj/Debug
+/Calculator/obj/Release
+/DataClasses/obj/Release

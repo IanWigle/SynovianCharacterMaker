@@ -1,5 +1,6 @@
 ﻿using System;
 using Synovian_Character_Maker.DataClasses.Instanced;
+using System.Windows.Forms;
 
 namespace Synovian_Character_Maker.CharacterCalculator
 {
