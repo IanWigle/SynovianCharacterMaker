@@ -4,12 +4,11 @@ using System.Linq;
 using System.IO;
 using System.Text.Json;
 using System.Drawing;
-using Synovian_Character_Maker.DataClasses.Instanced;
-using Synovian_Character_Maker.DataClasses.Static;
+using Synovian_Character_Maker.Data_Classes;
 
 using Aspose.Zip;
 
-namespace Synovian_Character_Maker
+namespace Synovian_Character_Maker.Static_Classes
 {
     static public class DataReader
     {
@@ -22,8 +21,6 @@ namespace Synovian_Character_Maker
             max
         }
 
-        //public static StatRules StatRulesRef = null;
-        //public static AbilityLibrary abilityLibraryRef = null;
 
         /// <summary>
         /// Main method of reading abilities from disk.
@@ -193,19 +190,19 @@ namespace Synovian_Character_Maker
                     if (compElement.GetRawText() != "null")
                     {
                         string compName = "";
-                        CompanionSheet.CompanionType primaryType = CompanionSheet.CompanionType.None;
-                        List<CompanionSheet.CompanionType> secondaryTypes = new List<CompanionSheet.CompanionType>();
+                        Data_Classes.CompanionSheet.CompanionType primaryType = CompanionSheet.CompanionType.None;
+                        List<Data_Classes.CompanionSheet.CompanionType> secondaryTypes = new List<CompanionSheet.CompanionType>();
                         List<int> abilities = new List<int>();
 
                         if (compElement.TryGetProperty("companionName", out JsonElement jsonElement4))
                             compName = jsonElement4.GetString();
                         if (compElement.TryGetProperty("primaryCompanionType", out JsonElement jsonElement6))
-                            primaryType = (CompanionSheet.CompanionType)jsonElement6.GetInt32();
+                            primaryType = (Data_Classes.CompanionSheet.CompanionType)jsonElement6.GetInt32();
                         if (compElement.TryGetProperty("additionalCompanionTypes", out JsonElement jsonElement7))
                         {
                             foreach (JsonElement jsonElement8 in jsonElement7.EnumerateArray())
                             {
-                                secondaryTypes.Add((CompanionSheet.CompanionType)jsonElement8.GetInt32());
+                                secondaryTypes.Add((Data_Classes.CompanionSheet.CompanionType)jsonElement8.GetInt32());
                             }
                         }
                         if (compElement.TryGetProperty("abilities", out JsonElement jsonElement9))
@@ -218,7 +215,7 @@ namespace Synovian_Character_Maker
 
                         if (compName != "" && primaryType != CompanionSheet.CompanionType.None)
                         {
-                            companionSheet = new CompanionSheet(compName, primaryType, abilities, ref Program._statRules, ref Program.abilityLibrary);
+                            companionSheet = new CompanionSheet(compName, primaryType, abilities);
                         }
                     }
                 }
@@ -245,8 +242,7 @@ namespace Synovian_Character_Maker
                                                                        dateTimeofMod,
                                                                        null,
                                                                        species,
-                                                                       CharacterSheet.SheetFileType.Txt,
-                                                                       ref Program.abilityLibrary);
+                                                                       CharacterSheet.SheetFileType.Txt);
                     characterSheet.characterDescription = description;
                     if (companionSheet != null) characterSheet.companionSheets.Add(companionSheet);
                     return characterSheet;
@@ -303,20 +299,20 @@ namespace Synovian_Character_Maker
                     else if (extension == "xls")
                     {
                         //CharacterSheet characterSheet = LoadExelSheet(fullFile, ExcelFileFormat.XLS);
-                        CharacterSheet characterSheet = Program.excelManager.ImportSheet(fullFile);
+                        CharacterSheet characterSheet = ExcelManager.ImportSheet(fullFile);
                         characterLibrary.AddCharacter(characterSheet);
                     }
                     else if (extension == "xlsx")
                     {
                         //CharacterSheet characterSheet = LoadExelSheet(fullFile, ExcelFileFormat.XLSX);
-                        CharacterSheet characterSheet = Program.excelManager.ImportSheet(fullFile);
+                        CharacterSheet characterSheet = ExcelManager.ImportSheet(fullFile);
                         characterLibrary.AddCharacter(characterSheet);
                     }
                 }
             }
             catch(Exception e)
             {
-                ExceptionHandles.ExceptionHandle(e);
+                Helpers.ExceptionHandle(e);
             }
 
 
@@ -423,7 +419,7 @@ namespace Synovian_Character_Maker
             }
             catch (Exception ex)
             {
-                ExceptionHandles.ExceptionHandle(ex);
+                Helpers.ExceptionHandle(ex);
             }
         }
 
@@ -479,8 +475,7 @@ namespace Synovian_Character_Maker
                                           rank,
                                           ability_Alignment,
                                           vs,
-                                          dateTimeofMod,
-                                          ref Program.abilityLibrary);
+                                          dateTimeofMod);
                 
             }
 
@@ -532,19 +527,19 @@ namespace Synovian_Character_Maker
                     if (compElement.GetRawText() != "null")
                     {
                         string compName = "";
-                        CompanionSheet.CompanionType primaryType = CompanionSheet.CompanionType.None;
-                        List<CompanionSheet.CompanionType> secondaryTypes = new List<CompanionSheet.CompanionType>();
+                        Data_Classes.CompanionSheet.CompanionType primaryType = CompanionSheet.CompanionType.None;
+                        List<Data_Classes.CompanionSheet.CompanionType> secondaryTypes = new List<CompanionSheet.CompanionType>();
                         List<int> abilities = new List<int>();
 
                         if (compElement.TryGetProperty("companionName", out JsonElement jsonElement4))
                             compName = jsonElement4.GetString();
                         if (compElement.TryGetProperty("primaryCompanionType", out JsonElement jsonElement6))
-                            primaryType = (CompanionSheet.CompanionType)jsonElement6.GetInt32();
+                            primaryType = (Data_Classes.CompanionSheet.CompanionType)jsonElement6.GetInt32();
                         if (compElement.TryGetProperty("additionalCompanionTypes", out JsonElement jsonElement7))
                         {
                             foreach (JsonElement jsonElement8 in jsonElement7.EnumerateArray())
                             {
-                                secondaryTypes.Add((CompanionSheet.CompanionType)jsonElement8.GetInt32());
+                                secondaryTypes.Add((Data_Classes.CompanionSheet.CompanionType)jsonElement8.GetInt32());
                             }
                         }
                         if (compElement.TryGetProperty("abilities", out JsonElement jsonElement9))
@@ -557,7 +552,7 @@ namespace Synovian_Character_Maker
 
                         if (compName != "" && primaryType != CompanionSheet.CompanionType.None)
                         {
-                            companionSheet = new CompanionSheet(compName, primaryType, abilities, ref Program._statRules, ref Program.abilityLibrary);
+                            companionSheet = new CompanionSheet(compName, primaryType, abilities);
                         }
                     }
                 }
@@ -584,8 +579,7 @@ namespace Synovian_Character_Maker
                                                                        dateTimeofMod,
                                                                        null,
                                                                        species,
-                                                                       CharacterSheet.SheetFileType.Txt,
-                                                                       ref Program.abilityLibrary);
+                                                                       CharacterSheet.SheetFileType.Txt);
                     new_characterSheet.characterDescription = description;
                     if (companionSheet != null) new_characterSheet.companionSheets.Add(companionSheet);
                     return new_characterSheet;

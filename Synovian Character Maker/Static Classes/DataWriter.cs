@@ -6,11 +6,10 @@ using System.IO;
 // Third-Party references.
 using Aspose.Zip;
 
-//using Synovian_Character_Maker.Forms.CharacterMaker;
-using Synovian_Character_Maker.DataClasses.Instanced;
-using Synovian_Character_Maker.DataClasses.Static;
+using Synovian_Character_Maker.Data_Classes;
+using Synovian_Character_Maker.Forms.CharacterMaker;
 
-namespace Synovian_Character_Maker
+namespace Synovian_Character_Maker.Static_Classes
 {
     static public class DataWriter
     {
@@ -43,7 +42,7 @@ namespace Synovian_Character_Maker
             }
             catch (Exception e)
             {
-                ExceptionHandles.ExceptionHandle(e);
+                Helpers.ExceptionHandle(e);
             }
         }
 
@@ -74,7 +73,7 @@ namespace Synovian_Character_Maker
             }
             catch (Exception e)
             {
-                ExceptionHandles.ExceptionHandle(e);
+                Helpers.ExceptionHandle(e);
             }
         }
 
@@ -113,7 +112,7 @@ namespace Synovian_Character_Maker
             }
             catch (Exception e)
             {
-                ExceptionHandles.ExceptionHandle(e);
+                Helpers.ExceptionHandle(e);
             }
         }
 
@@ -154,7 +153,7 @@ namespace Synovian_Character_Maker
             }
             catch (Exception e)
             {
-                ExceptionHandles.ExceptionHandle(e);
+                Helpers.ExceptionHandle(e);
                 return false;
             }
         }
@@ -165,100 +164,93 @@ namespace Synovian_Character_Maker
         /// <param name="characterSheet">The Sheet to be exported.</param>
         /// <param name="url">Target directory to save into.</param>
         /// <param name="zipExportSettings">Additional settings for export.</param>
-        //public static void WriteCharacterToDiskZip(CharacterSheet characterSheet, string url, ZipExportSettings zipExportSettings)
-        //{
-        //    if (url == "")
-        //        url = Globals.CharacterFolder;
-        //    else
-        //        url = Path.GetDirectoryName(url);
-        //
-        //    // First save txt
-        //    var options = new JsonSerializerOptions
-        //    {
-        //        WriteIndented = true,
-        //    };
-        //
-        //    string jsonString = JsonSerializer.Serialize(characterSheet, options);
-        //
-        //    if (!Directory.Exists(Globals.TempFolder))
-        //        Directory.CreateDirectory(Globals.TempFolder);
-        //
-        //    System.IO.File.WriteAllText($"{Globals.TempFolder}\\{characterSheet.Name}.txt", jsonString);
-        //
-        //    if (zipExportSettings.savePicture && characterSheet._image != null)
-        //    {
-        //        using (var ms = new MemoryStream())
-        //        {
-        //            characterSheet._image.Save(ms, characterSheet._image.RawFormat);
-        //            System.IO.File.WriteAllBytes($"{Globals.TempFolder}\\{characterSheet.Name}.{characterSheet.imageExtension}", ms.ToArray());
-        //        }
-        //    }
-        //    if (zipExportSettings.saveExcel)
-        //    {
-        //        SheetExportSettingsForm sheetExportSettingsForm = new SheetExportSettingsForm();
-        //        sheetExportSettingsForm.ShowDialog();
-        //        SheetExportSettingsForm.SheetExportSettings settings = sheetExportSettingsForm.sheetExportSettings;
-        //
-        //       ExportCharacterSheetExcel(characterSheet, $"{Globals.TempFolder}\\{characterSheet.Name}", settings);
-        //
-        //    }
-        //
-        //    // Archive all files
-        //    using (FileStream zipFile = File.Open($"{url}\\{characterSheet.Name}.zip", FileMode.Create))
-        //    {
-        //        string[] filesToZip = Directory.GetFiles(Globals.TempFolder);
-        //        List<FileInfo> fileInfos = new List<FileInfo>();
-        //
-        //        foreach (string file in filesToZip)
-        //            fileInfos.Add(new FileInfo(file));
-        //
-        //        using (Archive archive = new Archive())
-        //        {
-        //            // Add files to archive
-        //            foreach (FileInfo fileInfo in fileInfos)
-        //                archive.CreateEntry(fileInfo.Name, fileInfo);
-        //            // Create ZIP archive
-        //            archive.Save(zipFile, new Aspose.Zip.Saving.ArchiveSaveOptions());
-        //        }
-        //
-        //        try
-        //        {
-        //            foreach (string file1 in filesToZip)
-        //                File.Delete(file1);
-        //        }
-        //        catch(Exception e) { ExceptionHandles.ExceptionHandle(e); }
-        //    }
-        //}
+        public static void WriteCharacterToDiskZip(CharacterSheet characterSheet, string url, ZipExportOptions.ZipExportSettings zipExportSettings)
+        {
+            if (url == "")
+                url = Globals.CharacterFolder;
+            else
+                url = Path.GetDirectoryName(url);
 
-        //public static void ExportAllCharacterSheets(List<CharacterSheet> characterSheets)
-        //{
-        //    foreach (CharacterSheet characterSheet in characterSheets)
-        //    {
-        //        //SheetExportSettings sheetExportSettings;
-        //        //
-        //        //if (characterSheet.sheetFileType == CharacterSheet.SheetFileType.Xls || characterSheet.sheetFileType == CharacterSheet.SheetFileType.XlSx)
-        //        //{
-        //        //    SheetExportSettingsForm sheetExportSettingsForm = new SheetExportSettingsForm();
-        //        //    sheetExportSettingsForm.ShowDialog();
-        //        //    sheetExportSettings = sheetExportSettingsForm.sheetExportSettings;
-        //        //}
-        //
-        //        switch (characterSheet.sheetFileType)
-        //        {
-        //            case CharacterSheet.SheetFileType.Xls:
-        //                ExportCharacterSheetExcel(characterSheet, "", new SheetExportSettings(), ExcelFormats.XLS);
-        //                break;
-        //            case CharacterSheet.SheetFileType.XlSx:
-        //                ExportCharacterSheetExcel(characterSheet, "", new SheetExportSettings(), ExcelFormats.XLSX);
-        //                break;
-        //            case CharacterSheet.SheetFileType.Xlsx_Google:
-        //                break;
-        //            default:
-        //                ExportCharacterSheetExcel(characterSheet, "", new SheetExportSettings(), ExcelFormats.XLSX);
-        //                break;
-        //        }
-        //    }
-        //}
+            // First save txt
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true,
+            };
+
+            string jsonString = JsonSerializer.Serialize(characterSheet, options);
+
+            if (!Directory.Exists(Globals.TempFolder))
+                Directory.CreateDirectory(Globals.TempFolder);
+
+            System.IO.File.WriteAllText($"{Globals.TempFolder}\\{characterSheet.Name}.txt", jsonString);
+
+            if (zipExportSettings.savePicture && characterSheet._image != null)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    characterSheet._image.Save(ms, characterSheet._image.RawFormat);
+                    System.IO.File.WriteAllBytes($"{Globals.TempFolder}\\{characterSheet.Name}.{characterSheet.imageExtension}", ms.ToArray());
+                }
+            }
+            if (zipExportSettings.saveExcel)
+            {
+               ExportCharacterSheetExcel(characterSheet, $"{Globals.TempFolder}\\{characterSheet.Name}");
+
+            }
+
+            // Archive all files
+            using (FileStream zipFile = File.Open($"{url}\\{characterSheet.Name}.zip", FileMode.Create))
+            {
+                string[] filesToZip = Directory.GetFiles(Globals.TempFolder);
+                List<FileInfo> fileInfos = new List<FileInfo>();
+
+                foreach (string file in filesToZip)
+                    fileInfos.Add(new FileInfo(file));
+
+                using (Archive archive = new Archive())
+                {
+                    // Add files to archive
+                    foreach (FileInfo fileInfo in fileInfos)
+                        archive.CreateEntry(fileInfo.Name, fileInfo);
+                    // Create ZIP archive
+                    archive.Save(zipFile, new Aspose.Zip.Saving.ArchiveSaveOptions());
+                }
+
+                try
+                {
+                    foreach (string file1 in filesToZip)
+                        File.Delete(file1);
+                }
+                catch(Exception e) { Helpers.ExceptionHandle(e); }
+            }
+        }
+
+        public static void ExportAllCharacterSheets(List<CharacterSheet> characterSheets)
+        {
+            foreach (CharacterSheet characterSheet in characterSheets)
+            {
+                switch (characterSheet.sheetFileType)
+                {
+                    case CharacterSheet.SheetFileType.Txt:
+                        WriteCharacterToDiskTxt(characterSheet);
+                        break;
+                    case CharacterSheet.SheetFileType.Zip:
+                        WriteCharacterToDiskZip(characterSheet, "", new ZipExportOptions.ZipExportSettings(true, false, false));
+                        break;
+                    case CharacterSheet.SheetFileType.Xls:
+                        ExportCharacterSheetExcel(characterSheet, "", ExcelFormats.XLS);
+                        break;
+                    case CharacterSheet.SheetFileType.XlSx:
+                        ExportCharacterSheetExcel(characterSheet, "", ExcelFormats.XLSX);
+                        break;
+                    case CharacterSheet.SheetFileType.Xlsx_Google:
+                        break;
+                    default:
+                        WriteCharacterToDiskTxt(characterSheet);
+                        break;
+                }
+            }
+        }
 
         /// <summary>
         /// Exports a sheet to a xls or xlsx sheet
@@ -267,10 +259,10 @@ namespace Synovian_Character_Maker
         /// <param name="url">The provided url of where to save to.</param>
         /// <param name="excelFormats">The prefered format to save the excel sheet. Default is the newer XLSX</param>
         /// <returns>Will return a copy of the Workbook structure.</returns>
-        //public static void ExportCharacterSheetExcel(CharacterSheet characterSheet, string url, SheetExportSettings settings , ExcelFormats excelFormats = ExcelFormats.XLSX)
-        //{
-        //    ExcelManager.ExportSheet(characterSheet, url, settings);
-        //}
+        public static void ExportCharacterSheetExcel(CharacterSheet characterSheet, string url, ExcelFormats excelFormats = ExcelFormats.XLSX)
+        {
+            ExcelManager.ExportSheet(characterSheet, url);
+        }
 
         /*
         /// <summary>

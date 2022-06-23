@@ -2,23 +2,18 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using Synovian_Character_Maker.Static_Classes;
 
-using Synovian_Character_Maker.DataClasses.Static;
-
-namespace Synovian_Character_Maker.DataClasses.Instanced
+namespace Synovian_Character_Maker.Data_Classes
 {
     public class CharacterLibrary
     {
         public List<CharacterSheet> characterSheets { get => new List<CharacterSheet>(_characterSheets); }
         List<CharacterSheet> _characterSheets;
 
-        ExcelManager _excelManagerRef;
-
-        public CharacterLibrary(ref ExcelManager excelManagerref)
+        public CharacterLibrary()
         {
             _characterSheets = new List<CharacterSheet>();
-
-            _excelManagerRef = excelManagerref;
         }
 
         public CharacterLibrary(List<CharacterSheet> characters)
@@ -28,15 +23,7 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
 
         public void ExportSheets()
         {
-            //DataWriter.ExportAllCharacterSheets(_characterSheets);
-
-            foreach (CharacterSheet characterSheet in _characterSheets)
-            {
-                if (characterSheet.sheetFileType == CharacterSheet.SheetFileType.Xlsx_Google)
-                    continue;
-
-                _excelManagerRef.ExportSheet(characterSheet, "", new SheetExportSettings());
-            }
+            Static_Classes.DataWriter.ExportAllCharacterSheets(_characterSheets);
         }
 
         /// <summary>
@@ -78,7 +65,7 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
             }
 
             _characterSheets.Add(characterSheet);
-            return true; //(automaticallyToFile == true) ? DataWriter.WriteCharacterToDiskTxt(characterSheet) : true;
+            return (automaticallyToFile == true) ? DataWriter.WriteCharacterToDiskTxt(characterSheet) : true;
         }
 
         /// <summary>
@@ -123,7 +110,7 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
                             }
                             catch (Exception e)
                             {
-                                ExceptionHandles.ExceptionHandle(e);
+                                Helpers.ExceptionHandle(e);
                                 return false;
                             }
                         }
@@ -136,7 +123,7 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
                             }
                             catch (Exception e)
                             {
-                                ExceptionHandles.ExceptionHandle(e);
+                                Helpers.ExceptionHandle(e);
                                 return false;
                             }
                         }

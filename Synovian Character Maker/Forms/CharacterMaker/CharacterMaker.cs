@@ -4,9 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.IO;
 using System.Windows.Forms;
-using Synovian_Character_Maker.DataClasses;
-using Synovian_Character_Maker.DataClasses.Instanced;
-using Synovian_Character_Maker.DataClasses.Static;
+using Synovian_Character_Maker.Data_Classes;
+using Synovian_Character_Maker.Static_Classes;
 using Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker;
 
 namespace Synovian_Character_Maker.Forms.CharacterMaker
@@ -35,7 +34,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
         {
             if(saveCurrentOne)
             {
-                Program.excelManager.ExportSheet(current_characterSheet,"", new SheetExportSettings());
+                DataWriter.WriteCharacterToDiskTxt(current_characterSheet);
             }
 
             current_characterSheet = characterSheet;
@@ -202,7 +201,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                 else if (extension == "xls" || extension == "xlsx")
                 {
                     //current_characterSheet = DataReader.LoadExelSheet(openCharacterDialog.FileName, ((extension == ".xls") ? IronXL.ExcelFileFormat.XLS : IronXL.ExcelFileFormat.XLSX));
-                    current_characterSheet = Program.excelManager.ImportSheet(openCharacterDialog.FileName);
+                    current_characterSheet = ExcelManager.ImportSheet(openCharacterDialog.FileName);
                 }
                 else
                 {
@@ -241,7 +240,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             if (zipExportOptions.exitStatus == ZipExportOptions.ExitStatus.Failed)
                 return;
 
-            //DataWriter.WriteCharacterToDiskZip(current_characterSheet, saveZip.FileName, zipExportOptions.exportSettings);
+            DataWriter.WriteCharacterToDiskZip(current_characterSheet, saveZip.FileName, zipExportOptions.exportSettings);
             WriteLog("Saved character as zip to disk.");
         }
 
@@ -275,12 +274,11 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
         private void calculateButton_Click(object sender, EventArgs e)
         {
-            /*
             // Get the rules for the specific rank setup for this character.
-            int FeatPointMax = Program._statRules.FeatPoints[current_characterSheet.Rank];
-            int SkillPointsMax = Program._statRules.SkillPoints[current_characterSheet.Rank];
-            int SchoolsMax = Program._statRules.Schools[current_characterSheet.Rank];
-            int MasteriesMax = Program._statRules.Masteries[current_characterSheet.Rank];
+            int FeatPointMax = Program.statRules.FeatPoints[current_characterSheet.Rank];
+            int SkillPointsMax = Program.statRules.SkillPoints[current_characterSheet.Rank];
+            int SchoolsMax = Program.statRules.Schools[current_characterSheet.Rank];
+            int MasteriesMax = Program.statRules.Masteries[current_characterSheet.Rank];
 
             CalculatorLog calculatorLog = new CalculatorLog();
 
@@ -399,24 +397,6 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                         else
                             continue;
                     }
-                }
-            }
-            // Calculate number of masterys
-            {
-                int numMaxMasteries = Program._statRules.Masteries[current_characterSheet.Rank];
-                int numMasteries = 0;
-
-                foreach(KeyValuePair<int,Ability_Mastery> pair in current_characterSheet.abilityMasteryDictionary)
-                {
-                    if (pair.Value >= Ability_Mastery.Mastery_Master) numMasteries++;
-                }
-
-
-                if(numMasteries > numMaxMasteries)
-                {
-                    valid = false;
-                    calculatorLog.AddToLog($"You {numMaxMasteries - numMasteries} more masteries than what you can currently have. You're max is {numMaxMasteries}");
-                    numErrors++;
                 }
             }
             // Calculate all prereq checks
@@ -623,7 +603,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                                 numErrors++;
                             }
                         }
-                        else if (ability.Name == "Blaster" || ability.Name == "Slug Thrower" || ability.Name.Contains("Anti-Material") || ability.Name.Contains("Anti-Organic") || ability.Name.Contains("Anti-Armor") || ability.Name == "Covering Fire" || ability.Name == "Tactical Reload" || ability.Name == "Rail Shot" || ability.Name == "Laze Target" || ability.Name == "High Impact Bolt")
+                        else if (ability.Name == "Blaster" || ability.Name == "Slug Thrower" || ability.Name.Contains("Anti-") || ability.Name == "Covering Fire" || ability.Name == "Tactical Reload" || ability.Name == "Rail Shot" || ability.Name == "Laze Target" || ability.Name == "High Impact Bolt")
                         {
                             string[] rangeFeats = { "Blaster Training", "Marksman Training", "Pistol Training", "Heavy Weapons Training" };
                             bool hasFeat = false;
@@ -932,15 +912,10 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             //    }
             //
             //    SkipCompaionChecks:;                
-            //}*/
+            //}
 
-            CalculatorLog calculatorLog = new CalculatorLog();
-            string log = "";
-            int errors = 0;
-            bool success = Program.calculator.Calculate(ref current_characterSheet, ref log, ref errors);
-            calculatorLog.AddToLog(log);
-            calculatorLog.AddToLog($"Results are in: your sheet is {((success == true) ? "valid" : "invalid")}.");
-            calculatorLog.AddToLog($"Number of errors: {errors}");
+            calculatorLog.AddToLog($"Results are in: your sheet is {((valid == true) ? "valid" : "invalid")}.");
+            calculatorLog.AddToLog($"Number of errors: {numErrors}");
             calculatorLog.ShowDialog();
             WriteLog("Did big brain math.");
         }
@@ -956,14 +931,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
         private void saveExcel_FileOk(object sender, CancelEventArgs e)
         {
-            return;
-
-            SheetExportSettingsForm sheetExportSettingsForm = new SheetExportSettingsForm();
-            sheetExportSettingsForm.ShowDialog();
-            SheetExportSettings sheetExportSettings = sheetExportSettingsForm.sheetExportSettings;
-
-            //DataWriter.ExportCharacterSheetExcel(current_characterSheet, saveExcel.FileName, sheetExportSettings, (saveExcel.FileName.Split('.')[1] == "xlsx") ? DataWriter.ExcelFormats.XLSX : DataWriter.ExcelFormats.XLS);
-            Program.excelManager.ExportSheet(current_characterSheet, saveExcel.FileName, sheetExportSettings);
+            DataWriter.ExportCharacterSheetExcel(current_characterSheet, saveExcel.FileName, (saveExcel.FileName.Split('.')[1] == "xlsx") ? DataWriter.ExcelFormats.XLSX : DataWriter.ExcelFormats.XLS);
             WriteLog("Saved character to disk as excel");
         }
 
@@ -1015,25 +983,10 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
         private void googleDriveButton_Click(object sender, EventArgs e)
         {
-            SheetExportSettingsForm sheetExportSettings = new SheetExportSettingsForm();
-            sheetExportSettings.ShowDialog();
-            if (!sheetExportSettings.finishedSetup) return;
-            SheetExportSettings sheetExport = sheetExportSettings.sheetExportSettings;
-
             if (!Directory.Exists(Globals.TempFolder)) Directory.CreateDirectory(Globals.TempFolder);
-
-
-            // Create the file
-            //DataWriter.ExportCharacterSheetExcel(current_characterSheet, $"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx", sheetExport, DataWriter.ExcelFormats.XLSX);
-            Program.excelManager.ExportSheet(current_characterSheet, $"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx", sheetExport);
-
-            // Send file to google drive
-            Networking.GoogleDrive.GoogleDriveManager.SubmitSheetToDrive($"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx");
-
-            // Delete the file, we don't need it on disk
+            DataWriter.ExportCharacterSheetExcel(current_characterSheet, $"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx", DataWriter.ExcelFormats.XLSX);
+            Static_Classes.Networking.GoogleDrive.GoogleDriveManager.SubmitSheetToDrive($"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx");
             File.Delete($"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx");
-
-
             WriteLog("Sent sheet to google drive.");
         }
 

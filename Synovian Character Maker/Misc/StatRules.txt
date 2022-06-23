@@ -39,7 +39,7 @@
     "Invalid": 1,
     "Initiate": 0,
     "Acolyte": 0,
-    "Apprentice": 5,
+    "Apprentice": 0,
     "Knight": 10,
     "Lord": 15,
     "Archon": 20,

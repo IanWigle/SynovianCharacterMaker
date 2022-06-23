@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
-using Synovian_Character_Maker.DataClasses;
-using Synovian_Character_Maker.DataClasses.Instanced;
+using Synovian_Character_Maker.Data_Classes;
 
 namespace Synovian_Character_Maker.Forms
 {
@@ -138,7 +137,7 @@ namespace Synovian_Character_Maker.Forms
             
         }
 
-        private void AbilityMaker_FormClosing(object sender, FormClosingEventArgs e) => DataWriter.WriteAbilitiesToDisk(Program.abilityLibrary.GetAbilities());
+        private void AbilityMaker_FormClosing(object sender, FormClosingEventArgs e) => Static_Classes.DataWriter.WriteAbilitiesToDisk(Program.abilityLibrary.GetAbilities());
 
         private void listView1_Click(object sender, EventArgs e)
         {

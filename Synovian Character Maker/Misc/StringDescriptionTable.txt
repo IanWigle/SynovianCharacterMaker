@@ -515,9 +515,5 @@
   "514": "No description available.",
   "515": "No description available.",
   "516": "No description available.",
-  "517": "No description available.",
-  "518": "No description available.",
-  "519": "No description available.",
-  "520": "No description available.",
-  "521": "No description available."
+  "517": "No description available."
 }

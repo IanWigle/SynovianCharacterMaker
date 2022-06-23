@@ -1,5 +1,5 @@
-﻿namespace Synovian_Character_Maker.DataClasses.Static
-{ 
+﻿namespace Synovian_Character_Maker.Static_Classes
+{
     public class ProgramSettings
     {
         public bool FocusOnZipsOverTxts { get; set; }
@@ -7,5 +7,10 @@
         public bool HideMainMenu { get; set; }
         public bool LoopSong { get; set; }
         public decimal AudioVolume { get; set; }
+
+        ~ProgramSettings()
+        {
+            DataWriter.ExportSettings(this);
+        }
     }
 }

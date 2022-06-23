@@ -3,8 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Net;
 using System.Net.Sockets;
-using Synovian_Character_Maker.DataClasses.Static;
-using Synovian_Character_Maker.DataClasses.Instanced;
+using Synovian_Character_Maker.Data_Classes;
 using Synovian_Character_Maker.Forms.Experimental;
 
 namespace Synovian_Character_Maker.Static_Classes.Networking.TCP
@@ -66,7 +65,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.TCP
             }
             catch(Exception e)
             {
-                ExceptionHandles.ExceptionHandle(e);
+                Helpers.ExceptionHandle(e);
                 return false;
             }
         }
@@ -81,7 +80,7 @@ namespace Synovian_Character_Maker.Static_Classes.Networking.TCP
                     return ip.ToString();
                 }
             }
-            ExceptionHandles.ExceptionHandle(new Exception("TCP : EXCEPTION : No network adapters with an IPv4 address in the system!"));
+            Helpers.ExceptionHandle(new Exception("TCP : EXCEPTION : No network adapters with an IPv4 address in the system!"));
             return "";
         }
 

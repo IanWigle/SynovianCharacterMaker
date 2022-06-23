@@ -57,8 +57,6 @@
             this.schoolColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.masteryComboBox = new System.Windows.Forms.ComboBox();
             this.abilityDescriptionBox = new System.Windows.Forms.RichTextBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.googleDriveButton = new System.Windows.Forms.Button();
@@ -76,6 +74,8 @@
             this.openCharacterDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveZip = new System.Windows.Forms.SaveFileDialog();
             this.saveExcel = new System.Windows.Forms.SaveFileDialog();
+            this.masteryComboBox = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -238,7 +238,6 @@
             // 
             // loadZipButton
             // 
-            this.loadZipButton.Enabled = false;
             this.loadZipButton.Location = new System.Drawing.Point(119, 71);
             this.loadZipButton.Name = "loadZipButton";
             this.loadZipButton.Size = new System.Drawing.Size(111, 62);
@@ -249,7 +248,6 @@
             // 
             // saveZipButton
             // 
-            this.saveZipButton.Enabled = false;
             this.saveZipButton.Location = new System.Drawing.Point(3, 71);
             this.saveZipButton.Name = "saveZipButton";
             this.saveZipButton.Size = new System.Drawing.Size(110, 62);
@@ -260,7 +258,6 @@
             // 
             // loadTxtButton
             // 
-            this.loadTxtButton.Enabled = false;
             this.loadTxtButton.Location = new System.Drawing.Point(119, 3);
             this.loadTxtButton.Name = "loadTxtButton";
             this.loadTxtButton.Size = new System.Drawing.Size(111, 62);
@@ -271,7 +268,6 @@
             // 
             // saveTxtButton
             // 
-            this.saveTxtButton.Enabled = false;
             this.saveTxtButton.Location = new System.Drawing.Point(3, 3);
             this.saveTxtButton.Name = "saveTxtButton";
             this.saveTxtButton.Size = new System.Drawing.Size(110, 62);
@@ -398,29 +394,6 @@
             this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Ability Description";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(264, 364);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(74, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Ability Mastery";
-            // 
-            // masteryComboBox
-            // 
-            this.masteryComboBox.FormattingEnabled = true;
-            this.masteryComboBox.Items.AddRange(new object[] {
-            "Not learned",
-            "Learned",
-            "Master",
-            "Head Master"});
-            this.masteryComboBox.Location = new System.Drawing.Point(264, 383);
-            this.masteryComboBox.Name = "masteryComboBox";
-            this.masteryComboBox.Size = new System.Drawing.Size(121, 21);
-            this.masteryComboBox.TabIndex = 2;
-            this.masteryComboBox.SelectedIndexChanged += new System.EventHandler(this.masteryComboBox_SelectedIndexChanged);
             // 
             // abilityDescriptionBox
             // 
@@ -565,6 +538,29 @@
             // 
             this.saveExcel.DefaultExt = "xlsx";
             this.saveExcel.FileOk += new System.ComponentModel.CancelEventHandler(this.saveExcel_FileOk);
+            // 
+            // masteryComboBox
+            // 
+            this.masteryComboBox.FormattingEnabled = true;
+            this.masteryComboBox.Items.AddRange(new object[] {
+            "Not learned",
+            "Learned",
+            "Master",
+            "Head Master"});
+            this.masteryComboBox.Location = new System.Drawing.Point(264, 383);
+            this.masteryComboBox.Name = "masteryComboBox";
+            this.masteryComboBox.Size = new System.Drawing.Size(121, 21);
+            this.masteryComboBox.TabIndex = 2;
+            this.masteryComboBox.SelectedIndexChanged += new System.EventHandler(this.masteryComboBox_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(264, 364);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(74, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Ability Mastery";
             // 
             // CharacterMaker
             // 
