@@ -409,10 +409,15 @@ xcopy /I /E /Y "$(ProjectDir)Assets\Audio" "$(SolutionDir)Output\Main\$(Configur
 xcopy /I /E /Y "$(ProjectDir)Assets\Graphics" "$(SolutionDir)Output\Main\$(Configuration)\Data\Assets"
 
 if $(ConfigurationName) == Release del $(SolutionDir)Output\Main\$(Configuration)\*.xml
-if $(ConfigurationName) == NewVersion del $(SolutionDir)Output\Main\$(Configuration)\*.xml
 if $(ConfigurationName) == Release del $(SolutionDir)Output\Main\$(Configuration)\*.pdb
-if $(ConfigurationName) == NewVersion del $(SolutionDir)Output\Main\$(Configuration)\*.pdb
-if $(ConfigurationName) == NewVersion del $(SolutionDir)Output\Main\$(Configuration)\Data\client_secret.json</PostBuildEvent>
+
+copy "$(TargetDir)*dll" "$(TargetDir)Libs" /Y
+copy "$(TargetDir)*pdb" "$(TargetDir)Libs" /Y
+copy "$(TargetDir)*xml" "$(TargetDir)Libs" /Y
+
+del "$(SolutionDir)Output\Main\$(Configuration)\*.dll"
+del "$(SolutionDir)Output\Main\$(Configuration)\*.xml"
+del "$(SolutionDir)Output\Main\$(Configuration)\*.pdb"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
