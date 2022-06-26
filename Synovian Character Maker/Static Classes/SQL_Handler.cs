@@ -26,8 +26,7 @@ namespace Synovian_Character_Maker
             cmd.CommandText = "DROP TABLE IF EXISTS abilities";
             cmd.ExecuteNonQuery();
 
-            //cmd.CommandText = "CREATE TABLE abilities(id INTEGER PRIMARY KEY, abilityName TEXT, abilityDescription TEXT, abilityID INT, abilityAlignment INT, abilityRank INT, abilitySchool INT, abilityCost INT, abilityPrereqs TEXT, abilityFeat BOOL)";
-            cmd.CommandText = "CREATE TABLE abilities(id INTEGER PRIMARY KEY, abilityName TEXT)";
+            cmd.CommandText = "CREATE TABLE abilities(id INTEGER PRIMARY KEY, name TEXT, description TEXT, align INT, school INT, rank INT, skillCost INT, isfeat BOOL, prereqs TEXT)";
             cmd.ExecuteNonQuery();
 
 
@@ -41,7 +40,7 @@ namespace Synovian_Character_Maker
 
                 //string commandText = $"INSERT INTO abilities(abilityName,abilityDescription,abilityID,abilityAlignment,abilityRank,abilitySchool,abilityCost,abilityPrereqs,abilityFeat) " +
                 //                     $"VALUES('{ability.Name.Replace("'","''")}','{ability.description.Replace("'", "''")}',{ability.ID},{(int)ability.alignment},{(int)ability.Rank},{(int)ability.ability_School},{ability.skillCostOverride},'{s_pre}',{ability.isFeat})";
-                string commandText = $"INSERT INTO abilities(abilityName) VALUES('{ability.Name.Replace("'","''")}')";
+                string commandText = $"INSERT INTO abilities(id,name,description,align,school,rank,skillCost,isfeat,prereqs) VALUES({ability.ID},'{ability.Name.Replace("'","''")}','{ability.description.Replace("'","''")}',{(int)ability.alignment},{(int)ability.ability_School},{(int)ability.Rank},{ability.skillCostOverride},{ability.isFeat},'{ability.sql_prepres}')";
                 cmd.CommandText = commandText;
                 cmd.ExecuteNonQuery();
             }

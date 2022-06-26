@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+
 using Synovian_Character_Maker.Networking;
 using Synovian_Character_Maker.DataClasses.Instanced;
 using Synovian_Character_Maker.DataClasses.Static;

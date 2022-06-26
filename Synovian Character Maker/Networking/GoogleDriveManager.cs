@@ -17,6 +17,9 @@ namespace Synovian_Character_Maker.Networking
 {
     static class GoogleDriveManager
     {
+        /// <summary>
+        /// Data class for file search result.
+        /// </summary>
         public struct FileSearch
         {
             public string Name;
@@ -199,7 +202,7 @@ namespace Synovian_Character_Maker.Networking
         }
 
         /// <summary>
-        /// Created a local copy of the DriveService that connects to google.
+        /// Create a local copy of the DriveService that connects to google.
         /// </summary>
         /// <returns></returns>
         static private DriveService GetActiveService()
@@ -211,6 +214,8 @@ namespace Synovian_Character_Maker.Networking
             {
                 // The file token.json stores the user's access and refresh tokens, and is created
                 // automatically when the authorization flow completes for the first time.
+                // 
+                // If the token folder is deleted, the user must authenticate again.
                 string credPath = "Data/token.json";
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
                     GoogleClientSecrets.FromStream(stream).Secrets,
@@ -264,6 +269,7 @@ namespace Synovian_Character_Maker.Networking
                 }
             }
 
+            // If we did not find the folder but we are told to make it.
             if (makeIfNotFound)
             {
                 Google.Apis.Drive.v3.Data.File folderFileMeta = new Google.Apis.Drive.v3.Data.File();

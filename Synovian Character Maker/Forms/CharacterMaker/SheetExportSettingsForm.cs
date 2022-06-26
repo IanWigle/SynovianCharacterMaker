@@ -1,6 +1,7 @@
-﻿using Synovian_Character_Maker.DataClasses.Instanced;
-using System;
+﻿using System;
 using System.Windows.Forms;
+
+using Synovian_Character_Maker.DataClasses.Instanced;
 
 namespace Synovian_Character_Maker.Forms.CharacterMaker
 {

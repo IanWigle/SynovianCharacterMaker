@@ -4,14 +4,9 @@ using System.Linq;
 using System.IO;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.Text.RegularExpressions;
-using System.Drawing;
-using System.Diagnostics;
-using System.Windows.Forms;
 
 using SpreadsheetLight;
-using SpreadsheetLight.Drawing;
 
-//using Synovian_Character_Maker.Forms.CharacterMaker;
 using Synovian_Character_Maker.DataClasses.Instanced;
 
 namespace Synovian_Character_Maker.DataClasses.Static

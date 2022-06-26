@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
+
 using Synovian_Character_Maker.Static_Classes;
 using Synovian_Character_Maker.DataClasses.Instanced;
 using Synovian_Character_Maker.DataClasses.Static;

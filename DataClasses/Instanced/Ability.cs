@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using System.Text.Json.Serialization;
 
 namespace Synovian_Character_Maker.DataClasses.Instanced
@@ -155,27 +151,21 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
         public string description { get; private set; }
 
         /// <summary>
-        /// Returns a string list of all the prerequisite abilitys for the ability. Returns the names, not IDs.
+        /// String of prereqs meant for SQL database.
         /// </summary>
-        //[JsonIgnore]
-        //public List<string> s_prereqs
-        //{
-        //    get
-        //    {
-        //        List<string> list = new List<string>();
-        //        if (Program.abilityLibrary == null)
-        //            return list;
-        //        else
-        //        {
-        //            foreach (int i in prereqs)
-        //            {
-        //                if (Program.abilityLibrary.TryGetAbility(i, out Ability ability))
-        //                    list.Add(ability.Name);
-        //            }
-        //            return list;
-        //        }
-        //    }
-        //}
+        [JsonIgnore]
+        public string sql_prepres
+        {
+            get
+            {
+                string sql = "";
+                foreach(int i in prereqs)
+                {
+                    sql += i.ToString() + ",";
+                }
+                return sql;
+            }
+        }
 
         /// <summary>
         /// Integer list of the ability IDs required for this ability.

@@ -1,5 +1,4 @@
-﻿
-namespace Synovian_Character_Maker.DataClasses.Instanced
+﻿namespace Synovian_Character_Maker.DataClasses.Instanced
 {
     public struct SheetExportSettings
     {

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.IO;
 using System.Windows.Forms;
+
 using Synovian_Character_Maker.Static_Classes;
 using Synovian_Character_Maker.DataClasses.Static;
 using Synovian_Character_Maker.DataClasses.Instanced;
