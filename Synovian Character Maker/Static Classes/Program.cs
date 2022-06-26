@@ -3,13 +3,11 @@ using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+
 using Synovian_Character_Maker.Forms;
 using Synovian_Character_Maker.Static_Classes;
-
-
 using Synovian_Character_Maker.DataClasses.Static;
 using Synovian_Character_Maker.DataClasses.Instanced;
-
 using Synovian_Character_Maker.CharacterCalculator;
 
 namespace Synovian_Character_Maker
@@ -99,9 +97,9 @@ namespace Synovian_Character_Maker
                 _statRules = new StatRules();
                 DataReader.ReadStatRules(ref _statRules);
 
-                abilityLibrary = new AbilityLibrary();
-                DataReader.ReadAbilities(ref abilityLibrary);
-
+                abilityLibrary = new AbilityLibrary();                         
+                SQL.ImportLibrary(ref abilityLibrary);
+            
                 _excelManager = new ExcelManager(ref abilityLibrary, ref _statRules);
 
                 _characterLibrary = new CharacterLibrary(ref _excelManager);
@@ -113,6 +111,7 @@ namespace Synovian_Character_Maker
                 calculator = new Calculator(ref _statRules, ref abilityLibrary);
 
                 _programArgs = args;
+                //SQL.ExportLibrary(ref abilityLibrary);
 
                 if(args.Contains("-ability_maker") || openAbilityMaker == true)
                     Application.Run(new AbilityMaker());
