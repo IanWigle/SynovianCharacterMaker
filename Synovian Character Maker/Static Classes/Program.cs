@@ -111,10 +111,12 @@ namespace Synovian_Character_Maker
                 calculator = new Calculator(ref _statRules, ref abilityLibrary);
 
                 _programArgs = args;
-                //SQL.ExportLibrary(ref abilityLibrary);
 
                 if(args.Contains("-ability_maker") || openAbilityMaker == true)
-                    Application.Run(new AbilityMaker());
+                {
+                    Application.Run(new AbilityMakerV2());
+                    SQL.ExportLibrary(ref abilityLibrary);
+                }
                 else
                     Application.Run(new MainForm());
 

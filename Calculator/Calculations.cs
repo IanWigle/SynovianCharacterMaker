@@ -102,7 +102,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
                 numErrors++;
             }
             else
-                log += $"Using {numMasteries} out of {MasteriesMax} for rank.";
+                log += $"Using {numMasteries} out of {MasteriesMax} masteries for rank.";
         }
     }
 }

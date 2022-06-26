@@ -198,6 +198,12 @@
     <Compile Include="Forms\AbilityMaker.Designer.cs">
       <DependentUpon>AbilityMaker.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\AbilityMakerV2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AbilityMakerV2.Designer.cs">
+      <DependentUpon>AbilityMakerV2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\CharacterMaker\CalculatorLog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -292,6 +298,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\AbilityMaker.resx">
       <DependentUpon>AbilityMaker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AbilityMakerV2.resx">
+      <DependentUpon>AbilityMakerV2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CharacterMaker\CalculatorLog.resx">
       <DependentUpon>CalculatorLog.cs</DependentUpon>
