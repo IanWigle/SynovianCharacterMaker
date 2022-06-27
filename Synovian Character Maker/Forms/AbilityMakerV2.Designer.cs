@@ -62,12 +62,21 @@
             this.abiliColAlignment = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.abiliColSchool = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.resetButton = new System.Windows.Forms.Button();
+            this.deleteButton = new System.Windows.Forms.Button();
+            this.isFeatCheck = new System.Windows.Forms.CheckBox();
+            this.readOnlyIsFeat = new System.Windows.Forms.CheckBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.skillCostBox = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.skillCostBox)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.skillCostBox);
+            this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Controls.Add(this.isFeatCheck);
             this.groupBox1.Controls.Add(this.resetButton);
             this.groupBox1.Controls.Add(this.makeAbilityButton);
             this.groupBox1.Controls.Add(this.validationPrereqButton);
@@ -226,9 +235,12 @@
             this.AbilityList.UseCompatibleStateImageBehavior = false;
             this.AbilityList.View = System.Windows.Forms.View.Details;
             this.AbilityList.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.AbilityList_ColumnClick);
+            this.AbilityList.Click += new System.EventHandler(this.AbilityList_Click);
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.readOnlyIsFeat);
+            this.groupBox2.Controls.Add(this.deleteButton);
             this.groupBox2.Controls.Add(this.readOnlyPrereqs);
             this.groupBox2.Controls.Add(this.label12);
             this.groupBox2.Controls.Add(this.readOnlySchool);
@@ -297,7 +309,7 @@
             this.readonlyRank.Location = new System.Drawing.Point(6, 284);
             this.readonlyRank.Name = "readonlyRank";
             this.readonlyRank.ReadOnly = true;
-            this.readonlyRank.Size = new System.Drawing.Size(179, 20);
+            this.readonlyRank.Size = new System.Drawing.Size(97, 20);
             this.readonlyRank.TabIndex = 14;
             // 
             // label10
@@ -348,7 +360,7 @@
             this.readOnlyPrereqs.Location = new System.Drawing.Point(6, 449);
             this.readOnlyPrereqs.Name = "readOnlyPrereqs";
             this.readOnlyPrereqs.ReadOnly = true;
-            this.readOnlyPrereqs.Size = new System.Drawing.Size(179, 129);
+            this.readOnlyPrereqs.Size = new System.Drawing.Size(229, 92);
             this.readOnlyPrereqs.TabIndex = 14;
             this.readOnlyPrereqs.Text = "";
             // 
@@ -382,6 +394,57 @@
             this.resetButton.UseVisualStyleBackColor = true;
             this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
+            // deleteButton
+            // 
+            this.deleteButton.Location = new System.Drawing.Point(87, 555);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(75, 23);
+            this.deleteButton.TabIndex = 16;
+            this.deleteButton.Text = "Delete";
+            this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
+            // 
+            // isFeatCheck
+            // 
+            this.isFeatCheck.AutoSize = true;
+            this.isFeatCheck.Location = new System.Drawing.Point(161, 286);
+            this.isFeatCheck.Name = "isFeatCheck";
+            this.isFeatCheck.Size = new System.Drawing.Size(58, 17);
+            this.isFeatCheck.TabIndex = 15;
+            this.isFeatCheck.Text = "Is Feat";
+            this.isFeatCheck.UseVisualStyleBackColor = true;
+            // 
+            // readOnlyIsFeat
+            // 
+            this.readOnlyIsFeat.AutoSize = true;
+            this.readOnlyIsFeat.Location = new System.Drawing.Point(127, 287);
+            this.readOnlyIsFeat.Name = "readOnlyIsFeat";
+            this.readOnlyIsFeat.Size = new System.Drawing.Size(58, 17);
+            this.readOnlyIsFeat.TabIndex = 16;
+            this.readOnlyIsFeat.Text = "Is Feat";
+            this.readOnlyIsFeat.UseVisualStyleBackColor = true;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(156, 332);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(71, 13);
+            this.label13.TabIndex = 16;
+            this.label13.Text = "Cost Override";
+            // 
+            // skillCostBox
+            // 
+            this.skillCostBox.Location = new System.Drawing.Point(155, 349);
+            this.skillCostBox.Name = "skillCostBox";
+            this.skillCostBox.Size = new System.Drawing.Size(72, 20);
+            this.skillCostBox.TabIndex = 17;
+            this.skillCostBox.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // AbilityMakerV2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -396,6 +459,7 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.skillCostBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -436,5 +500,10 @@
         private System.Windows.Forms.ColumnHeader abiliColAlignment;
         private System.Windows.Forms.ColumnHeader abiliColSchool;
         private System.Windows.Forms.Button resetButton;
+        private System.Windows.Forms.Button deleteButton;
+        private System.Windows.Forms.CheckBox isFeatCheck;
+        private System.Windows.Forms.CheckBox readOnlyIsFeat;
+        private System.Windows.Forms.NumericUpDown skillCostBox;
+        private System.Windows.Forms.Label label13;
     }
 }

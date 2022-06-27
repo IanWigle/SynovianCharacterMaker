@@ -23,6 +23,8 @@ namespace Synovian_Character_Maker.Forms
             School
         }
 
+        ColumnSort lastSort = ColumnSort.None;
+
 
         public AbilityMakerV2()
         {
@@ -97,12 +99,12 @@ namespace Synovian_Character_Maker.Forms
             Ability ability = new Ability(nameBox.Text, 
                                           descriptionBox.Text, 
                                           Program.abilityLibrary.newID,
-                                          (Ability_Alignment)Enum.Parse(typeof(Ability_Alignment),AlignBox.SelectedText),
-                                          (Rank)Enum.Parse(typeof(Rank), RankBox.SelectedText),
-                                          (Ability_Schools)Enum.Parse(typeof(Ability_Schools), SchoolBox.SelectedText),
+                                          (Ability_Alignment)Enum.Parse(typeof(Ability_Alignment),AlignBox.Text),
+                                          (Rank)Enum.Parse(typeof(Rank), RankBox.Text),
+                                          (Ability_Schools)Enum.Parse(typeof(Ability_Schools), SchoolBox.Text),
                                           prereqIDs, 
-                                          1, 
-                                          false);
+                                          (int)skillCostBox.Value, 
+                                          isFeatCheck.Checked);
 
             Program.abilityLibrary.AddNewAbility(ability);
             RefreshList();
@@ -117,6 +119,15 @@ namespace Synovian_Character_Maker.Forms
             AlignBox.SelectedIndex = 0;
             SchoolBox.SelectedIndex = 0;
             prereqBox.Text = "";
+            skillCostBox.Value = 1;
+
+            readOnlyAbilName.Text = "";
+            readOnlyAbilDescription.Text = "";
+            readonlyRank.Text = "";
+            readonlyAlignment.Text = "";
+            readOnlySchool.Text = "";
+            readOnlyPrereqs.Text = "";
+            readOnlyIsFeat.Checked = false;
         }
 
         private void RefreshList(ColumnSort columnSort = ColumnSort.None)
@@ -199,11 +210,13 @@ namespace Synovian_Character_Maker.Forms
 
         private void AbilityList_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            switch(e.Column)
+            lastSort = (ColumnSort)e.Column;
+            switch (e.Column)
             {
                 // Name
                 case 0:
                     {
+                        
                         RefreshList(ColumnSort.Name);
                         break;
                     }
@@ -227,6 +240,42 @@ namespace Synovian_Character_Maker.Forms
                     }
             }
                 
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            if (AbilityList.FocusedItem == null) return;
+            switch (MessageBox.Show("Are you sure you want to do this? The change can't be reversed.", "Caution!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning))
+            {
+                case DialogResult.OK:
+                {
+                    foreach(ListViewItem listViewItem in AbilityList.SelectedItems)
+                    Program.abilityLibrary.TryRemoveAbility(listViewItem.Text);
+                        AbilityList.FocusedItem = null;
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+
+            resetButton_Click(this, new EventArgs());
+            RefreshList(lastSort);
+        }
+
+        private void AbilityList_Click(object sender, EventArgs e)
+        {
+            if (Program.abilityLibrary.TryGetAbility(AbilityList.FocusedItem.Text, out Ability ability))
+            {
+                readOnlyAbilName.Text = ability.Name;
+                readOnlyAbilDescription.Text = ability.description;
+                readonlyRank.Text = ability.s_rank;
+                readonlyAlignment.Text = ability.s_alignment;
+                readOnlySchool.Text = ability.s_ability_School;
+                readOnlyPrereqs.Text = ability.sql_prepres;
+                readOnlyIsFeat.Checked = ability.isFeat;
+            }
         }
     }
 }

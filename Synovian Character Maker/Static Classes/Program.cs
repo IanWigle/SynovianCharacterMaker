@@ -84,7 +84,6 @@ namespace Synovian_Character_Maker
             List<string> argList = args.ToList();
 
             argList.Add("-TCN");
-            //argList.Add("-Google");
 
             args = argList.ToArray();
 #endif

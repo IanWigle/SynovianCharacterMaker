@@ -16,7 +16,7 @@ namespace Synovian_Character_Maker
     {
         static public void ExportLibrary(ref AbilityLibrary abilityLibrary)
         {
-            string cs = $"URI=file:{Directory.GetCurrentDirectory()}\\AbilityLibrary.db";
+            string cs = $"URI=file:{Directory.GetCurrentDirectory()}\\Data\\AbilityLibrary.db";
 
             SQLiteConnection con = new SQLiteConnection(cs);
             con.Open();

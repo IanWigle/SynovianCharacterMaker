@@ -78,7 +78,7 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
         }
 
         /// <summary>
-        /// Creates a new id based on an the next number in order.
+        /// Creates a new id based on an the next number available number.
         /// </summary>
         public int newID
         {
@@ -87,7 +87,37 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
                 if (_abilities.Count == 0)
                     return 0;
                 else
-                    return _abilities.Last().ID + 1;
+                {
+                    //int i = 0;
+                    //for(; i < _abilities.Count; i++)
+                    //{
+                    //    if (GetAbility(i) != null)
+                    //        if(GetAbility(i).ID == i)
+                    //        continue;
+                    //    else
+                    //        return i;
+                    //}
+                    //
+                    //return i + 2;
+
+                    List<int> ids = new List<int>();
+                    foreach(Ability ability in _abilities)
+                    {
+                        ids.Add(ability.ID);
+                    }
+
+                    int i = 0;
+                    while(true)
+                    {
+                        if (ids.Contains(i))
+                        {
+                            i++;
+                        }
+                        else
+                            return i;
+                    }
+                }    
+
             }
         }
 
@@ -99,7 +129,8 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
         public bool AddNewAbility(Ability ability)
         {
             foreach (Ability ab in _abilities)
-                if (ab.ID == ability.ID || ab.Name == ability.Name) return false;
+                if (ab.ID == ability.ID || ab.Name == ability.Name) 
+                    return false;
             _abilities.Add(ability);
             return true;
         }
