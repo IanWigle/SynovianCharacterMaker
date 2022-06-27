@@ -192,12 +192,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\AbilityMaker.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AbilityMaker.Designer.cs">
-      <DependentUpon>AbilityMaker.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\AbilityMakerV2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -296,9 +290,6 @@
     <Compile Include="Networking\TCPManager.cs" />
     <Compile Include="Static Classes\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\AbilityMaker.resx">
-      <DependentUpon>AbilityMaker.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\AbilityMakerV2.resx">
       <DependentUpon>AbilityMakerV2.cs</DependentUpon>
     </EmbeddedResource>
