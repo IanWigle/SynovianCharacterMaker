@@ -299,6 +299,16 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
         private void saveExcel_FileOk(object sender, CancelEventArgs e)
         {
             //DataWriter.ExportCharacterSheetExcel(current_characterSheet, saveExcel.FileName, (saveExcel.FileName.Split('.')[1] == "xlsx") ? DataWriter.ExcelFormats.XLSX : DataWriter.ExcelFormats.XLS);
+            SheetExportSettingsForm sheetExportSettings = new SheetExportSettingsForm();
+            sheetExportSettings.ShowDialog();
+            if (!sheetExportSettings.finishedSetup) return;
+            SheetExportSettings sheetExport = sheetExportSettings.sheetExportSettings;
+
+            if (!Directory.Exists(Globals.SheetsFolder)) Directory.CreateDirectory(Globals.SheetsFolder);
+
+            // Create the file
+            //DataWriter.ExportCharacterSheetExcel(current_characterSheet, $"{Globals.TempFolder}\\{current_characterSheet.Name}.xlsx", sheetExport, DataWriter.ExcelFormats.XLSX);
+            Program.excelManager.ExportSheet(current_characterSheet, $"{saveExcel.FileName}", sheetExport);
             WriteLog("Saved character to disk as excel");
         }
 

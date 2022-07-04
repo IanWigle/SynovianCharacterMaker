@@ -307,6 +307,11 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
             return vs.ToArray();
         }
 
+        public Ability GetAbility(string name)
+        {
+            return AbilityLibraryRef.Contains(name) ? AbilityLibraryRef.GetAbility(name) : null;
+        }
+
         /// <summary>
         /// Empty the character sheets list of abilities.
         /// </summary>

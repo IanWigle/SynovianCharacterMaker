@@ -9,6 +9,7 @@ using Synovian_Character_Maker.Static_Classes;
 using Synovian_Character_Maker.DataClasses.Static;
 using Synovian_Character_Maker.DataClasses.Instanced;
 using Synovian_Character_Maker.CharacterCalculator;
+using Synovian_Character_Maker.Networking;
 
 namespace Synovian_Character_Maker
 {
@@ -16,6 +17,16 @@ namespace Synovian_Character_Maker
     {
         static bool openAbilityMaker = false;
         static bool deleteGoogleFolderOnClose = true;
+
+        enum LoadAbilitiesMethod
+        {
+            Json,
+            SQL,
+            Back4App
+        };
+
+        static LoadAbilitiesMethod loadAbilitiesMethod = LoadAbilitiesMethod.SQL;
+
 
         /// <summary>
         /// A flag that signifies whether the program is closing. Returns true if closing.
@@ -90,15 +101,32 @@ namespace Synovian_Character_Maker
 
             try
             {
+                Back4App.Test();
+
                 programSettings = new ProgramSettings();
                 DataReader.ReadSettings(ref programSettings);
 
                 _statRules = new StatRules();
                 DataReader.ReadStatRules(ref _statRules);
 
-                abilityLibrary = new AbilityLibrary();                         
-                SQL.ImportLibrary(ref abilityLibrary);
-            
+                abilityLibrary = new AbilityLibrary();
+
+                switch (loadAbilitiesMethod)
+                {
+                    case LoadAbilitiesMethod.Json:
+                        {
+                            DataReader.ReadAbilities(ref abilityLibrary);
+                            break;
+                        }
+                    case LoadAbilitiesMethod.SQL:
+                        {
+                            SQL.ImportLibrary(ref abilityLibrary);
+                            break;
+                        }
+                    case LoadAbilitiesMethod.Back4App:
+                        break;
+                }
+                            
                 _excelManager = new ExcelManager(ref abilityLibrary, ref _statRules);
 
                 _characterLibrary = new CharacterLibrary(ref _excelManager);
@@ -111,6 +139,8 @@ namespace Synovian_Character_Maker
 
                 _programArgs = args;
 
+                
+
                 if(args.Contains("-ability_maker") || openAbilityMaker == true)
                 {
                     Application.Run(new AbilityMakerV2());
@@ -121,6 +151,9 @@ namespace Synovian_Character_Maker
 
                 _isClosing = true;
                 _characterLibrary.ExportSheets();
+
+                //Back4App.UploadAbilityList(abilityLibrary).Wait();
+
                 if(deleteGoogleFolderOnClose)
                     Networking.GoogleDriveManager.WipeGoogleFolderOnDisk();
                 if (Directory.Exists(Globals.TempFolder))

@@ -112,6 +112,12 @@
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Parse, Version=1.7.0.0, Culture=neutral, PublicKeyToken=ba48c3a442de616e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Parse.1.7.0\lib\net45\Parse.dll</HintPath>
+    </Reference>
+    <Reference Include="Parse.NetFx45, Version=1.7.0.0, Culture=neutral, PublicKeyToken=ba48c3a442de616e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Parse.1.7.0\lib\net45\Parse.NetFx45.dll</HintPath>
+    </Reference>
     <Reference Include="SpreadsheetLight, Version=3.5.0.0, Culture=neutral, PublicKeyToken=32fbb46dc1730c57, processorArchitecture=MSIL">
       <HintPath>..\packages\SpreadsheetLight.3.5.0\lib\netstandard2.0\SpreadsheetLight.dll</HintPath>
     </Reference>
@@ -282,6 +288,12 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Networking\Back4App.cs" />
+    <Compile Include="Resources\Resource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
     <Compile Include="Static Classes\SQL_Handler.cs" />
     <Compile Include="Static Classes\DataReader.cs" />
     <Compile Include="Static Classes\DataWriter.cs" />
@@ -333,7 +345,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -342,6 +354,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Resources\Resource1.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="App Config files\app.manifest" />
     <None Include="app.config" />
     <None Include="Editor Files\ClassDiagram1.cd" />
@@ -369,7 +385,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Audio\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Graphics\Preview.bmp" />

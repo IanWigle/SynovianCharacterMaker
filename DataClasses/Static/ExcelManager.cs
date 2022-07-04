@@ -968,6 +968,7 @@ namespace Synovian_Character_Maker.DataClasses.Static
 
 				string prereqFormsString = "";
 				string prereqmasterString = "";
+				string furthestformsmasteries = "";
 
 				string[] allformabilities = characterSheet.GetAbilitiesOfSchool(Ability_Schools.Ability_Forms);
 				foreach (string formAbility in allformabilities)
@@ -984,8 +985,20 @@ namespace Synovian_Character_Maker.DataClasses.Static
 					}
 				}
 
+				foreach(string form in FurthestForms)
+                {
+					Ability_Mastery mastery = characterSheet.abilityMasteryDictionary[AbilityLibraryRef.GetAbility(form).ID];
+
+					if (mastery >= Ability_Mastery.Mastery_Master)
+					{
+						furthestformsmasteries += ((int)mastery).ToString();
+						furthestformsmasteries += ",";
+					}
+                }
+
 				WriteCell("A4", prereqFormsString);
 				WriteCell("A5", prereqmasterString);
+				WriteCell("A6", furthestformsmasteries);
 			}
 
 			sLDocument.SelectWorksheet(characterSheet.Name);
@@ -1102,6 +1115,8 @@ namespace Synovian_Character_Maker.DataClasses.Static
 				}
 			} while (true);
 
+			List<int> listOfMasterForms = new List<int>();
+
 			// Get all forms
 			int s_f_i = 4;
 			do
@@ -1119,6 +1134,7 @@ namespace Synovian_Character_Maker.DataClasses.Static
 					{
 						abilities.Add(ability.ID);
 						ReadMasteryCell($"F{s_f_i}", ability.ID);
+						if (ability.Name.Contains("Expert") || ability.Name.Contains("Master")) listOfMasterForms.Add(ability.ID);
 						s_f_i++;
 					}
 					else
@@ -1135,7 +1151,7 @@ namespace Synovian_Character_Maker.DataClasses.Static
 			if (sl.GetCellValueAsString($"B{s_ability_name}") == "") s_ability_name += 3;
 			int starting_name_value = s_ability_name;
 
-
+			
 
 			// Read all abilities
 			// Start with left column
@@ -1153,6 +1169,7 @@ namespace Synovian_Character_Maker.DataClasses.Static
 					{
 						abilities.Add(ability.ID);
 						ReadMasteryCell($"E{s_ability_name}", ability.ID);
+						
 						s_ability_name++;
 					}
 					else
@@ -1214,6 +1231,7 @@ namespace Synovian_Character_Maker.DataClasses.Static
 				string[] ids = otherFormIDs.Split(',');
 				string otherMasteryNumbers = sl.GetCellValueAsString("A5");
 				string[] masters = otherMasteryNumbers.Split(',');
+				string[] furthestFormMasters = sl.GetCellValueAsString("A6").Split(',');
 				int index = 0;
 				foreach (string id in ids)
 				{
@@ -1226,6 +1244,13 @@ namespace Synovian_Character_Maker.DataClasses.Static
 						masteries[int.Parse(id)] = (Ability_Mastery)(int.Parse(masters[index]));
 					}
 				}
+				
+				for(int i = 0; i < furthestFormMasters.Length; i++)
+                {
+					if (furthestFormMasters[i] == "")
+						continue;
+					masteries[listOfMasterForms[i]] = (Ability_Mastery)(int.Parse((string)furthestFormMasters[i]));
+                }
 			}
 
 			List<CompanionSheet> companionSheets = new List<CompanionSheet>();
