@@ -264,6 +264,12 @@
     <Compile Include="Forms\Experimental\IPRequest.Designer.cs">
       <DependentUpon>IPRequest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Experimental\LoadingBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Experimental\LoadingBar.Designer.cs">
+      <DependentUpon>LoadingBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Experimental\SheetSubmission.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -322,6 +328,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Experimental\IPRequest.resx">
       <DependentUpon>IPRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Experimental\LoadingBar.resx">
+      <DependentUpon>LoadingBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Experimental\SheetSubmission.resx">
       <DependentUpon>SheetSubmission.cs</DependentUpon>
@@ -440,7 +449,8 @@ copy "$(TargetDir)*xml" "$(TargetDir)Libs" /Y
 
 del "$(SolutionDir)Output\Main\$(Configuration)\*.dll"
 del "$(SolutionDir)Output\Main\$(Configuration)\*.xml"
-del "$(SolutionDir)Output\Main\$(Configuration)\*.pdb"</PostBuildEvent>
+del "$(SolutionDir)Output\Main\$(Configuration)\*.pdb"
+RD /S /Q "$(SolutionDir)Output\Main\$(Configuration)\x86\"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

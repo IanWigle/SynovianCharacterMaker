@@ -145,106 +145,106 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             WriteLog($"Added {ability.Name} to character");
         }
 
-        private void saveTxtButton_Click(object sender, EventArgs e)
-        {
-            if (current_characterSheet._image != null)
-            {
-                if (MessageBox.Show("Your character has a image. The image won't be saved into the text file. Are you sure you want to do this?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-                    return;
-            }
+        //private void saveTxtButton_Click(object sender, EventArgs e)
+        //{
+        //    if (current_characterSheet._image != null)
+        //    {
+        //        if (MessageBox.Show("Your character has a image. The image won't be saved into the text file. Are you sure you want to do this?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+        //            return;
+        //    }
+        //
+        //    if (DataReader.IsSheetInDefaultDir(current_characterSheet.Name))
+        //    {
+        //        DataWriter.WriteCharacterToDiskTxt(current_characterSheet);
+        //    }
+        //    else
+        //    {
+        //        saveTxt.FileName = current_characterSheet.Name;
+        //        saveTxt.Title = "Save Txt As...";
+        //        saveTxt.DefaultExt = ".txt";
+        //        saveTxt.InitialDirectory = Globals.CharacterFolder;
+        //        saveTxt.ShowDialog();
+        //    }
+        //}
 
-            if (DataReader.IsSheetInDefaultDir(current_characterSheet.Name))
-            {
-                DataWriter.WriteCharacterToDiskTxt(current_characterSheet);
-            }
-            else
-            {
-                saveTxt.FileName = current_characterSheet.Name;
-                saveTxt.Title = "Save Txt As...";
-                saveTxt.DefaultExt = ".txt";
-                saveTxt.InitialDirectory = Globals.CharacterFolder;
-                saveTxt.ShowDialog();
-            }
-        }
+        //private void saveTxt_FileOk(object sender, CancelEventArgs e)
+        //{
+        //    DataWriter.WriteCharacterToDiskTxt(current_characterSheet);
+        //    WriteLog("Saved Character to disk as txt.");
+        //}
 
-        private void saveTxt_FileOk(object sender, CancelEventArgs e)
-        {
-            DataWriter.WriteCharacterToDiskTxt(current_characterSheet);
-            WriteLog("Saved Character to disk as txt.");
-        }
+        //private void loadTxtButton_Click(object sender, EventArgs e)
+        //{
+        //    openCharacterDialog.Title = "Open Txt";
+        //    openCharacterDialog.InitialDirectory = Globals.CharacterFolder;
+        //    openCharacterDialog.DefaultExt = ".txt";
+        //    openCharacterDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+        //    openCharacterDialog.ShowDialog();
+        //}
 
-        private void loadTxtButton_Click(object sender, EventArgs e)
-        {
-            openCharacterDialog.Title = "Open Txt";
-            openCharacterDialog.InitialDirectory = Globals.CharacterFolder;
-            openCharacterDialog.DefaultExt = ".txt";
-            openCharacterDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            openCharacterDialog.ShowDialog();
-        }
+        //private void openTxt_FileOk(object sender, CancelEventArgs e)
+        //{
+        //    if (Program.characterLibrary.TryGetCharacter(openCharacterDialog.SafeFileName.Split('.')[0], out CharacterSheet sheet))
+        //    {
+        //        current_characterSheet = sheet;
+        //    }    
+        //    else
+        //    {
+        //        string extension = openCharacterDialog.SafeFileName.Split('.')[1];
+        //
+        //        if (extension == "txt")
+        //        {
+        //            current_characterSheet = DataReader.ReadSheetFromTxtDisk(openCharacterDialog.SafeFileName);
+        //        }
+        //        else if (extension == "zip")
+        //        {
+        //            current_characterSheet = DataReader.ReadSheetFromZipDisk(openCharacterDialog.FileName);
+        //        }
+        //        else if (extension == "xls" || extension == "xlsx")
+        //        {
+        //            current_characterSheet = Program.excelManager.ImportSheet(openCharacterDialog.FileName);
+        //        }
+        //        else
+        //        {
+//#if DEBUG
+        //            throw new Exception($"{extension} is not a valid extension to use");
+//#else   //
+        //            MessageBox.Show($"{extension} is not a valid extension to use", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+//#endif  //
+        //        }
+        //    }
+        //
+        //    UpdateLabels();
+        //    Filters filters = new Filters(false,
+        //                                  new List<Rank>(),
+        //                                  new List<Ability_Alignment>(),
+        //                                  new List<Ability_Schools>());
+        //    filters.Fill();
+        //    FilterLibraryAbilities(filters);
+        //    FilterCharacterAbilities(filters);
+        //    WriteLog("Opened new character");
+        //}
 
-        private void openTxt_FileOk(object sender, CancelEventArgs e)
-        {
-            if (Program.characterLibrary.TryGetCharacter(openCharacterDialog.SafeFileName.Split('.')[0], out CharacterSheet sheet))
-            {
-                current_characterSheet = sheet;
-            }    
-            else
-            {
-                string extension = openCharacterDialog.SafeFileName.Split('.')[1];
+        //private void saveZipButton_Click(object sender, EventArgs e)
+        //{
+        //    saveZip.Title = "Save Zip As...";
+        //    saveZip.FileName = current_characterSheet.Name;
+        //    saveZip.Filter = "Zip files (*.zip)|*.zip|All files (*.*)|*.*";
+        //    saveZip.InitialDirectory = Globals.CharacterFolder;
+        //    saveZip.ShowDialog();
+        //}
 
-                if (extension == "txt")
-                {
-                    current_characterSheet = DataReader.ReadSheetFromTxtDisk(openCharacterDialog.SafeFileName);
-                }
-                else if (extension == "zip")
-                {
-                    current_characterSheet = DataReader.ReadSheetFromZipDisk(openCharacterDialog.FileName);
-                }
-                else if (extension == "xls" || extension == "xlsx")
-                {
-                    current_characterSheet = Program.excelManager.ImportSheet(openCharacterDialog.FileName);
-                }
-                else
-                {
-#if DEBUG
-                    throw new Exception($"{extension} is not a valid extension to use");
-#else
-                    MessageBox.Show($"{extension} is not a valid extension to use", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-#endif
-                }
-            }
-
-            UpdateLabels();
-            Filters filters = new Filters(false,
-                                          new List<Rank>(),
-                                          new List<Ability_Alignment>(),
-                                          new List<Ability_Schools>());
-            filters.Fill();
-            FilterLibraryAbilities(filters);
-            FilterCharacterAbilities(filters);
-            WriteLog("Opened new character");
-        }
-
-        private void saveZipButton_Click(object sender, EventArgs e)
-        {
-            saveZip.Title = "Save Zip As...";
-            saveZip.FileName = current_characterSheet.Name;
-            saveZip.Filter = "Zip files (*.zip)|*.zip|All files (*.*)|*.*";
-            saveZip.InitialDirectory = Globals.CharacterFolder;
-            saveZip.ShowDialog();
-        }
-
-        private void saveZip_FileOk(object sender, CancelEventArgs e)
-        {
-            return;
-            //ZipExportOptions zipExportOptions = new ZipExportOptions();
-            //zipExportOptions.ShowDialog();
-            //if (zipExportOptions.exitStatus == ZipExportOptions.ExitStatus.Failed)
-            //    return;
-            //
-            //DataWriter.WriteCharacterToDiskZip(current_characterSheet, saveZip.FileName, zipExportOptions.exportSettings);
-            //WriteLog("Saved character as zip to disk.");
-        }
+        //private void saveZip_FileOk(object sender, CancelEventArgs e)
+        //{
+        //    return;
+        //    //ZipExportOptions zipExportOptions = new ZipExportOptions();
+        //    //zipExportOptions.ShowDialog();
+        //    //if (zipExportOptions.exitStatus == ZipExportOptions.ExitStatus.Failed)
+        //    //    return;
+        //    //
+        //    //DataWriter.WriteCharacterToDiskZip(current_characterSheet, saveZip.FileName, zipExportOptions.exportSettings);
+        //    //WriteLog("Saved character as zip to disk.");
+        //}
 
         private void companionButton_Click(object sender, EventArgs e)
         {
@@ -298,7 +298,10 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
         private void saveExcel_FileOk(object sender, CancelEventArgs e)
         {
-            //DataWriter.ExportCharacterSheetExcel(current_characterSheet, saveExcel.FileName, (saveExcel.FileName.Split('.')[1] == "xlsx") ? DataWriter.ExcelFormats.XLSX : DataWriter.ExcelFormats.XLS);
+            SheetExportSettingsForm sheetExportSettingsForm = new SheetExportSettingsForm();
+            sheetExportSettingsForm.ShowDialog();
+
+            Program.excelManager.ExportSheet(current_characterSheet, saveExcel.FileName, sheetExportSettingsForm.sheetExportSettings);
             WriteLog("Saved character to disk as excel");
         }
 
@@ -318,15 +321,6 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                 FilterCharacterAbilities(filterTab.filters);
                 WriteLog("Emptied character.");
             }
-        }
-
-        private void loadZipButton_Click(object sender, EventArgs e)
-        {
-            openCharacterDialog.Title = "Open Zip";
-            openCharacterDialog.InitialDirectory = Globals.CharacterFolder;
-            openCharacterDialog.DefaultExt = ".zip";
-            openCharacterDialog.Filter = "Zip files (*.zip)|*.zip|All files (*.*)|*.*";
-            openCharacterDialog.ShowDialog();
         }
 
         private void loadExcelButton_Click(object sender, EventArgs e)

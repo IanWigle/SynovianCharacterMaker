@@ -17,6 +17,16 @@ namespace Synovian_Character_Maker
         static bool openAbilityMaker = false;
         static bool deleteGoogleFolderOnClose = true;
 
+        enum LoadAbilitiesMethod
+        {
+            Json,
+            SQL,
+            Back4App
+        };
+
+        static LoadAbilitiesMethod loadAbilitiesMethod = LoadAbilitiesMethod.SQL;
+
+
         /// <summary>
         /// A flag that signifies whether the program is closing. Returns true if closing.
         /// </summary>
@@ -96,9 +106,28 @@ namespace Synovian_Character_Maker
                 _statRules = new StatRules();
                 DataReader.ReadStatRules(ref _statRules);
 
-                abilityLibrary = new AbilityLibrary();                         
-                SQL.ImportLibrary(ref abilityLibrary);
-            
+                abilityLibrary = new AbilityLibrary();
+
+                switch (loadAbilitiesMethod)
+                {
+                    case LoadAbilitiesMethod.Json:
+                        {
+                            DataReader.ReadAbilities(ref abilityLibrary);
+                            break;
+                        }
+                    case LoadAbilitiesMethod.SQL:
+                        {
+                            SQL.ImportLibrary(ref abilityLibrary);
+                            break;
+                        }
+                    case LoadAbilitiesMethod.Back4App:
+                        {
+                            //Back4App.Initialize();
+                            //Back4App.DownloadAbilityList().Wait();
+                            break;
+                        }
+                }
+                            
                 _excelManager = new ExcelManager(ref abilityLibrary, ref _statRules);
 
                 _characterLibrary = new CharacterLibrary(ref _excelManager);
@@ -121,6 +150,7 @@ namespace Synovian_Character_Maker
 
                 _isClosing = true;
                 _characterLibrary.ExportSheets();
+                DataWriter.ExportSettings(ref programSettings);
                 if(deleteGoogleFolderOnClose)
                     Networking.GoogleDriveManager.WipeGoogleFolderOnDisk();
                 if (Directory.Exists(Globals.TempFolder))

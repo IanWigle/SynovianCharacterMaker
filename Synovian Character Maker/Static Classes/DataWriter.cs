@@ -28,7 +28,7 @@ namespace Synovian_Character_Maker.Static_Classes
             XLSX
         }
 
-        public static void ExportSettings(ProgramSettings programSettings)
+        public static void ExportSettings(ref ProgramSettings programSettings)
         {
             if (!Directory.Exists(Globals.DataFolder))
                 Directory.CreateDirectory(Globals.DataFolder);

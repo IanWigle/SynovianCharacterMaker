@@ -39,12 +39,8 @@
             this.nameLabel = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.loadExcelButton = new System.Windows.Forms.Button();
             this.saveExcelButton = new System.Windows.Forms.Button();
-            this.loadZipButton = new System.Windows.Forms.Button();
-            this.saveZipButton = new System.Windows.Forms.Button();
-            this.loadTxtButton = new System.Windows.Forms.Button();
-            this.saveTxtButton = new System.Windows.Forms.Button();
+            this.loadExcelButton = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.logTextBox = new System.Windows.Forms.RichTextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -72,9 +68,7 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.saveTxt = new System.Windows.Forms.SaveFileDialog();
             this.openCharacterDialog = new System.Windows.Forms.OpenFileDialog();
-            this.saveZip = new System.Windows.Forms.SaveFileDialog();
             this.saveExcel = new System.Windows.Forms.SaveFileDialog();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -201,80 +195,34 @@
             this.tableLayoutPanel3.ColumnCount = 2;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.loadExcelButton, 1, 2);
-            this.tableLayoutPanel3.Controls.Add(this.saveExcelButton, 0, 2);
-            this.tableLayoutPanel3.Controls.Add(this.loadZipButton, 1, 1);
-            this.tableLayoutPanel3.Controls.Add(this.saveZipButton, 0, 1);
-            this.tableLayoutPanel3.Controls.Add(this.loadTxtButton, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.saveTxtButton, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.saveExcelButton, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.loadExcelButton, 1, 0);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(6, 19);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 3;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(233, 205);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
-            // loadExcelButton
-            // 
-            this.loadExcelButton.Location = new System.Drawing.Point(119, 139);
-            this.loadExcelButton.Name = "loadExcelButton";
-            this.loadExcelButton.Size = new System.Drawing.Size(111, 62);
-            this.loadExcelButton.TabIndex = 5;
-            this.loadExcelButton.Text = "Load Excel";
-            this.loadExcelButton.UseVisualStyleBackColor = true;
-            this.loadExcelButton.Click += new System.EventHandler(this.loadExcelButton_Click);
-            // 
             // saveExcelButton
             // 
-            this.saveExcelButton.Location = new System.Drawing.Point(3, 139);
+            this.saveExcelButton.Location = new System.Drawing.Point(3, 3);
             this.saveExcelButton.Name = "saveExcelButton";
-            this.saveExcelButton.Size = new System.Drawing.Size(110, 62);
+            this.saveExcelButton.Size = new System.Drawing.Size(110, 198);
             this.saveExcelButton.TabIndex = 4;
             this.saveExcelButton.Text = "Save As Excel";
             this.saveExcelButton.UseVisualStyleBackColor = true;
             this.saveExcelButton.Click += new System.EventHandler(this.saveExcelButton_Click);
             // 
-            // loadZipButton
+            // loadExcelButton
             // 
-            this.loadZipButton.Location = new System.Drawing.Point(119, 71);
-            this.loadZipButton.Name = "loadZipButton";
-            this.loadZipButton.Size = new System.Drawing.Size(111, 62);
-            this.loadZipButton.TabIndex = 3;
-            this.loadZipButton.Text = "Load Zip";
-            this.loadZipButton.UseVisualStyleBackColor = true;
-            this.loadZipButton.Click += new System.EventHandler(this.loadZipButton_Click);
-            // 
-            // saveZipButton
-            // 
-            this.saveZipButton.Location = new System.Drawing.Point(3, 71);
-            this.saveZipButton.Name = "saveZipButton";
-            this.saveZipButton.Size = new System.Drawing.Size(110, 62);
-            this.saveZipButton.TabIndex = 2;
-            this.saveZipButton.Text = "Save As Zip";
-            this.saveZipButton.UseVisualStyleBackColor = true;
-            this.saveZipButton.Click += new System.EventHandler(this.saveZipButton_Click);
-            // 
-            // loadTxtButton
-            // 
-            this.loadTxtButton.Location = new System.Drawing.Point(119, 3);
-            this.loadTxtButton.Name = "loadTxtButton";
-            this.loadTxtButton.Size = new System.Drawing.Size(111, 62);
-            this.loadTxtButton.TabIndex = 1;
-            this.loadTxtButton.Text = "Load Txt";
-            this.loadTxtButton.UseVisualStyleBackColor = true;
-            this.loadTxtButton.Click += new System.EventHandler(this.loadTxtButton_Click);
-            // 
-            // saveTxtButton
-            // 
-            this.saveTxtButton.Location = new System.Drawing.Point(3, 3);
-            this.saveTxtButton.Name = "saveTxtButton";
-            this.saveTxtButton.Size = new System.Drawing.Size(110, 62);
-            this.saveTxtButton.TabIndex = 0;
-            this.saveTxtButton.Text = "Save As Txt";
-            this.saveTxtButton.UseVisualStyleBackColor = true;
-            this.saveTxtButton.Click += new System.EventHandler(this.saveTxtButton_Click);
+            this.loadExcelButton.Location = new System.Drawing.Point(119, 3);
+            this.loadExcelButton.Name = "loadExcelButton";
+            this.loadExcelButton.Size = new System.Drawing.Size(111, 198);
+            this.loadExcelButton.TabIndex = 5;
+            this.loadExcelButton.Text = "Load Excel";
+            this.loadExcelButton.UseVisualStyleBackColor = true;
+            this.loadExcelButton.Click += new System.EventHandler(this.loadExcelButton_Click);
             // 
             // groupBox4
             // 
@@ -543,19 +491,9 @@
             this.columnHeader4.Text = "School";
             this.columnHeader4.Width = 97;
             // 
-            // saveTxt
-            // 
-            this.saveTxt.FileOk += new System.ComponentModel.CancelEventHandler(this.saveTxt_FileOk);
-            // 
             // openCharacterDialog
             // 
             this.openCharacterDialog.FileName = "openFileDialog1";
-            this.openCharacterDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.openTxt_FileOk);
-            // 
-            // saveZip
-            // 
-            this.saveZip.DefaultExt = "zip";
-            this.saveZip.FileOk += new System.ComponentModel.CancelEventHandler(this.saveZip_FileOk);
             // 
             // saveExcel
             // 
@@ -602,12 +540,6 @@
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Button loadExcelButton;
-        private System.Windows.Forms.Button saveExcelButton;
-        private System.Windows.Forms.Button loadZipButton;
-        private System.Windows.Forms.Button saveZipButton;
-        private System.Windows.Forms.Button loadTxtButton;
-        private System.Windows.Forms.Button saveTxtButton;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.RichTextBox logTextBox;
         private System.Windows.Forms.GroupBox groupBox5;
@@ -626,9 +558,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.SaveFileDialog saveTxt;
         private System.Windows.Forms.OpenFileDialog openCharacterDialog;
-        private System.Windows.Forms.SaveFileDialog saveZip;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Button companionButton;
@@ -640,5 +570,7 @@
         private System.Windows.Forms.Button googleDriveButton;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox masteryComboBox;
+        private System.Windows.Forms.Button saveExcelButton;
+        private System.Windows.Forms.Button loadExcelButton;
     }
 }
