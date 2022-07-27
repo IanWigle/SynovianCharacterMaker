@@ -141,7 +141,7 @@ namespace Synovian_Character_Maker
         /// Read all sheets from the default sheet folder.
         /// </summary>
         /// <param name="characterLibrary">Referance for library.</param>
-        public static void ReadAllSheets(ref CharacterLibrary characterLibrary)
+        public static void ReadAllSheets()
         {
             if (!Directory.Exists(Globals.CharacterFolder))
                 Directory.CreateDirectory(Globals.CharacterFolder);
@@ -264,7 +264,7 @@ namespace Synovian_Character_Maker
                         continue;
                     else if (extension == "txt")
                     {
-                        characterLibrary.AddCharacter(GetCharacterSheetFromTextJson(fullFile));
+                        Program.characterLibrary.AddCharacter(GetCharacterSheetFromTextJson(fullFile));
                     }
                     else if (extension == "zip")
                     {
@@ -303,13 +303,13 @@ namespace Synovian_Character_Maker
                     {
                         //CharacterSheet characterSheet = LoadExelSheet(fullFile, ExcelFileFormat.XLS);
                         CharacterSheet characterSheet = Program.excelManager.ImportSheet(fullFile);
-                        characterLibrary.AddCharacter(characterSheet);
+                        Program.characterLibrary.AddCharacter(characterSheet);
                     }
                     else if (extension == "xlsx")
                     {
                         //CharacterSheet characterSheet = LoadExelSheet(fullFile, ExcelFileFormat.XLSX);
                         CharacterSheet characterSheet = Program.excelManager.ImportSheet(fullFile);
-                        characterLibrary.AddCharacter(characterSheet);
+                        Program.characterLibrary.AddCharacter(characterSheet);
                     }
                 }
             }
@@ -629,7 +629,7 @@ namespace Synovian_Character_Maker
         /// Loads audio json settings from disk and straight into the audio player.
         /// </summary>
         /// <param name="audioPlayer">The program's static audio player.</param>
-        public static void LoadAudioSettings(ref AudioPlayer audioPlayer)
+        public static void LoadAudioSettings()
         {
             string settingsFile = File.ReadAllText($"{Globals.DataFolder}\\Settings.txt");
 
@@ -639,182 +639,13 @@ namespace Synovian_Character_Maker
             if (rootElement.TryGetProperty("LoopSong", out JsonElement jsonElement2))
             {
                 Program.programSettings.LoopSong = jsonElement2.GetBoolean();
-                audioPlayer.onLoop = jsonElement2.GetBoolean();
+                Program.audioPlayer.onLoop = jsonElement2.GetBoolean();
             }
             if (rootElement.TryGetProperty("AudioVolume", out JsonElement jsonElement3))
             {
                 Program.programSettings.AudioVolume = jsonElement3.GetDecimal();
-                audioPlayer.volume = jsonElement3.GetDecimal(); ;
+                Program.audioPlayer.volume = jsonElement3.GetDecimal(); ;
             }
         }
-
-        /*
-        public static CharacterSheet LoadExelSheet(string url, IronXL.ExcelFileFormat excelFileFormat = ExcelFileFormat.XLSX)
-        {
-            WorkBook workBook = WorkBook.Load(url);
-            WorkSheet mainSheet = workBook.WorkSheets.First();
-
-            string charName = "";
-            string species = "";
-            Ability_Alignment ability_Alignment = Ability_Alignment.Ability_Invalid;
-            Rank rank = Rank.Invalid;
-            List<int> abilities = new List<int>();
-
-            int currentIndex = 3;
-
-            // Get all basic info
-            charName = mainSheet["B2"].StringValue;
-            string s_rank = mainSheet["B4"].StringValue.Replace("Rank: ","");
-            foreach(Rank _rank in (Rank[])Enum.GetValues(typeof(Rank)))
-            {
-                if (s_rank == Enum.GetName(typeof(Rank), _rank))
-                {
-                    rank = _rank;
-                    break;
-                }
-            }
-            string s_alignment = mainSheet["B5"].StringValue.Replace("Alignment: ", "");
-            foreach(Ability_Alignment _alignment in (Ability_Alignment[])Enum.GetValues(typeof(Ability_Alignment)))
-            {
-                if (s_alignment == Enum.GetName(typeof(Ability_Alignment), _alignment).Replace("Ability_",""))
-                {
-                    ability_Alignment = _alignment;
-                    break;
-                }
-            }
-            species = mainSheet["B6"].StringValue.Replace("Species: ", "");
-            currentIndex++;
-            // Dynamically get all specialized schools.
-            int schoolIndex = currentIndex;
-            do
-            {
-                // Get cell string
-                string schoolName = mainSheet[$"F{schoolIndex}"].StringValue;
-                // If the cell did not have a string, leave this loop.
-                if (schoolName == "" || schoolName == null) break;
-                // Get the school from the ability library.
-                Ability ability_school = Program.abilityLibrary.GetSchool(schoolName);
-                // If ability is valid, add to abilities list
-                if (ability_school != null)
-                    abilities.Add(ability_school.ID);
-                schoolIndex++;
-                // Throw an exception if we somehow surpassed the max number of registered schools.
-                if (schoolIndex > (int)Ability_Schools.Ability_Max)
-                    throw new Exception("School read has exceeded possible number of schools");
-            } while (true);
-
-            // Dynamically get all saber/force forms
-            int formIndex = currentIndex;
-            do
-            {
-                // Get form name from cell.
-                string formName = mainSheet[$"J{formIndex}"].StringValue;
-                if (formName == "" || formName == null) break;
-                if (formName.Contains("School Of"))
-                {
-                    Ability ability = Program.abilityLibrary.GetSchool(formName);
-                    if (ability != null)
-                    {
-                        abilities.Add(ability.ID);
-                        formIndex++;
-                        continue;
-                    }
-                }
-                else if(Program.abilityLibrary.TryGetAbility(formName, out Ability ability1))
-                {
-                    abilities.Add(ability1.ID);
-                    formIndex++;
-                }
-                if (Program.abilityLibrary.GetAbilitiesOfSchool(Ability_Schools.Ability_Forms).Count() < formIndex)
-                    throw new Exception("Form read has exceeded possible numver of forms");
-            } while (true);
-
-            currentIndex = (formIndex > schoolIndex) ? formIndex : schoolIndex;
-
-            // Incremant for page break and for the two headers
-            currentIndex += 3;
-            if (mainSheet[$"B{currentIndex}"].StringValue == "") currentIndex += 3;
-
-            int leftColumnAbilities = currentIndex;
-            int ceneterColumnAbilities = currentIndex;
-            int rightColumnAbilities = currentIndex;
-
-            string[] headerNames = { "Offense Abilities", "Survival Abilities", "Understanding Abilities", 
-                                     "Mentalism Abilities", "Defense Abilities", "Arms Abilities", 
-                                     "Engineering Abilities","Medical Abilities", "Mobility Abilities",
-                                     "Technology Abilities", "Close_Quarters Abilities"};
-                        
-            void HandleColumn(string cellColumn, ref int columnIndex)
-            {
-                do
-                {
-                    string name = mainSheet[$"{cellColumn}{columnIndex}"].StringValue;
-                    if (name != "")
-                    {
-                        if (headerNames.Contains(name))
-                        {
-                            columnIndex++;
-                            continue;
-                        }
-                        if (Program.abilityLibrary.TryGetAbility(name, out Ability ability))
-                        {
-                            abilities.Add(ability.ID);
-                            columnIndex++;
-                        }
-                        else
-                            break;
-                    }
-                    else
-                        break;
-                } while (true);
-            }
-
-            HandleColumn("B", ref leftColumnAbilities);
-            HandleColumn("F", ref ceneterColumnAbilities);
-            HandleColumn("J", ref rightColumnAbilities);
-
-            CharacterSheet characterSheet = new CharacterSheet(charName,
-                                                               rank,
-                                                               ability_Alignment,
-                                                               new List<int>(),
-                                                               null,
-                                                               species);
-            characterSheet.AddAbilities(abilities);
-
-            WorkSheet companSheet = workBook.GetWorkSheet("Companion");
-            if (companSheet != null)
-            {
-                string compName = companSheet["C1"].StringValue;
-                string companionType = companSheet["C2"].StringValue.Replace(" ", "_");
-                List<int> compAbilities = new List<int>();
-                CompanionSheet.CompanionType companionType1 = CompanionSheet.CompanionType.None;
-                foreach(CompanionSheet.CompanionType companionType2 in (CompanionSheet.CompanionType[])Enum.GetValues(typeof(CompanionSheet.CompanionType)))
-                {
-                    if (companionType == Enum.GetName(typeof(CompanionSheet.CompanionType), companionType2))
-                        companionType1 = companionType2;
-                }
-
-                int startingIndex = 10;
-                do
-                {
-                    if (companSheet[$"A{startingIndex}"].StringValue != "")
-                    {
-                        if (Program.abilityLibrary.TryGetAbility(companSheet[$"A{startingIndex}"].StringValue, out Ability ability))
-                        {
-                            compAbilities.Add(ability.ID);
-                            startingIndex++;
-                        }
-                    }
-                    else
-                        break;
-                } while (true);
-
-                CompanionSheet companionSheet = new CompanionSheet(compName, companionType1, compAbilities);
-                characterSheet.companionSheet = companionSheet;
-            }
-
-            return characterSheet;
-        }
-        */
     }
 }

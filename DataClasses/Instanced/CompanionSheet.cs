@@ -8,11 +8,9 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
 {
     public class CompanionSheet
     {
-        public string companionName { get => _companionName; }
-        string _companionName;
+        public string companionName { get; private set; }
 
-        public string companionHistory { get => _companionHistory; }
-        string _companionHistory;
+        public string companionHistory { get; private set; }
 
         public enum CompanionType
         {
@@ -50,7 +48,7 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
 
         public CompanionSheet(string name, string beastSpecies, ref StatRules rules, ref AbilityLibrary abilityLibrary)
         {
-            _companionName = name;
+            companionName = name;
             _beastSpecies = beastSpecies;
 
             _primaryCompanionType = CompanionType.Beast;
@@ -63,7 +61,7 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
 
         public CompanionSheet(string name, CompanionType primaryType, List<int> abs, ref StatRules rules, ref AbilityLibrary abilityLibrary)
         {
-            _companionName = name;
+            companionName = name;
             _primaryCompanionType = primaryType;
             abilities = abs;
 
@@ -73,7 +71,7 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
 
         public CompanionSheet(string name, CompanionType primaryType, ref StatRules rules, ref AbilityLibrary abilityLibrary)
         {
-            _companionName = name;
+            companionName = name;
             _primaryCompanionType = primaryType;
             abilities = new List<int>();
             statRulesRef = rules;
@@ -82,7 +80,7 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
 
         public CompanionSheet(string name, string history, CompanionType primaryType, List<int> abs, ref StatRules rules, ref AbilityLibrary abilityLibrary)
         {
-            _companionName = name;
+            companionName = name;
             SetCompanionHistory(history);
             _primaryCompanionType = primaryType;
             abilities = new List<int>(abs);
@@ -153,7 +151,7 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
 
         public void SetCompanionHistory(string history)
         {
-            _companionHistory = history;
+            companionHistory = history;
         }
 
         public void SetBeastSpecies(string species)

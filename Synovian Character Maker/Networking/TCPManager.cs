@@ -30,11 +30,6 @@ namespace Synovian_Character_Maker.Networking
             }
         }
 
-        ~TCPManager()
-        {
-
-        }
-
         public bool SendSheet(CharacterSheet sheet)
         {
             try
@@ -89,7 +84,6 @@ namespace Synovian_Character_Maker.Networking
         private const string IP = "";
         private string hostname = "";
         private const int port = 13;
-        //private bool LAN = false;
     }
 
     public struct TCP_DataPack

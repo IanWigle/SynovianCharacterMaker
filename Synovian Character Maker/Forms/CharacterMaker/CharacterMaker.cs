@@ -83,7 +83,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                     if (!filters.ContainsRank(ability.Rank)) continue;
                 if (filters.acceptedSchools.Count > 0)
                     if (!filters.ContainsSchool(ability.ability_School)) continue;
-                if (current_characterSheet.abilities.Contains(ability.ID)) continue;
+                if (current_characterSheet._abilities.Contains(ability.ID)) continue;
                 if (ability.ability_School == Ability_Schools.Ability_Droids) continue;
 
                 string[] subitems = { ability.Name, ability.s_rank, ability.s_alignment, ability.s_ability_School };
@@ -96,7 +96,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
         {
             characterAbilitiesView.Items.Clear();
 
-            if (abilities == null) abilities = current_characterSheet.abilities;
+            if (abilities == null) abilities = current_characterSheet._abilities;
 
             foreach (int abilityID in abilities)
             {
@@ -144,107 +144,6 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             }
             WriteLog($"Added {ability.Name} to character");
         }
-
-        //private void saveTxtButton_Click(object sender, EventArgs e)
-        //{
-        //    if (current_characterSheet._image != null)
-        //    {
-        //        if (MessageBox.Show("Your character has a image. The image won't be saved into the text file. Are you sure you want to do this?", "Warning!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-        //            return;
-        //    }
-        //
-        //    if (DataReader.IsSheetInDefaultDir(current_characterSheet.Name))
-        //    {
-        //        DataWriter.WriteCharacterToDiskTxt(current_characterSheet);
-        //    }
-        //    else
-        //    {
-        //        saveTxt.FileName = current_characterSheet.Name;
-        //        saveTxt.Title = "Save Txt As...";
-        //        saveTxt.DefaultExt = ".txt";
-        //        saveTxt.InitialDirectory = Globals.CharacterFolder;
-        //        saveTxt.ShowDialog();
-        //    }
-        //}
-
-        //private void saveTxt_FileOk(object sender, CancelEventArgs e)
-        //{
-        //    DataWriter.WriteCharacterToDiskTxt(current_characterSheet);
-        //    WriteLog("Saved Character to disk as txt.");
-        //}
-
-        //private void loadTxtButton_Click(object sender, EventArgs e)
-        //{
-        //    openCharacterDialog.Title = "Open Txt";
-        //    openCharacterDialog.InitialDirectory = Globals.CharacterFolder;
-        //    openCharacterDialog.DefaultExt = ".txt";
-        //    openCharacterDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-        //    openCharacterDialog.ShowDialog();
-        //}
-
-        //private void openTxt_FileOk(object sender, CancelEventArgs e)
-        //{
-        //    if (Program.characterLibrary.TryGetCharacter(openCharacterDialog.SafeFileName.Split('.')[0], out CharacterSheet sheet))
-        //    {
-        //        current_characterSheet = sheet;
-        //    }    
-        //    else
-        //    {
-        //        string extension = openCharacterDialog.SafeFileName.Split('.')[1];
-        //
-        //        if (extension == "txt")
-        //        {
-        //            current_characterSheet = DataReader.ReadSheetFromTxtDisk(openCharacterDialog.SafeFileName);
-        //        }
-        //        else if (extension == "zip")
-        //        {
-        //            current_characterSheet = DataReader.ReadSheetFromZipDisk(openCharacterDialog.FileName);
-        //        }
-        //        else if (extension == "xls" || extension == "xlsx")
-        //        {
-        //            current_characterSheet = Program.excelManager.ImportSheet(openCharacterDialog.FileName);
-        //        }
-        //        else
-        //        {
-//#if DEBUG
-        //            throw new Exception($"{extension} is not a valid extension to use");
-//#else   //
-        //            MessageBox.Show($"{extension} is not a valid extension to use", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-//#endif  //
-        //        }
-        //    }
-        //
-        //    UpdateLabels();
-        //    Filters filters = new Filters(false,
-        //                                  new List<Rank>(),
-        //                                  new List<Ability_Alignment>(),
-        //                                  new List<Ability_Schools>());
-        //    filters.Fill();
-        //    FilterLibraryAbilities(filters);
-        //    FilterCharacterAbilities(filters);
-        //    WriteLog("Opened new character");
-        //}
-
-        //private void saveZipButton_Click(object sender, EventArgs e)
-        //{
-        //    saveZip.Title = "Save Zip As...";
-        //    saveZip.FileName = current_characterSheet.Name;
-        //    saveZip.Filter = "Zip files (*.zip)|*.zip|All files (*.*)|*.*";
-        //    saveZip.InitialDirectory = Globals.CharacterFolder;
-        //    saveZip.ShowDialog();
-        //}
-
-        //private void saveZip_FileOk(object sender, CancelEventArgs e)
-        //{
-        //    return;
-        //    //ZipExportOptions zipExportOptions = new ZipExportOptions();
-        //    //zipExportOptions.ShowDialog();
-        //    //if (zipExportOptions.exitStatus == ZipExportOptions.ExitStatus.Failed)
-        //    //    return;
-        //    //
-        //    //DataWriter.WriteCharacterToDiskZip(current_characterSheet, saveZip.FileName, zipExportOptions.exportSettings);
-        //    //WriteLog("Saved character as zip to disk.");
-        //}
 
         private void companionButton_Click(object sender, EventArgs e)
         {
@@ -417,7 +316,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                                 continue;
                             foreach (Ability ability in Program.abilityLibrary.GetAbilities())
                             {
-                                if (abilities.Contains(ability) || current_characterSheet.abilities.Contains(ability.ID))
+                                if (abilities.Contains(ability) || current_characterSheet._abilities.Contains(ability.ID))
                                     continue;
                                 if (ability.alignment == alignment)
                                     abilities.Add(ability);
@@ -434,7 +333,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
                                 continue;
                             foreach (Ability ability in Program.abilityLibrary.GetAbilities())
                             {
-                                if (abilities.Contains(ability) || current_characterSheet.abilities.Contains(ability.ID))
+                                if (abilities.Contains(ability) || current_characterSheet._abilities.Contains(ability.ID))
                                     continue;
                                 if (ability.ability_School == school)
                                     abilities.Add(ability);
@@ -451,7 +350,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
         private void characterAbilitiesView_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             List<Ability> abilities = new List<Ability>();
-            var rawAbilitiesIDS = current_characterSheet.abilities;
+            var rawAbilitiesIDS = current_characterSheet._abilities;
             var rawAbilities = Program.abilityLibrary.GetAbilitiesContainingIDS(rawAbilitiesIDS.ToArray());
             List<string> abilityNames = new List<string>();
             switch (e.Column)

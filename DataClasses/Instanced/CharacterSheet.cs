@@ -30,8 +30,7 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
 
         public string characterDescription { get; set; }
 
-        public List<int> abilities { get => new List<int>(_abilities); }
-        List<int> _abilities;
+        public List<int> _abilities { get; private set; }
 
         [JsonIgnore]
         public string lastModified { get; private set; }
@@ -253,7 +252,7 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
 
             foreach (Ability ability in existingAbilitiesWithStr)
             {
-                if (abilities.Contains(ability.ID))
+                if (_abilities.Contains(ability.ID))
                     vs.Add(ability.Name);
             }
 
@@ -272,7 +271,7 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
 
             foreach (Ability ability in existingAbilitiesWithStr)
             {
-                if (abilities.Contains(ability.ID) && ability.Rank == rank)
+                if (_abilities.Contains(ability.ID) && ability.Rank == rank)
                     vs.Add(ability.Name);
             }
 
@@ -286,7 +285,7 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
 
             foreach (Ability ability in existingAbilitiesWithStr)
             {
-                if (abilities.Contains(ability.ID) && ability.Rank == rank && ability.alignment == alignment)
+                if (_abilities.Contains(ability.ID) && ability.Rank == rank && ability.alignment == alignment)
                     vs.Add(ability.Name);
             }
 
@@ -300,7 +299,7 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
 
             foreach (Ability ability in existingAbilitiesWithStr)
             {
-                if (abilities.Contains(ability.ID) && ability.Rank == rank && ability.alignment == alignment && ability.ability_School == schools)
+                if (_abilities.Contains(ability.ID) && ability.Rank == rank && ability.alignment == alignment && ability.ability_School == schools)
                     vs.Add(ability.Name);
             }
 
@@ -315,7 +314,7 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
         public string[] GetAllDescriptionsBySchool(Ability_Schools schools)
         {
             List<string> descriptions = new List<string>();
-            foreach (int ability in abilities)
+            foreach (int ability in _abilities)
             {
                 if (AbilityLibraryRef.TryGetAbility(ability, out Ability ability1))
                 {

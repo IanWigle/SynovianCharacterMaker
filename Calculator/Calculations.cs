@@ -12,7 +12,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
     {
         void CalculateUsedSkillPoints()
         {
-            foreach (int int_ability in sheet.abilities)
+            foreach (int int_ability in sheet._abilities)
             {
                 if (_abilityLibrary.TryGetAbility(int_ability, out Ability ability))
                 {
@@ -38,7 +38,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
 
         void CalculateUsedFeatPoints()
         {
-            foreach (int int_ability in sheet.abilities)
+            foreach (int int_ability in sheet._abilities)
             {
                 if (_abilityLibrary.TryGetAbility(int_ability, out Ability ability))
                 {
@@ -75,7 +75,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
             foreach (Ability abilitySchool in schools)
             {
                 if (abilitySchool.ability_School == Ability_Schools.Ability_Forms) continue;
-                if (sheet.abilities.Contains(abilitySchool.ID))
+                if (sheet._abilities.Contains(abilitySchool.ID))
                     usedSchools++;
             }
 

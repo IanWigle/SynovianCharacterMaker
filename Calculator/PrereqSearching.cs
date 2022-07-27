@@ -12,7 +12,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
     {
         void CheckPrereqs()
         {
-            foreach (int i in sheet.abilities)
+            foreach (int i in sheet._abilities)
             {
                 if (_abilityLibrary.TryGetAbility(i, out Ability ability))
                 {
@@ -50,7 +50,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
                             numErrors++;
                         }
 
-                        foreach (int j in sheet.abilities)
+                        foreach (int j in sheet._abilities)
                         {
                             if (_abilityLibrary.TryGetAbility(j, out Ability ability1))
                             {
@@ -74,7 +74,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
                     {
                         int numUnderstanding = 0;
 
-                        foreach (int j in sheet.abilities)
+                        foreach (int j in sheet._abilities)
                         {
                             if (_abilityLibrary.TryGetAbility(j, out Ability ability1))
                             {
@@ -262,7 +262,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
                                 continue;
                             else
                             {
-                                if (sheet.abilities.Contains(j))
+                                if (sheet._abilities.Contains(j))
                                     continue;
                                 else
                                 {

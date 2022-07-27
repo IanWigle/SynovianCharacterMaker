@@ -26,16 +26,6 @@ namespace Synovian_Character_Maker
 
         static LoadAbilitiesMethod loadAbilitiesMethod = LoadAbilitiesMethod.SQL;
 
-
-        /// <summary>
-        /// A flag that signifies whether the program is closing. Returns true if closing.
-        /// </summary>
-        static public bool isClosing
-        {
-            get => _isClosing;
-        }
-        static private bool _isClosing = false;
-
         /// <summary>
         /// Main library for all registered abilities.
         /// </summary>
@@ -44,8 +34,7 @@ namespace Synovian_Character_Maker
         /// <summary>
         /// Main library for all registered abilities.
         /// </summary>
-        static public CharacterLibrary characterLibrary { get => _characterLibrary; }
-        static private CharacterLibrary _characterLibrary = null;
+        static public CharacterLibrary characterLibrary { get; private set; }
 
         /// <summary>
         /// Main Value container that determines what each rank equates for values such as skillpoints, 
@@ -61,17 +50,18 @@ namespace Synovian_Character_Maker
         /// <summary>
         /// Main Audio player that runs in the background as program runs.
         /// </summary>
-        static public AudioPlayer audioPlayer { get => _audioPlayer; }
-        static private AudioPlayer _audioPlayer = null;
+        static public AudioPlayer audioPlayer { get; private set; }
         static private string defaultSong = "AFriendAudio.wav";
 
         /// <summary>
         /// Main Excel Class responsible for exporting and importing excel character sheets.
         /// </summary>
-        static public ExcelManager excelManager { get => _excelManager; }
-        static private ExcelManager _excelManager = null;
+        static public ExcelManager excelManager { get; private set; }
 
-        static public Calculator calculator = null;
+        /// <summary>
+        /// Main Calculator class responsible for calculating character sheets.
+        /// </summary>
+        static public Calculator calculator { get; private set; }
 
 
         static public string[] programArgs
@@ -128,13 +118,13 @@ namespace Synovian_Character_Maker
                         }
                 }
                             
-                _excelManager = new ExcelManager(ref abilityLibrary, ref _statRules);
+                excelManager = new ExcelManager(ref abilityLibrary, ref _statRules);
 
-                _characterLibrary = new CharacterLibrary(ref _excelManager);
-                DataReader.ReadAllSheets(ref _characterLibrary);
+                characterLibrary = new CharacterLibrary(excelManager);
+                DataReader.ReadAllSheets();
 
-                _audioPlayer = new AudioPlayer(defaultSong, ref programSettings);
-                DataReader.LoadAudioSettings(ref _audioPlayer);
+                audioPlayer = new AudioPlayer(defaultSong, ref programSettings);
+                DataReader.LoadAudioSettings();
 
                 calculator = new Calculator(ref _statRules, ref abilityLibrary);
 
@@ -148,8 +138,7 @@ namespace Synovian_Character_Maker
                 else
                     Application.Run(new MainForm());
 
-                _isClosing = true;
-                _characterLibrary.ExportSheets();
+                characterLibrary.ExportSheets();
                 DataWriter.ExportSettings(ref programSettings);
                 if(deleteGoogleFolderOnClose)
                     Networking.GoogleDriveManager.WipeGoogleFolderOnDisk();

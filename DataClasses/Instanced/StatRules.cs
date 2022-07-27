@@ -35,8 +35,6 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
 
         ~StatRules()
         {
-            //if (false)
-            //    DataWriter.ExportStatRules(this);
         }
     }
 }

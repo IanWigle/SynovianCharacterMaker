@@ -88,18 +88,6 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
                     return 0;
                 else
                 {
-                    //int i = 0;
-                    //for(; i < _abilities.Count; i++)
-                    //{
-                    //    if (GetAbility(i) != null)
-                    //        if(GetAbility(i).ID == i)
-                    //        continue;
-                    //    else
-                    //        return i;
-                    //}
-                    //
-                    //return i + 2;
-
                     List<int> ids = new List<int>();
                     foreach(Ability ability in _abilities)
                     {

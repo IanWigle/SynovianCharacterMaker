@@ -166,7 +166,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
             
             if (comp != null)
             {
-                CompanionEditor companionEditor = new CompanionEditor(comp, Helpers.GetAvailableAbilities(comp.primaryCompanionType));
+                CompanionEditor companionEditor = new CompanionEditor(comp, Helpers.GetAvailableAbilitiesForDroids(comp.primaryCompanionType));
                 companionEditor.ShowDialog();
             }
         }
@@ -192,7 +192,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
 
             if (comp != null)
             {
-                CompanionEditor companionEditor = new CompanionEditor(comp, Helpers.GetAvailableAbilities(comp.primaryCompanionType));
+                CompanionEditor companionEditor = new CompanionEditor(comp, Helpers.GetAvailableAbilitiesForDroids(comp.primaryCompanionType));
                 companionEditor.ShowDialog();
             }
         }

@@ -8,7 +8,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
     {
         void CheckSpecializations()
         {
-            foreach (int i in sheet.abilities)
+            foreach (int i in sheet._abilities)
             {
                 if (_abilityLibrary.TryGetAbility(i, out Ability ability))
                 {
@@ -27,7 +27,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
                             continue;
 #endif
                         }
-                        if (!sheet.abilities.Contains(ability_School.ID))
+                        if (!sheet._abilities.Contains(ability_School.ID))
                         {
                             valid = false;
                             log += $"{ability.Name} is a {ability.s_rank} ability, requiring you to specialize in the {ability_School.Name}.\n";

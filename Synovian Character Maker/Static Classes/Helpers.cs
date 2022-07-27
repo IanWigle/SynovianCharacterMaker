@@ -84,7 +84,7 @@ namespace Synovian_Character_Maker.Static_Classes
 #endif
         }
 
-        public static List<Ability> GetAvailableAbilities(CompanionSheet.CompanionType companionType1)
+        public static List<Ability> GetAvailableAbilitiesForDroids(CompanionSheet.CompanionType companionType1)
         {
             List<Ability> skillsAvailable = new List<Ability>();
 

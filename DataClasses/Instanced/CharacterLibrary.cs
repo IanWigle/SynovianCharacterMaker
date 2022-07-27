@@ -14,7 +14,7 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
 
         ExcelManager _excelManagerRef;
 
-        public CharacterLibrary(ref ExcelManager excelManagerref)
+        public CharacterLibrary(ExcelManager excelManagerref)
         {
             _characterSheets = new List<CharacterSheet>();
 
@@ -28,8 +28,6 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
 
         public void ExportSheets()
         {
-            //DataWriter.ExportAllCharacterSheets(_characterSheets);
-
             foreach (CharacterSheet characterSheet in _characterSheets)
             {
                 if (characterSheet.sheetFileType == CharacterSheet.SheetFileType.Xlsx_Google)

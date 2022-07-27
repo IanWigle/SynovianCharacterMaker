@@ -163,7 +163,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
 
         private void makeButton_Click(object sender, EventArgs e)
         {
-            List<Ability> abilities = Helpers.GetAvailableAbilities(companionType);
+            List<Ability> abilities = Helpers.GetAvailableAbilitiesForDroids(companionType);
 
             if (companionType == CompanionSheet.CompanionType.Beast)
             {
