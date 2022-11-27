@@ -16,6 +16,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
     {
         public CharacterSheet current_characterSheet;
         FilterTab filterTab = new FilterTab();
+        HardcorePointsMenu hardcorePointsMenu= new HardcorePointsMenu();
 
         public CharacterMaker(CharacterSheet characterSheet)
         {
@@ -30,6 +31,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             serverSubmissionButton.Enabled = Program.programArgs.Contains("-TCN");
             FilterLibraryAbilities(filters);
             FilterCharacterAbilities(filters);
+            hardcorePointsButton.Enabled = characterSheet.Rank >= Rank.Knight;
         }
 
         public void UseDifferentCharacter(CharacterSheet characterSheet, bool saveCurrentOne = true)
@@ -41,6 +43,7 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
 
             current_characterSheet = characterSheet;
             WriteLog($"Set {characterSheet.Name} as the character to edit.");
+            hardcorePointsButton.Enabled = characterSheet.Rank >= Rank.Knight;
         }
 
         private void UpdateLabels()
@@ -441,6 +444,12 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker
             {
                 current_characterSheet.abilityMasteryDictionary[ability.ID] = (Ability_Mastery)masteryComboBox.SelectedIndex;
             }
+        }
+
+        private void hardcorePointsButton_Click(object sender, EventArgs e)
+        {
+            hardcorePointsMenu.LinkCharacterSheet(ref current_characterSheet);
+            hardcorePointsMenu.ShowDialog();
         }
     }
 }

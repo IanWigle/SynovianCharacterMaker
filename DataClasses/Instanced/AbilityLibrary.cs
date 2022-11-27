@@ -179,11 +179,6 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
         public List<Ability> GetAbilities() => new List<Ability>(_abilities);
 
         /// <summary>
-        /// Clears thge library.
-        /// </summary>
-        public void ClearList() => _abilities.Clear();
-
-        /// <summary>
         /// Get ability with ability ID.
         /// </summary>
         /// <param name="id">Unique ID of desired ability.</param>

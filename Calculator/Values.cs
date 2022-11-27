@@ -26,11 +26,13 @@ namespace Synovian_Character_Maker.CharacterCalculator
 
         private int numMasteries = 0;
 
-        CharacterSheet sheet = null;
+        private CharacterSheet sheet = null;
 
-        StatRules _statRules { get; set; }
-        AbilityLibrary _abilityLibrary { get; set; }
+        private StatRules _statRules { get; set; }
+        private AbilityLibrary _abilityLibrary { get; set; }
 
-        string log = "";
+        private string log = "";
+
+        private int numDroids = 0;
     }
 }

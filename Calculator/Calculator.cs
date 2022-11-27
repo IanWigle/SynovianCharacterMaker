@@ -31,6 +31,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
             CheckPrereqs();
 
             CheckCompanions();
+            CalculateDroids();
 
             outlog = log;
             errors = numErrors;
@@ -58,6 +59,8 @@ namespace Synovian_Character_Maker.CharacterCalculator
             sheet = null;
 
             log = "";
+
+            numDroids= 0;
         }
     }
 }

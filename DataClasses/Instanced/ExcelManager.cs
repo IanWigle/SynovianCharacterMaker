@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using SpreadsheetLight;
 
 using Synovian_Character_Maker.DataClasses.Instanced;
+using DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace Synovian_Character_Maker.DataClasses.Static
 {
@@ -1023,9 +1024,14 @@ namespace Synovian_Character_Maker.DataClasses.Static
 				WriteCell("A4", prereqFormsString);
 				WriteCell("A5", prereqmasterString);
 
-				// If we created seperate worksheets for multiple companions we need to record the names here so
-				// we know that there are companion sheets with these names to read.
-				if(sheetExportSettings.seperateSheetsPerCompanion)
+				// Handle HCM points
+				string HCM = "";
+				HCM = $"{characterSheet.additionalSkillPoints},{characterSheet.additionalFeetPoints},{characterSheet.additionalMasteryPoints},{characterSheet.additionalDroidSlot},{characterSheet.additionalSpecialization}";
+				WriteCell("A7", HCM);
+
+                // If we created seperate worksheets for multiple companions we need to record the names here so
+                // we know that there are companion sheets with these names to read.
+                if (sheetExportSettings.seperateSheetsPerCompanion)
                 {
 					string names = "";
 					foreach(CompanionSheet companionSheet in characterSheet.companionSheets)
@@ -1034,6 +1040,8 @@ namespace Synovian_Character_Maker.DataClasses.Static
                     }
 					WriteCell("A6", names);
                 }
+
+				
 			}
 
 			sLDocument.SelectWorksheet(characterSheet.Name);
@@ -1058,6 +1066,8 @@ namespace Synovian_Character_Maker.DataClasses.Static
 			Ability_Alignment ability_Alignment = Ability_Alignment.Ability_Invalid;
 			List<int> abilities = new List<int>();
 			Dictionary<int, Ability_Mastery> masteries = new Dictionary<int, Ability_Mastery>();
+
+			int hcm_skills = 0, hcm_feat = 0, hcm_mastery = 0, hcm_droid = 0, hcm_spec = 0;
 
 			string s_rank = sl.GetCellValueAsString("B4").Replace("Rank: ", "");
 			foreach (Rank _rank in Enum.GetValues(typeof(Rank)))
@@ -1247,6 +1257,8 @@ namespace Synovian_Character_Maker.DataClasses.Static
 				string[] ids = otherFormIDs.Split(',');
 				string otherMasteryNumbers = sl.GetCellValueAsString("A5");
 				string[] masters = otherMasteryNumbers.Split(',');
+				string hcm_str = sl.GetCellValueAsString("A7");
+				string[] hcm_split = hcm_str.Split(',');
 				int index = 0;
 				foreach (string id in ids)
 				{
@@ -1266,7 +1278,17 @@ namespace Synovian_Character_Maker.DataClasses.Static
 						break;
 					dataStringForCompNames.Add(compName);
                 }
-			}
+				
+				if (hcm_split.Length == 5)
+				{
+					hcm_skills = int.Parse(hcm_split[0]);
+					hcm_feat = int.Parse(hcm_split[1]);
+					hcm_mastery = int.Parse(hcm_split[2]);
+					hcm_droid = int.Parse(hcm_split[3]);
+					hcm_spec = int.Parse(hcm_split[4]);
+				}
+
+            }
 
 			List<CompanionSheet> companionSheets = new List<CompanionSheet>();
 			if (sl.SelectWorksheet("Companion") == true)
@@ -1398,6 +1420,7 @@ namespace Synovian_Character_Maker.DataClasses.Static
 															   ref AbilityLibraryRef);
 
 			characterSheet.abilityMasteryDictionary = masteries;
+			characterSheet.AddHardcoreValues(hcm_skills, hcm_feat, hcm_mastery, hcm_droid, hcm_spec);
 
 			if (companionSheets.Count > 0)
 				characterSheet.companionSheets = new List<CompanionSheet>(companionSheets);

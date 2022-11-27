@@ -18,13 +18,13 @@ namespace Synovian_Character_Maker.CharacterCalculator
                 {
                     if (!sheet.Contains("Taming I"))
                     {
-                        log += "You are missing Taming I if you wish to have a animal companion.";
+                        log += "You are missing Taming I if you wish to have a animal companion.\n";
                         numErrors++;
                         valid = false;
                     }
                     if (!sheet.Contains("Taming II"))
                     {
-                        log += "You are missing Taming II if you wish to have a animal companion.";
+                        log += "You are missing Taming II if you wish to have a animal companion.\n";
                         numErrors++;
                         valid = false;
                     }
@@ -35,7 +35,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
                             {
                                 if (!sheet.Contains("Beast Control I"))
                                 {
-                                    log += "As a darksider you need at mininum Beast Control I if you wish to have a animal companion.";
+                                    log += "As a darksider you need at mininum Beast Control I if you wish to have a animal companion.\n";
                                     numErrors++;
                                     valid = false;
                                 }
@@ -45,7 +45,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
                             {
                                 if (!sheet.Contains("Animal Friendship I"))
                                 {
-                                    log += "As a lightsider you need at mininum Animal Friendship I if you wish to have a animal companion.";
+                                    log += "As a lightsider you need at mininum Animal Friendship I if you wish to have a animal companion.\n";
                                     numErrors++;
                                     valid = false;
                                 }
@@ -55,6 +55,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
                 }
                 else
                 {
+                    numDroids++;
                     switch (companion.primaryCompanionType)
                     {
                         case CompanionSheet.CompanionType.Research_Droid:
@@ -63,7 +64,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
                                 {
                                     numErrors++;
                                     valid = false;
-                                    log += $"To use the droid companion {companion.companionName}, you need Class I Droids for missions";
+                                    log += $"To use the droid companion {companion.companionName}, you need Class I Droids for missions.\n";
                                 }
                                 break;
                             }
@@ -73,7 +74,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
                                 {
                                     numErrors++;
                                     valid = false;
-                                    log += $"To use the droid companion {companion.companionName}, you need Class I Droids for missions";
+                                    log += $"To use the droid companion {companion.companionName}, you need Class I Droids for missions.\n";
                                 }
                                 break;
                             }
@@ -83,7 +84,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
                                 {
                                     numErrors++;
                                     valid = false;
-                                    log += $"To use the droid companion {companion.companionName}, you need Class II Droids for missions";
+                                    log += $"To use the droid companion {companion.companionName}, you need Class II Droids for missions.\n";
                                 }
                                 break;
                             }
@@ -93,7 +94,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
                                 {
                                     numErrors++;
                                     valid = false;
-                                    log += $"To use the droid companion {companion.companionName}, you need Class II Droids for missions";
+                                    log += $"To use the droid companion {companion.companionName}, you need Class II Droids for missions.\n";
                                 }
                                 break;
                             }
@@ -103,7 +104,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
                                 {
                                     numErrors++;
                                     valid = false;
-                                    log += $"To use the droid companion {companion.companionName}, you need Class III Droids for missions";
+                                    log += $"To use the droid companion {companion.companionName}, you need Class III Droids for missions.\n";
                                 }
                                 break;
                             }
@@ -113,7 +114,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
                                 {
                                     numErrors++;
                                     valid = false;
-                                    log += $"To use the droid companion {companion.companionName}, you need Class IV Droids for missions";
+                                    log += $"To use the droid companion {companion.companionName}, you need Class IV Droids for missions.\n";
                                 }
                                 break;
                             }
@@ -123,7 +124,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
                                 {
                                     numErrors++;
                                     valid = false;
-                                    log += $"To use the droid companion {companion.companionName}, you need Class IV Droids for missions";
+                                    log += $"To use the droid companion {companion.companionName}, you need Class IV Droids for missions.\n";
                                 }
                                 break;
                             }
@@ -133,7 +134,7 @@ namespace Synovian_Character_Maker.CharacterCalculator
                                 {
                                     numErrors++;
                                     valid = false;
-                                    log += $"To use the droid companion {companion.companionName}, you need Class IV Droids for missions";
+                                    log += $"To use the droid companion {companion.companionName}, you need Class IV Droids for missions.\n";
                                 }
                                 break;
                             }

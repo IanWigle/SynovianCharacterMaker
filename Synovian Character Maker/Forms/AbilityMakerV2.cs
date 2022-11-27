@@ -98,7 +98,7 @@ namespace Synovian_Character_Maker.Forms
             }
             Ability ability = new Ability(nameBox.Text, 
                                           descriptionBox.Text, 
-                                          Program.abilityLibrary.newID,
+                                          (checkIDOverride.Checked == true) ? (int)idoverrideNumaric.Value : Program.abilityLibrary.newID,
                                           (Ability_Alignment)Enum.Parse(typeof(Ability_Alignment),AlignBox.Text),
                                           (Rank)Enum.Parse(typeof(Rank), RankBox.Text),
                                           (Ability_Schools)Enum.Parse(typeof(Ability_Schools), SchoolBox.Text),
@@ -120,6 +120,7 @@ namespace Synovian_Character_Maker.Forms
             SchoolBox.SelectedIndex = 0;
             prereqBox.Text = "";
             skillCostBox.Value = 1;
+            idoverrideNumaric.Value = 1;
 
             readOnlyAbilName.Text = "";
             readOnlyAbilDescription.Text = "";
@@ -128,6 +129,7 @@ namespace Synovian_Character_Maker.Forms
             readOnlySchool.Text = "";
             readOnlyPrereqs.Text = "";
             readOnlyIsFeat.Checked = false;
+            readOnlySkillCost.Value = 1;
         }
 
         private void RefreshList(ColumnSort columnSort = ColumnSort.None)
@@ -275,6 +277,26 @@ namespace Synovian_Character_Maker.Forms
                 readOnlySchool.Text = ability.s_ability_School;
                 readOnlyPrereqs.Text = ability.sql_prepres;
                 readOnlyIsFeat.Checked = ability.isFeat;
+                readOnlySkillCost.Value = ability.skillCostOverride;
+                readOnlyID.Value = ability.ID;
+            }
+        }
+
+        private void validateID_Click(object sender, EventArgs e)
+        {
+            if(checkIDOverride.Checked)
+            {
+                bool valid = true; 
+                foreach(Ability ability in Program.abilityLibrary.GetAbilities())
+                {
+                    if (ability.ID == idoverrideNumaric.Value)
+                        valid = false;
+                }
+
+                if(valid)
+                    MessageBox.Show($"Valid ID", "Check complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else
+                    MessageBox.Show($"Invalid ID", "Check complete", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

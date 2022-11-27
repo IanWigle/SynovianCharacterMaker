@@ -97,7 +97,6 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
         /// <summary>
         /// Unique ability name.
         /// </summary>
-        [JsonIgnore]
         public string Name { get; private set; }
 
         /// <summary>
@@ -108,7 +107,6 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
         /// <summary>
         /// Returns a string of the enum value name. Removes the "Ability_" prefix.
         /// </summary>
-        [JsonIgnore]
         public string s_alignment { get => Enum.GetName(typeof(Ability_Alignment), alignment).Replace("Ability_", ""); }
 
         /// <summary>
@@ -119,7 +117,6 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
         /// <summary>
         /// Returns a string of the enum value name.
         /// </summary>
-        [JsonIgnore]
         public string s_rank { get => Enum.GetName(typeof(Rank), Rank); }
 
         /// <summary>
@@ -130,7 +127,6 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
         /// <summary>
         /// Returns a string of the enum value name. Removes the "Ability_" prefix and replaces '_' with spaces.
         /// </summary>
-        [JsonIgnore]
         public string s_ability_School { get => Enum.GetName(typeof(Ability_Schools), ability_School).Replace("Ability_", "").Replace('_', ' '); }
 
         /// <summary>
@@ -141,19 +137,16 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
         /// <summary>
         /// Returns the skill cost as a string.
         /// </summary>
-        [JsonIgnore]
         public string s_skillCostOverride { get => skillCostOverride.ToString(); }
 
         /// <summary>
         /// Unique ability description.
         /// </summary>
-        [JsonIgnore]
         public string description { get; private set; }
 
         /// <summary>
         /// String of prereqs meant for SQL database.
         /// </summary>
-        [JsonIgnore]
         public string sql_prepres
         {
             get

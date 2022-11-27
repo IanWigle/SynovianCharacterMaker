@@ -53,6 +53,8 @@
             this.schoolColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.searchBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.masteryComboBox = new System.Windows.Forms.ComboBox();
             this.abilityDescriptionBox = new System.Windows.Forms.RichTextBox();
@@ -70,6 +72,8 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.openCharacterDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveExcel = new System.Windows.Forms.SaveFileDialog();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.hardcorePointsButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -83,6 +87,7 @@
             this.groupBox6.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -182,13 +187,13 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.panel1);
             this.groupBox3.Controls.Add(this.tableLayoutPanel3);
             this.groupBox3.Location = new System.Drawing.Point(3, 117);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(245, 228);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "To/From Disk";
             // 
             // tableLayoutPanel3
             // 
@@ -201,14 +206,14 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(233, 205);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(233, 93);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // saveExcelButton
             // 
             this.saveExcelButton.Location = new System.Drawing.Point(3, 3);
             this.saveExcelButton.Name = "saveExcelButton";
-            this.saveExcelButton.Size = new System.Drawing.Size(110, 198);
+            this.saveExcelButton.Size = new System.Drawing.Size(110, 87);
             this.saveExcelButton.TabIndex = 4;
             this.saveExcelButton.Text = "Save As Excel";
             this.saveExcelButton.UseVisualStyleBackColor = true;
@@ -218,7 +223,7 @@
             // 
             this.loadExcelButton.Location = new System.Drawing.Point(119, 3);
             this.loadExcelButton.Name = "loadExcelButton";
-            this.loadExcelButton.Size = new System.Drawing.Size(111, 198);
+            this.loadExcelButton.Size = new System.Drawing.Size(111, 87);
             this.loadExcelButton.TabIndex = 5;
             this.loadExcelButton.Text = "Load Excel";
             this.loadExcelButton.UseVisualStyleBackColor = true;
@@ -333,6 +338,8 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.label2);
+            this.groupBox6.Controls.Add(this.searchBox);
             this.groupBox6.Controls.Add(this.label1);
             this.groupBox6.Controls.Add(this.masteryComboBox);
             this.groupBox6.Controls.Add(this.abilityDescriptionBox);
@@ -342,6 +349,22 @@
             this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Ability Description";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 364);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Search";
+            // 
+            // searchBox
+            // 
+            this.searchBox.Location = new System.Drawing.Point(9, 383);
+            this.searchBox.Name = "searchBox";
+            this.searchBox.Size = new System.Drawing.Size(118, 20);
+            this.searchBox.TabIndex = 4;
             // 
             // label1
             // 
@@ -500,6 +523,24 @@
             this.saveExcel.DefaultExt = "xlsx";
             this.saveExcel.FileOk += new System.ComponentModel.CancelEventHandler(this.saveExcel_FileOk);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.hardcorePointsButton);
+            this.panel1.Location = new System.Drawing.Point(6, 161);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(233, 61);
+            this.panel1.TabIndex = 1;
+            // 
+            // hardcorePointsButton
+            // 
+            this.hardcorePointsButton.Location = new System.Drawing.Point(4, 0);
+            this.hardcorePointsButton.Name = "hardcorePointsButton";
+            this.hardcorePointsButton.Size = new System.Drawing.Size(226, 58);
+            this.hardcorePointsButton.TabIndex = 0;
+            this.hardcorePointsButton.Text = "Hardcore Points";
+            this.hardcorePointsButton.UseVisualStyleBackColor = true;
+            this.hardcorePointsButton.Click += new System.EventHandler(this.hardcorePointsButton_Click);
+            // 
             // CharacterMaker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -525,6 +566,7 @@
             this.groupBox6.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -572,5 +614,9 @@
         private System.Windows.Forms.ComboBox masteryComboBox;
         private System.Windows.Forms.Button saveExcelButton;
         private System.Windows.Forms.Button loadExcelButton;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox searchBox;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button hardcorePointsButton;
     }
 }

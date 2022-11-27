@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-
 using Synovian_Character_Maker.Forms;
 using Synovian_Character_Maker.Static_Classes;
 using Synovian_Character_Maker.DataClasses.Static;
@@ -20,8 +19,7 @@ namespace Synovian_Character_Maker
         enum LoadAbilitiesMethod
         {
             Json,
-            SQL,
-            Back4App
+            SQL
         };
 
         static LoadAbilitiesMethod loadAbilitiesMethod = LoadAbilitiesMethod.SQL;
@@ -110,12 +108,6 @@ namespace Synovian_Character_Maker
                             SQL.ImportLibrary(ref abilityLibrary);
                             break;
                         }
-                    case LoadAbilitiesMethod.Back4App:
-                        {
-                            //Back4App.Initialize();
-                            //Back4App.DownloadAbilityList().Wait();
-                            break;
-                        }
                 }
                             
                 excelManager = new ExcelManager(ref abilityLibrary, ref _statRules);
@@ -140,7 +132,8 @@ namespace Synovian_Character_Maker
 
                 characterLibrary.ExportSheets();
                 DataWriter.ExportSettings(ref programSettings);
-                if(deleteGoogleFolderOnClose)
+                //DataWriter.ExportStatRules(_statRules);
+                if (deleteGoogleFolderOnClose)
                     Networking.GoogleDriveManager.WipeGoogleFolderOnDisk();
                 if (Directory.Exists(Globals.TempFolder))
                     Directory.Delete(Globals.TempFolder);

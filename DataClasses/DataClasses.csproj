@@ -103,7 +103,6 @@
     <Compile Include="Instanced\CompanionSheet.cs" />
     <Compile Include="Instanced\SheetExportSettings.cs" />
     <Compile Include="Instanced\StatRules.cs" />
-    <Compile Include="Instanced\ZipExportSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Instanced\ExcelManager.cs" />
     <Compile Include="Static\ExceptionHandles.cs" />

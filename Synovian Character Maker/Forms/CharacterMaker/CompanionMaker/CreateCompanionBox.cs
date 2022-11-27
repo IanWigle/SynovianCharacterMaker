@@ -220,8 +220,16 @@ namespace Synovian_Character_Maker.Forms.CharacterMaker.CompanionMaker
                 }
             }
 
-            CompanionSheet companionSheet = new CompanionSheet((companionType == CompanionSheet.CompanionType.Beast) ? beastName.Text : droidName.Text, companionBeastSpecies, ref Program._statRules, ref Program.abilityLibrary);
-            //if (companionType == CompanionSheet.CompanionType.Beast) companionSheet.SetCompanionSpecies(speciesBox.Text);
+            CompanionSheet companionSheet = null;//new CompanionSheet((companionType == CompanionSheet.CompanionType.Beast) ? beastName.Text : droidName.Text, companionBeastSpecies, ref Program._statRules, ref Program.abilityLibrary);
+            if (companionType == CompanionSheet.CompanionType.Beast)
+            {
+                companionSheet= new CompanionSheet(beastName.Text, companionBeastSpecies, ref Program._statRules, ref Program.abilityLibrary);
+            }
+            else
+            {
+                companionSheet = new CompanionSheet(droidName.Text,companionType, ref Program._statRules, ref Program.abilityLibrary);
+            }
+            
 
             CompanionEditor companionEditor = new CompanionEditor(companionSheet, abilities);
 

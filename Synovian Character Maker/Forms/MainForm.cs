@@ -206,16 +206,6 @@ namespace Synovian_Character_Maker.Forms
 
             switch (dataReadTypes)
             {
-                case DataReader.DataReadTypes.txt:
-                    {
-                        characterSheet = DataReader.ReadSheetFromTxtDisk(openCharacter.FileName);
-                        break;
-                    }
-                case DataReader.DataReadTypes.zip:
-                    {
-                        characterSheet = DataReader.ReadSheetFromZipDisk(openCharacter.FileName);
-                        break;
-                    }
                 case DataReader.DataReadTypes.xls:
                     {
                         characterSheet = Program.excelManager.ImportSheet(openCharacter.FileName);

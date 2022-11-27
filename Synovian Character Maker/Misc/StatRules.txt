@@ -54,12 +54,6 @@
       "diceRank": "",
       "skillPoints": 0
     },
-    "Beast": {
-      "HP": 0,
-      "AP": 0,
-      "diceRank": "",
-      "skillPoints": 0
-    },
     "Research_Droid": {
       "HP": 2,
       "AP": 10,
@@ -108,11 +102,58 @@
       "diceRank": "d6 atk, d2 def",
       "skillPoints": 20
     },
+    "Beast": {
+      "HP": 0,
+      "AP": 0,
+      "diceRank": "",
+      "skillPoints": 0
+    },
     "Max": {
       "HP": 0,
       "AP": 0,
       "diceRank": "",
       "skillPoints": 0
     }
-  }
+  },
+  "MaxObtainableHCM": {
+    "SkillPoint": 15,
+    "FeatPoint": 6,
+    "MasteryPoint": 0,
+    "ExtraDroid": 1,
+    "Specialization": 1
+  },
+  "PossibleBeastSpecies": [
+    "Akk_Dog",
+    "Anooba",
+    "Blurrg",
+    "Condor_Dragon",
+    "Convor_Owl",
+    "Dewback",
+    "Exoboar",
+    "Ghest",
+    "Gizak",
+    "Hawkbat",
+    "Hississ",
+    "Kath_Hound",
+    "Klorslug",
+    "Kybuck",
+    "Manka_Cat",
+    "Massifs",
+    "Monkey_Lizard",
+    "Mumuu",
+    "Nekarr_Cat",
+    "Nexu",
+    "Pritarr",
+    "Rancor",
+    "Reek",
+    "Silooth",
+    "Tarentatek",
+    "Tauntaun",
+    "Tayan_Falcon",
+    "Tooka",
+    "Tukata",
+    "Tusk_Cat",
+    "Varactyl",
+    "Vulptilla"
+  ]
 }

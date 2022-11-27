@@ -19,39 +19,31 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
         }
 
         public string Name { get; private set; }
-
         public Rank Rank { get; private set; }
-        [JsonIgnore]
         public string s_rank { get => Enum.GetName(typeof(Rank), Rank); }
-
-        [JsonIgnore]
         public string s_alignment { get => Enum.GetName(typeof(Ability_Alignment), alignment).Replace("Ability_", ""); }
         public Ability_Alignment alignment { get; private set; }
-
         public string characterDescription { get; set; }
-
         public List<int> _abilities { get; private set; }
-
-        [JsonIgnore]
         public string lastModified { get; private set; }
-
-        [JsonIgnore]
         public SheetFileType sheetFileType { get; private set; }
         public void setFileType(SheetFileType fileType) => sheetFileType = fileType;
-
         public string characterSpecies { get; set; }
-
-        [JsonIgnore]
         public Image _image { get; set; }
-        [JsonIgnore]
         public string imageExtension { get; set; }
+
+        // Hardcore specific values
+        public int additionalSkillPoints { get; private set; }
+        public int additionalFeetPoints { get; private set; }
+        public int additionalMasteryPoints { get; private set; }
+        public int additionalDroidSlot { get; private set; }
+        public int additionalSpecialization { get; private set; }
+        // End of Hardcore values
 
         public List<CompanionSheet> companionSheets = new List<CompanionSheet>();
 
-        [JsonIgnore]
         public Dictionary<int, Ability_Mastery> abilityMasteryDictionary = new Dictionary<int, Ability_Mastery>();
 
-        [JsonIgnore]
         AbilityLibrary AbilityLibraryRef;
 
         public List<Ability> GetAbilitiesOfClass
@@ -264,6 +256,20 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
             return GetAbilitiesWithContaingString(str);
         }
 
+        public string[] GetAbilitiesWithFilters(string str, Ability_Schools school)
+        {
+            List<string> vs = new List<string>();
+            List<Ability> existingAbilitiesWithStr = AbilityLibraryRef.GetAbilitiesContainingString(str);
+
+            foreach(Ability ability in existingAbilitiesWithStr)
+            {
+                if(_abilities.Contains(ability.ID) && ability.ability_School == school)
+                    vs.Add(ability.Name);
+            }
+
+            return vs.ToArray();
+        }
+
         public string[] GetAbilitiesWithFilters(string str, Rank rank)
         {
             List<string> vs = new List<string>();
@@ -355,6 +361,15 @@ namespace Synovian_Character_Maker.DataClasses.Instanced
                     return;
                 }
             }
+        }
+
+        public void AddHardcoreValues(int skill, int feet, int mastery, int droid, int spec)
+        {
+            additionalSkillPoints = skill;
+            additionalFeetPoints = feet;
+            additionalMasteryPoints = mastery;
+            additionalDroidSlot = droid;
+            additionalSpecialization = spec;
         }
     }
 }
