@@ -1,0 +1,159 @@
+{
+  "FeatPoints": {
+    "Invalid": 1,
+    "Initiate": 2,
+    "Acolyte": 4,
+    "Apprentice": 6,
+    "Knight": 8,
+    "Lord": 10,
+    "Archon": 12,
+    "Elder": 14,
+    "Emperor": 14,
+    "Max": 1
+  },
+  "SkillPoints": {
+    "Invalid": 1,
+    "Initiate": 5,
+    "Acolyte": 5,
+    "Apprentice": 10,
+    "Knight": 20,
+    "Lord": 30,
+    "Archon": 40,
+    "Elder": 50,
+    "Emperor": 50,
+    "Max": 1
+  },
+  "Schools": {
+    "Invalid": 1,
+    "Initiate": 0,
+    "Acolyte": 0,
+    "Apprentice": 1,
+    "Knight": 2,
+    "Lord": 3,
+    "Archon": 3,
+    "Elder": 3,
+    "Emperor": 3,
+    "Max": 1
+  },
+  "Masteries": {
+    "Invalid": 1,
+    "Initiate": 0,
+    "Acolyte": 0,
+    "Apprentice": 0,
+    "Knight": 10,
+    "Lord": 15,
+    "Archon": 20,
+    "Elder": 25,
+    "Emperor": 25,
+    "Max": 1
+  },
+  "CompanionDroidDataDictionary": {
+    "None": {
+      "HP": 0,
+      "AP": 0,
+      "diceRank": "",
+      "skillPoints": 0
+    },
+    "Research_Droid": {
+      "HP": 2,
+      "AP": 10,
+      "diceRank": "d1",
+      "skillPoints": 15
+    },
+    "Medical_Droid": {
+      "HP": 0,
+      "AP": 0,
+      "diceRank": "",
+      "skillPoints": 0
+    },
+    "Engineering_Droid": {
+      "HP": 3,
+      "AP": 15,
+      "diceRank": "d3",
+      "skillPoints": 10
+    },
+    "Astromech_Droid": {
+      "HP": 3,
+      "AP": 15,
+      "diceRank": "d3",
+      "skillPoints": 10
+    },
+    "Protocol_Droid": {
+      "HP": 10,
+      "AP": 0,
+      "diceRank": "d1",
+      "skillPoints": 20
+    },
+    "Battle_Droid": {
+      "HP": 5,
+      "AP": 20,
+      "diceRank": "d4",
+      "skillPoints": 20
+    },
+    "Security_Droid": {
+      "HP": 7,
+      "AP": 20,
+      "diceRank": "d6 def, d2 atk",
+      "skillPoints": 20
+    },
+    "Assassin_Droid": {
+      "HP": 3,
+      "AP": 20,
+      "diceRank": "d6 atk, d2 def",
+      "skillPoints": 20
+    },
+    "Beast": {
+      "HP": 0,
+      "AP": 0,
+      "diceRank": "",
+      "skillPoints": 0
+    },
+    "Max": {
+      "HP": 0,
+      "AP": 0,
+      "diceRank": "",
+      "skillPoints": 0
+    }
+  },
+  "MaxObtainableHCM": {
+    "SkillPoint": 15,
+    "FeatPoint": 6,
+    "MasteryPoint": 0,
+    "ExtraDroid": 1,
+    "Specialization": 1
+  },
+  "PossibleBeastSpecies": [
+    "Akk_Dog",
+    "Anooba",
+    "Blurrg",
+    "Condor_Dragon",
+    "Convor_Owl",
+    "Dewback",
+    "Exoboar",
+    "Ghest",
+    "Gizak",
+    "Hawkbat",
+    "Hississ",
+    "Kath_Hound",
+    "Klorslug",
+    "Kybuck",
+    "Manka_Cat",
+    "Massifs",
+    "Monkey_Lizard",
+    "Mumuu",
+    "Nekarr_Cat",
+    "Nexu",
+    "Pritarr",
+    "Rancor",
+    "Reek",
+    "Silooth",
+    "Tarentatek",
+    "Tauntaun",
+    "Tayan_Falcon",
+    "Tooka",
+    "Tukata",
+    "Tusk_Cat",
+    "Varactyl",
+    "Vulptilla"
+  ]
+}

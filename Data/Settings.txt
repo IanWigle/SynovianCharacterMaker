@@ -1,0 +1,7 @@
+{
+  "FocusOnZipsOverTxts": false,
+  "DetectExcelSheets": false,
+  "HideMainMenu": true,
+  "LoopSong": true,
+  "AudioVolume": 0.1
+}
