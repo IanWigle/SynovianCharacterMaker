@@ -246,6 +246,12 @@
     <Compile Include="Forms\CharacterMaker\GeneralInfoWindow.Designer.cs">
       <DependentUpon>GeneralInfoWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CharacterMaker\HardcorePointsMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CharacterMaker\HardcorePointsMenu.Designer.cs">
+      <DependentUpon>HardcorePointsMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\CharacterMaker\SheetExportSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -322,6 +328,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CharacterMaker\GeneralInfoWindow.resx">
       <DependentUpon>GeneralInfoWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CharacterMaker\HardcorePointsMenu.resx">
+      <DependentUpon>HardcorePointsMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CharacterMaker\ZipExportOptions.resx">
       <DependentUpon>ZipExportOptions.cs</DependentUpon>
